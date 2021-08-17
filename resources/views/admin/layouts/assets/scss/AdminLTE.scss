@@ -1,0 +1,42 @@
+/*!
+ *   AdminLTE v3.0.4
+ *   Author: Colorlib
+ *   Website: AdminLTE.io <http://adminlte.io>
+ *   License: Open source - MIT <http://opensource.org/licenses/MIT>
+ */
+// Bootstrap
+// ---------------------------------------------------
+
+//$theme-colors: (
+//);
+
+@import '~bootstrap/scss/functions';
+@import 'bootstrap-variables';
+
+$nav-pills-link-active-bg: theme-color("info");
+@import '~bootstrap/scss/bootstrap';
+
+
+
+// Fontawesome
+// ---------------------------------------------------
+
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/v4-shims';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+
+// Variables and Mixins
+// ---------------------------------------------------
+@import 'variables';
+@import 'mixins';
+
+@import 'parts/core';
+@import 'parts/components';
+@import 'parts/extra-components';
+@import 'parts/plugins';
+@import 'parts/miscellaneous';
+@import 'parts/pages';
+
