@@ -70,7 +70,10 @@ class Commision
         
         }
         if($comPai == 15){
-            $result = $userPai->bonus + 0;
+            $commission = 1.74;
+            $valor = ($value / 100) * $commission;
+            $valorPai = $valor;
+            $result = $userPai->bonus + $valor;
             $userPai->bonus = $result;
             $userPai->save();
         }
