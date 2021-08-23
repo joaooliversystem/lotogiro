@@ -104,7 +104,7 @@ class GameController extends Controller
 
         try {
             $date = Carbon::now();
-             if ( $date->hour >=20 || $date->hour < 06) {
+             if ( $date->hour >=20 || $date->hour < 00) {
              return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                     'error' => 'Apostas Encerradas!'
                 ]);
