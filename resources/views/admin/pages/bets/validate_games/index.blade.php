@@ -72,7 +72,7 @@
 
         $(document).on('click', '#btn_delete_bet', function () {
             var bet = $(this).attr('bet');
-            var url = '{{ route("admin.bets.games.destroy", ":bet") }}';
+            var url = '{{ route("admin.bets.validate-games.destroy", ":bet") }}';
             url = url.replace(':bet', bet);
             $("#destroy").attr('action', url);
         });

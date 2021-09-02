@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Pages\Bets;
 use App\Helper\Mask;
 use App\Http\Controllers\Controller;
 use App\Models\Bet;
+use App\Models\Game;
 use App\Helper\Balance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,9 +39,9 @@ class ValidateGamesController extends Controller
                         <button class="btn btn-sm btn-warning" title="Editar"><i class="far fa-edit"></i></button>
                     </a>';
                     }
-                    if (auth()->user()->hasPermissionTo('delete_game')) {
-                        $data .= '<button class="btn btn-sm btn-danger" id="btn_delete_bet" game="' . $bet->id . '" title="Deletar" data-toggle="modal" data-target="#modal_delete_bet"> <i class="far fa-trash-alt"></i></button>';
-                    }
+                    
+                        $data .= '<button class="btn btn-sm btn-danger" id="btn_delete_bet" bet="' . $bet->id . '" title="Deletar" data-toggle="modal" data-target="#modal_delete_bet"> <i class="far fa-trash-alt"></i></button>';
+                    
                     return $data;
                 })
                 ->addColumn('client_cpf', function ($bet) {
@@ -108,8 +109,31 @@ class ValidateGamesController extends Controller
         }
     }
 
-    public function destroy()
+    public function destroy($url)
     {
+        $game = Game::where('bet_id', $url)->get();
+        $idGame = '';
+     
+        foreach ($game as $games) {
+            
+           $idGame = $games->id;
+        }
 
+       try {
+            Game::destroy($idGame);
+            Bet::destroy($url);
+
+            return redirect()->route('admin.bets.validate-games.index')->withErrors([
+                'success' => 'Aposta Deletada com sucesso'
+            ]);
+
+        } catch (\Exception $exception) {
+
+            return redirect()->route('admin.bets.validate-games.index')->withErrors([
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao deletar o sorteio, tente novamente'
+            ]);
+
+        }
+    
     }
 }
