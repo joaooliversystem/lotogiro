@@ -117,10 +117,11 @@ class ValidateGamesController extends Controller
         foreach ($game as $games) {
             
            $idGame = $games->id;
+           Game::destroy($idGame);
         }
 
        try {
-            Game::destroy($idGame);
+            
             Bet::destroy($url);
 
             return redirect()->route('admin.bets.validate-games.index')->withErrors([
