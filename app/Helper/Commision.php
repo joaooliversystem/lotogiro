@@ -14,8 +14,19 @@ class Commision
 
         $userPai = User::find($ID_VALUE);
         $comPai = $userPai->commission;
+        $typeClient = auth()->user()->type_client;
         $valorPai = 0;
+        if($typeClient == 1){
+            $commission = 4.35;
+            $valor = ($value / 100) * $commission;
+            $valorPai = $valor;
+            $result = $userPai->bonus + $valor;
+            $userPai->bonus = $result;
+            $userPai->save();
         
+        }else{
+
+       
         if($comPai == 25){
             if($percentage == 25){
                 $result = $userPai->bonus + 0;
@@ -70,13 +81,14 @@ class Commision
         
         }
         if($comPai == 15){
-            $commission = 1.74;
+            $commission = 4.35;
             $valor = ($value / 100) * $commission;
             $valorPai = $valor;
             $result = $userPai->bonus + $valor;
             $userPai->bonus = $result;
             $userPai->save();
         }
+ }
         
         return $valorPai;
     }
