@@ -101,6 +101,10 @@ class UserController extends Controller
             $indicador = 1;
         }
 
+        $auxRole;
+         foreach ($request->roles as $role){
+              $auxRole = $role;
+         }
 
         try {
             $user = new $this->user;
@@ -110,6 +114,9 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            if($auxRole == 6){
+            $user->type_client = 1;    
+            }
             $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
             $user->save();
 
