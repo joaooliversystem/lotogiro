@@ -79,7 +79,8 @@ class ValidateGamesController extends Controller
             if (!$balance) {
             throw new \Exception('Saldo Insufuciente!');
         }
-            if ($games->count() > 0) {
+
+          if ($games->count() > 0) {
                 foreach ($games as $game) {
                     $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->typeGameValue->value,$ID_VALUE);
                     $game->status = true;
@@ -102,7 +103,7 @@ class ValidateGamesController extends Controller
             }
 
             session()->flash('success', 'Aposta validada com sucesso!');
-            return redirect()->route('admin.bets.validate-games.index');
+            return redirect()->route('admin.bets.validate-games.edit', ['validate_game' => $validate_game->id]);
         } catch (\Exception $exception) {
             session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
             return redirect()->route('admin.bets.validate-games.index');

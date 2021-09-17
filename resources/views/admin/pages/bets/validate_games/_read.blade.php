@@ -66,13 +66,16 @@
                                     <th scope="col">Dezenas</th>
                                     <th scope="col">Valor</th>
                                     <th scope="col">Prêmio</th>
+                                    <th scope="col">Recibo</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @php($totalValue = 0)
                                 @php($totalPrize = 0)
                                 @forelse($validate_game->games as $game)
+   
                                     <tr>
+                                        
                                         <td>{{$game->typeGame->name}}</td>
                                         <td>{{$game->competition->number}}</td>
                                         <td>{{$game->numbers}}</td>
@@ -80,6 +83,32 @@
                                             R${{\App\Helper\Money::toReal($game->typeGameValue->value)}}</td>
                                         <td>
                                             R${{\App\Helper\Money::toReal($game->typeGameValue->prize)}}</td>
+                                            <td>                             @if($game->checked == 1)
+                              <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col-md-3 mb-3">
+                        <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'pdf'])}}">
+                            <button type="button" class="btn btn-info btn-block">
+                                PDF
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'txt'])}}">
+                            <button type="button" class="btn btn-info btn-block">
+                               TXT
+                            </button>
+                        </a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <a href="https://api.whatsapp.com/send?phone=55{{$validate_game->client->ddd.$validate_game->client->phone}}&text=Jogo de {{$game->typeGame->name }} cadastrado com sucesso! Id da Aposta: {{$game->id}}, Cliente: {{$validate_game->client->name. ' ' . $validate_game->client->last_name}}, Dezenas: {{$game->numbers}}, Valor R${{\App\Helper\Money::toReal($game->typeGameValue->value)}}, Prêmio R${{\App\Helper\Money::toReal($game->typeGameValue->prize)}}, Data: {{\Carbon\Carbon::parse($game->crated_at)->format('d/m/Y') }}" target="_blank">
+                            <button type="button" class="btn btn-info btn-block">
+                                WhatsApp
+                            </button>
+                        </a>
+                    </div>
+                </div>
+                                @endif</td>
                                     </tr>
                                     @php($totalValue += $game->typeGameValue->value)
                                     @php($totalPrize += $game->typeGameValue->prize)
@@ -114,7 +143,14 @@
         </a>
     </div>
     <div class="col-md-6 mb-3">
-        <button type="submit" id="button_game" class="btn btn-block btn-outline-success">Validar</button>
+        @if($validate_game->status == 1)
+            <button type="submit" id="button_game" class="btn btn-block btn-outline-success" disabled>Validado!</button>
+                
+            @else
+                <button type="submit" id="button_game" class="btn btn-block btn-outline-success">Validar</button>
+           
+        @endif
+
     </div>
 </div>
 
