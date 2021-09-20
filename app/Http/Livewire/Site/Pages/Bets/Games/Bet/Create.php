@@ -18,10 +18,16 @@ class Create extends Component
 
     public function mount($bet, $typeGame)
     {
+        $startnumberselected = 0;
         $this->bet = $bet;
         $this->typeGame = $typeGame;
         $this->user = $bet->user;
         $this->selectedNumbers = [];
+        for($i = 1;$i <= $typeGame->numbers; $i++){
+        $startnumberselected = $i;
+         array_push($this->selectedNumbers, $startnumberselected);
+        }
+        //$this->selectedNumbers = [];
         $this->numbers = $typeGame->numbers;
         $this->matriz($typeGame->numbers, $typeGame->columns);
     }
