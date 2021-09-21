@@ -18,10 +18,6 @@ class Form extends Component
     public function mount($typeGame, $clients)
     {
         $this->selectedNumbers = [];
-        for($i = 1;$i <= $typeGame->numbers; $i++){
-        $startnumberselected = $i;
-         array_push($this->selectedNumbers, $startnumberselected);
-        }
         if (!empty($typeGame)) {
             $this->typeGame = $typeGame;
             $this->clients = $clients;
@@ -30,7 +26,13 @@ class Form extends Component
             $this->matriz($typeGame->numbers, $typeGame->columns);
         }
     }
-
+    public function selecionaTudo(){
+         $startnumberselected = 0;
+        for($i = 1;$i <= $this->typeGame->numbers; $i++){
+        $startnumberselected = $i;
+        array_push($this->selectedNumbers, $startnumberselected);
+        }
+    }
     public function selectNumber($number)
     {
         if(in_array($number, $this->selectedNumbers)){
