@@ -18,6 +18,10 @@ class Form extends Component
     public function mount($typeGame, $clients)
     {
         $this->selectedNumbers = [];
+        for($i = 1;$i <= $typeGame->numbers; $i++){
+        $startnumberselected = $i;
+         array_push($this->selectedNumbers, $startnumberselected);
+        }
         if (!empty($typeGame)) {
             $this->typeGame = $typeGame;
             $this->clients = $clients;

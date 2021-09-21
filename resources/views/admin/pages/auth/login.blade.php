@@ -80,6 +80,13 @@
                         <a href="{{ route('password.request') }}">Esqueci minha senha</a>
                     </p>
                 @endif
+                    <p class="mb-1"><b>
+                        Não é cadastrado?
+                    </b>
+                    </p>
+                   <a href="https://api.whatsapp.com/send?phone=558196826967&text=Oi, Ainda não tenho cadastrado.">
+                 <button type="submit" class="btn btn-primary btn-block">Fale Conosco</button>
+                </a>
 
             </div>
         </div>
