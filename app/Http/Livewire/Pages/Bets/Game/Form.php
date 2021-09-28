@@ -14,6 +14,7 @@ class Form extends Component
     public $matriz;
     public $selectedNumbers;
     public $values;
+    public $selecionado = 0;
 
     public function mount($typeGame, $clients)
     {
@@ -28,11 +29,21 @@ class Form extends Component
     }
     public function selecionaTudo(){
          $startnumberselected = 0;
+
+        if($this->selecionado == 0){
+         foreach ($this->selectedNumbers as $value) {
+            array_pop($this->selectedNumbers);
+        }
         for($i = 1;$i <= $this->typeGame->numbers; $i++){
         $startnumberselected = $i;
         array_push($this->selectedNumbers, $startnumberselected);
         }
+        $this->selecionado = 1;
+         }
+
     }
+
+
     public function selectNumber($number)
     {
         if(in_array($number, $this->selectedNumbers)){

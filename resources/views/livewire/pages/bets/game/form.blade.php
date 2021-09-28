@@ -5,6 +5,7 @@
             <th scope="col">Tipo</th>
             <th scope="col">Concurso</th>
             <th scope="col">Data do Sorteio</th>
+            <th scope="col">Importar Jogo</th>
         </tr>
         </thead>
         <tbody>
@@ -16,9 +17,11 @@
             <td>{{$typeGame->competitions->last()->number}}</td>
             <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
             @endif
+            <td> <button data-toggle="modal" data-target="#modal-enviar" class="btn btn-primary" type="button">Carregar </button></td>
         </tr>
         </tbody>
     </table>
+    
     <div class="form-row">
         <div class="form-group col-md-12">
             <div wire:ignore>
@@ -79,7 +82,7 @@
         <div class="col-md-12">
             @if(isset($matriz))
                 <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
-                    @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania")
+                    @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "ACUMULADO 15 lotofacil")
                     <button wire:click="selecionaTudo()" class="btn btn-success" type="button">Seleciona todos os Números</button>
                     @endif
                     
