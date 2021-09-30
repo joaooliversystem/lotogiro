@@ -70,6 +70,10 @@ class Table extends Component
                 ];
                 $users = User::all();
                 foreach ($users as $user) {
+                $bonus = $user->bonus;
+                $balance = $user->balance;
+                $result = $balance + $bonus;
+                $user->balance = $result;
                 $user->bonus = 0;
                 $user->save();
                 }
