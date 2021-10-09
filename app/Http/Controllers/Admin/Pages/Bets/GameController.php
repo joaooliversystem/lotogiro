@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin\Pages\Bets;
-
+use Illuminate\Support\Facades\Storage;
 use App\Exports\Receipt;
 use App\Helper\Balance;
 use App\Helper\Commision;
@@ -14,13 +14,13 @@ use App\Models\Draw;
 use App\Models\Game;
 use App\Models\HashGame;
 use App\Models\TypeGame;
+use App\Models\TypeGameValue;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
-
+use Orchestra\Parser\Xml\Facade as XmlParser;
 class GameController extends Controller
 {
     protected $game;
@@ -92,7 +92,122 @@ class GameController extends Controller
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
+        
+        
+        //Fluxo de criação de Jogos por importação de arquivo XML
+        if($request->xml == 1){
+            $validatedData = $request->validate([
+            'arq' => 'required',
+            'client' => 'required',
+        ]);
 
+            if($request->hasFile('arq')){
+               $data = $request->arq;
+                $name = Auth()->user()->id;
+                $extenstion = $request->arq->extension();
+                $nameFile = "{$name}.{$extenstion}";
+                $upload = $request->arq->storeAs('xml', $nameFile);
+                $caminho = "storage/xml/";
+
+                $xmlDataString = file_get_contents(public_path($caminho.$nameFile));
+                $xmlObject = simplexml_load_string($xmlDataString);
+                foreach($xmlObject->attributes() as $a => $b) {
+                    $tipojogo = $b;
+                }
+                $numerosJogo;
+                foreach($xmlObject->jogo[0]->attributes() as $a => $b) {
+           
+                    if($a == "dezenas"){
+                        $numerosJogo = $b;
+                    }
+         
+                }
+ 
+                $string = preg_replace('/\s+/', ' ', trim($numerosJogo));
+                $words = explode(" ", $string);
+                 $qtdDezenas =  count($words);
+
+                $searchString = " ";
+                $replaceString = ",";
+                $numerosJogoS = str_replace($searchString, $replaceString, $numerosJogo); 
+
+            $tipojogoselect = TypeGame::where('id', $request->type_game)->get();
+            foreach($tipojogoselect as $selectType){
+                $sigla = $selectType->siglaxml;
+                
+             }
+            if($tipojogo == $sigla){
+                $valor;
+                $selectValor = TypeGameValue::where('numbers', $qtdDezenas)->where('id', $request->type_game )->get();
+                foreach( $selectValor as $select){
+                $valor = $select->value;
+                $type_game_value_id_banco = $select->id;
+            }
+        }
+        try{
+            $date = Carbon::now();
+             if ( $date->hour >=20 || $date->hour < 00) {
+             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                    'error' => 'Apostas Encerradas!'
+                ]);
+             }
+            $balance = Balance::calculation($type_game_value_id_banco);
+
+            if (!$balance) {
+                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                    'error' => 'Saldo Insuficiente!'
+                ]);
+            }
+
+            $competition = TypeGame::find($request->type_game)->competitions->last();
+            if (empty($competition)) {
+                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                    'error' => 'Não existe concurso cadastrado!'
+                ]);
+            }
+
+            $game = new $this->game;
+            $game->client_id = $request->client;
+            $game->user_id = auth()->id();
+            $game->type_game_id = $request->type_game;
+            $game->type_game_value_id = $type_game_value_id_banco;
+            $game->numbers = $numerosJogoS;
+            $game->competition_id = $competition->id;
+            $game->checked = 1;
+            $game->commission_percentage = auth()->user()->commission;
+            $game->save();
+
+              $extract = [
+                'type' => 1,
+                'value' => $game->typeGameValue->value,
+                'type_game_id' => $game->type_game_id,
+                'description' => 'Venda - Jogo de id: ' . $game->id,
+                'user_id' => $game->user_id,
+                'client_id' => $game->client_id
+            ];
+            $ID_VALUE = auth()->user()->indicador;
+            $storeExtact = ExtractController::store($extract);
+            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->typeGameValue->value,$ID_VALUE);
+            $commissionCalculation = Commision::calculation($game->commission_percentage, $game->typeGameValue->value);
+
+            $game->commission_value = $commissionCalculation;
+            $game->commision_value_pai = $commissionCalculationPai;
+            $game->save();
+
+            return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
+                'success' => 'Jogo cadastrado com sucesso'
+            ]);
+        } catch (\Exception $exception) {
+            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
+            ]);
+        }
+
+
+
+        }
+    }else{
+        
         $validatedData = $request->validate([
             'type_game' => 'required',
             'client' => 'required',
@@ -162,6 +277,7 @@ class GameController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
             ]);
         }
+    }
     }
 
     public function createLink()
