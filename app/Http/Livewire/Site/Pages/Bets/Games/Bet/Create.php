@@ -11,6 +11,8 @@ class Create extends Component
 {
     public $bet, $typeGame, $user, $cpf, $name, $last_name, $pix, $phone, $value;
     public $numbers, $matriz, $selectedNumbers, $values;
+    public $selecionado = 0;
+
 
     protected $rules = [
         'value' => 'required'
@@ -42,11 +44,19 @@ class Create extends Component
 
     }
     public function selecionaTudo(){
-        $startnumberselected = 0;
+         $startnumberselected = 0;
+
+        if($this->selecionado == 0){
+         foreach ($this->selectedNumbers as $value) {
+            array_pop($this->selectedNumbers);
+        }
         for($i = 1;$i <= $this->typeGame->numbers; $i++){
         $startnumberselected = $i;
-         array_push($this->selectedNumbers, $startnumberselected);
+        array_push($this->selectedNumbers, $startnumberselected);
         }
+        $this->selecionado = 1;
+         }
+
     }
 
     public function verifyValue()
