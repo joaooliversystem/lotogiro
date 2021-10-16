@@ -49,9 +49,9 @@
                     <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                     <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
                     Digite o Valor da Aposta
-                    <input type="text" id="value" onchange="altera();" value="" name="value" required>
+                    <input type="text" id="value" onchange="altera();" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                     Valor do Prêmio R$
-                    <input type="text" id="premio" value="" name="premio">
+                    <input type="text" id="premio" value="" name="premio" disabled>
                     <button  class="btn btn-success" type="button">Calcular</button>
                     @endforeach
                 @else

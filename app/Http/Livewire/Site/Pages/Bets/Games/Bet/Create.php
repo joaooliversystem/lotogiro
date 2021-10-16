@@ -103,14 +103,25 @@ class Create extends Component
             ['numbers', $numeros]
         ])->get();
         $multiplicador = 0; 
-        $valueid=0;       
+        $valueid=0;
+        $numMax=0;       
         foreach($typeGameValue as $type){
             $multiplicador = $type->multiplicador;
             $valueid = $type->id;
+            $numMax = $type->maxreais;
         }
+        //evento dispara quando retira o foco do campo texto
+        if( $numMax >= $this->vv ){
+            $resultado = $this->vv  * $multiplicador;
+            $this->premio = $resultado;
+            }else{
+            $resultado = $numMax * $multiplicador;
+            $this->premio = $resultado;
+            $this->vv =  $numMax;
+            }
     
      $this->valueId = $valueid;
-     $this->premio = $this->vv * $multiplicador; 
+    
     }
 
     public function submit()

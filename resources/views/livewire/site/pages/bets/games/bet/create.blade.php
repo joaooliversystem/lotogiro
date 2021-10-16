@@ -45,9 +45,9 @@
                     <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                     <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
                     Digite o Valor da Aposta
-                    <input wire:model="vv" type="text" id="vv" name="vv" required>
+                    <input wire:model="vv" type="text" id="vv" value="{{old('vv', $vv ?? null)}}" name="vv" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                     Valor do Prêmio R$
-                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio">
+                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" disabled>
                     <button  class="btn btn-success" wire:click="calcular()" type="button">Calcular</button>
                         @endforeach
                     @endif
