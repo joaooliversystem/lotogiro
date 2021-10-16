@@ -39,7 +39,7 @@
                     <div class="col-md-3">
                     </div>
                     <div class="col-md-3 mb-3 text-right">
-                        <a href="https://api.whatsapp.com/send?phone=55{{$client->ddd.$client->phone}}&text=Jogo de {{$typeGame->name }} cadastrado com sucesso! Id da Aposta: {{$game->id}}, Cliente: {{$client->name. ' ' . $client->last_name}}, Dezenas: {{$game->numbers}}, Valor R${{\App\Helper\Money::toReal($typeGameValue->value)}}, Prêmio R${{\App\Helper\Money::toReal($typeGameValue->prize)}}, Data: {{\Carbon\Carbon::parse($game->crated_at)->format('d/m/Y') }}" target="_blank">
+                        <a href="https://api.whatsapp.com/send?phone=55{{$client->ddd.$client->phone}}&text=Jogo de {{$typeGame->name }} cadastrado com sucesso! Id da Aposta: {{$game->id}}, Cliente: {{$client->name. ' ' . $client->last_name}}, Dezenas: {{$game->numbers}}, Valor R${{\App\Helper\Money::toReal($game->value)}}, Prêmio R${{\App\Helper\Money::toReal($game->premio)}}, Data: {{\Carbon\Carbon::parse($game->crated_at)->format('d/m/Y') }}" target="_blank">
                             <button type="button" class="btn btn-info btn-block">
                                 Informar via WhatsApp
                             </button>
@@ -91,10 +91,10 @@
                                         {{$game->user->name . ' ' . $game->user->last_name}}
                                     </td>
                                     <td>
-                                        R${{\App\Helper\Money::toReal($typeGameValue->value)}}
+                                        R${{\App\Helper\Money::toReal($game->value)}}
                                     </td>
                                     <td>
-                                        R${{\App\Helper\Money::toReal($typeGameValue->prize)}}
+                                        R${{\App\Helper\Money::toReal($game->premio)}}
                                     </td>
                                 </tr>
                                 </tbody>

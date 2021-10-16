@@ -53,7 +53,7 @@ class GameController extends Controller
         return view('site.bets.games.bets.create', compact('bet', 'typeGame'));
     }
 
-    public function store(Bet $bet, $typeGame, $selectedNumbers, $data)
+    public function store(Bet $bet, $typeGame, $selectedNumbers, $valor, $premio,$valueid)
     {
         
           /*   $date = Carbon::now();
@@ -63,7 +63,7 @@ class GameController extends Controller
        
         }*/
         sort($selectedNumbers, SORT_NUMERIC);
-        $balance = Balance::calculationByHash($data['value'], $bet->user);
+        $balance = Balance::calculationByHash($valor, $bet->user);
 
     //    if (!$balance) {
       //      throw new \Exception('Saldo Insufuciente!');
@@ -92,7 +92,9 @@ class GameController extends Controller
         $game->client_id = $bet->client->id;
         $game->user_id = $bet->user->id;
         $game->type_game_id = $typeGame->id;
-        $game->type_game_value_id = $data['value'];
+        $game->type_game_value_id = $valueid;
+        $game->value = $valor;
+        $game->premio = $premio;
         $game->numbers = implode(',', $selectedNumbers);
         $game->competition_id = $competition->id;
         $game->commission_percentage = $bet->user->commission;
@@ -112,7 +114,7 @@ class GameController extends Controller
 
         $storeExtact = ExtractController::store($extract);*/
 
-        $commissionCalculation = Commision::calculation($game->commission_percentage, $game->typeGameValue->value);
+        $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
 
         $game->commission_value = $commissionCalculation;
         $game->save();

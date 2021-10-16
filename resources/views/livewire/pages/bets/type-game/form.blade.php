@@ -77,8 +77,8 @@
                         <tr>
                             <th>Id</th>
                             <th>Dezenas</th>
-                            <th>Valor</th>
-                            <th>Prêmio</th>
+                            <th>Multiplicador</th>
+                            <th>Máximo em Reais</th>
                             <th>Criação</th>
                             <th style="width: 80px">Ações</th>
                         </tr>
@@ -159,8 +159,8 @@
                 columns: [
                     {data: 'id', name: 'id'},
                     {data: 'numbers', name: 'numbers'},
-                    {data: 'value', name: 'value'},
-                    {data: 'prize', name: 'prize'},
+                    {data: 'multiplicador', name: 'multiplicador'},
+                    {data: 'maxreais', name: 'maxreais'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]

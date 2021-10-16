@@ -34,24 +34,24 @@
                         @enderror
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="amount">Valor</label>
-                        <input type="text" class="form-control @error('amount') is-invalid @enderror"
-                               id="amount"
-                               name="amount"
-                               maxlength="100" value="{{old('amount', isset($value->value) ? \App\Helper\Money::toReal($value->value) : null)}}">
-                        @error('amount')
+                        <label for="multiplicador">Multiplicador</label>
+                        <input type="text" class="form-control @error('multiplicador') is-invalid @enderror"
+                               id="multiplicador"
+                               name="multiplicador"
+                               maxlength="100" value="{{old('multiplicador', isset($value->multiplicador) ? ($value->multiplicador) : null)}}">
+                        @error('multiplicador')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
                         @enderror
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="prize">Prêmio</label>
-                        <input type="text" class="form-control @error('prize') is-invalid @enderror"
-                               id="prize"
-                               name="prize"
-                               maxlength="100" value="{{old('prize', isset($value->value) ? \App\Helper\Money::toReal($value->prize) : null)}}">
-                        @error('prize')
+                        <label for="maxreais">Máximo em Reais</label>
+                        <input type="text" class="form-control @error('maxreais') is-invalid @enderror"
+                               id="maxreais"
+                               name="maxreais"
+                               maxlength="100" value="{{old('maxreais', isset($value->maxreais) ? \App\Helper\Money::toReal($value->maxreais) : null)}}">
+                        @error('maxreais')
                         <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>

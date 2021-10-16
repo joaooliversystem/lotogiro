@@ -82,7 +82,7 @@ class ValidateGamesController extends Controller
 
           if ($games->count() > 0) {
                 foreach ($games as $game) {
-                    $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->typeGameValue->value,$ID_VALUE);
+                    $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->value,$ID_VALUE);
                     $game->status = true;
                     $game->checked = 1;
                     $game->commision_value_pai = $commissionCalculation;

@@ -123,8 +123,8 @@
                                             <td>{{$game->id}}</td>
                                             <td>{{\App\Helper\Mask::addMaskCpf($game->client->cpf)}}</td>
                                             <td>{{$game->client->name . ' ' . $game->client->last_name}}</td>
-                                            <td>{{\App\Helper\Money::toReal($game->typeGameValue->value)}}</td>
-                                            <td>{{\App\Helper\Money::toReal($game->typeGameValue->prize)}}</td>
+                                            <td>{{\App\Helper\Money::toReal($game->value)}}</td>
+                                            <td>{{\App\Helper\Money::toReal($game->premio)}}</td>
                                             <td width="180">
                                                 <a href="{{route('admin.bets.games.receipt', ['game' => $game->id, 'format' => 'pdf', 'prize' => true])}}">
                                                     <button class="btn btn-info btn-sm">

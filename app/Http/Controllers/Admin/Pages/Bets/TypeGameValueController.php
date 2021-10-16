@@ -46,11 +46,11 @@ class TypeGameValueController extends Controller
                     }
                     return $data;
                 })
-                ->editColumn('value', function ($typeGameValue) {
-                    return Money::toReal($typeGameValue->value);
+                ->editColumn('multiplicador', function ($typeGameValue) {
+                    return $typeGameValue->multiplicador;
                 })
-                ->editColumn('prize', function ($typeGameValue) {
-                    return Money::toReal($typeGameValue->prize);
+                ->editColumn('maxreais', function ($typeGameValue) {
+                    return Money::toReal($typeGameValue->maxreais);
                 })
                 ->editColumn('created_at', function ($typeGameValue) {
                     return Carbon::parse($typeGameValue->created_at)->format('d/m/Y');
@@ -90,20 +90,22 @@ class TypeGameValueController extends Controller
 
         $validatedData = $request->validate([
             'dozens' => 'required',
-            'amount' => 'required',
-            'prize' => 'required',
+           // 'amount' => 'required',
+            //'prize' => 'required',
+            'multiplicador' => 'required',
+            'maxreais' => 'required',
         ]);
 
         $request['dozens'] = preg_replace('/[^0-9]/', '', $request->dozens);
-        $request['amount'] = Money::toDatabase($request->amount);
-        $request['prize'] = Money::toDatabase($request->prize);
+       // $request['amount'] = Money::toDatabase($request->amount);
+        //$request['prize'] = Money::toDatabase($request->prize);
 
         try {
             $typeGameValue = new $this->typeGameValue;
             $typeGameValue->type_game_id = $typeGame->id;
             $typeGameValue->numbers = $request->dozens;
-            $typeGameValue->value = $request->amount;
-            $typeGameValue->prize = $request->prize;
+            $typeGameValue->multiplicador = $request->multiplicador;
+            $typeGameValue->maxreais = $request->maxreais;
             $typeGameValue->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([

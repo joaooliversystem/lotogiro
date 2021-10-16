@@ -12,10 +12,11 @@ class Create extends Component
     public $bet, $typeGame, $user, $cpf, $name, $last_name, $pix, $phone, $value;
     public $numbers, $matriz, $selectedNumbers, $values;
     public $selecionado = 0;
-
+    public $premio, $vv;
+    public $valueId;
 
     protected $rules = [
-        'value' => 'required'
+       // 'value' => 'required'
     ];
 
     public function mount($bet, $typeGame)
@@ -95,19 +96,39 @@ class Create extends Component
         $this->matriz = $matriz;
     }
 
-    public function store()
+    public function calcular(){
+        $numeros = count($this->selectedNumbers);
+            $typeGameValue = TypeGameValue::where([
+            ['type_game_id', $this->typeGame->id],
+            ['numbers', $numeros]
+        ])->get();
+        $multiplicador = 0; 
+        $valueid=0;       
+        foreach($typeGameValue as $type){
+            $multiplicador = $type->multiplicador;
+            $valueid = $type->id;
+        }
+    
+     $this->valueId = $valueid;
+     $this->premio = $this->vv * $multiplicador; 
+    }
+
+    public function submit()
     {
-        $data = $this->validate();
-        if (!empty($this->typeGame->competitions->last())) {
+        //$data = $this->validate();
+        $valor = $this->vv;
+        $premio =$this->premio;
+        $valueid = $this->valueId;
+       if (!empty($this->typeGame->competitions->last())) {
             try {
-                $store = (new GameController())->store($this->bet, $this->typeGame, $this->selectedNumbers, $data);
+                $store = (new GameController())->store($this->bet, $this->typeGame, $this->selectedNumbers, $valor, $premio, $valueid );
 
                 session()->flash('success', 'Jogo criado com sucesso!');
                 return redirect()->route('games.bet', ['user' => $this->bet->user->id, 'bet' => $this->bet->id]);
 
             } catch (\Exception $exception) {
-                session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
-                return redirect()->route('games.bet', ['user' => $this->bet->user->id, 'bet' => $this->bet->id]);
+             session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
+             return redirect()->route('games.bet', ['user' => $this->bet->user->id, 'bet' => $this->bet->id]);
             }
         }
     }

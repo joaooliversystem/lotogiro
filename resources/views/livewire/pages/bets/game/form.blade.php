@@ -43,38 +43,23 @@
     </div>
     <div class="row mb-2">
         <div class="col-md-12">
-            <ul class="list-group list-group-horizontal-sm">
                 @if(isset($values) && $values->count() > 0)
                     @foreach($values as $value)
-                        <li class="list-group-item">
-                            <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="value_{{$value->id}}" value="{{$value->id}}" name="value"
-                                       class="custom-control-input @error('value') is-invalid @enderror">
-                                <label class="custom-control-label" for="value_{{$value->id}}">
-                                    Valor da Aposta: R${{\App\Helper\Money::toReal($value->value)}}<br/>
-                                    Valor do Prêmio: R${{\App\Helper\Money::toReal($value->prize)}}
-                                </label>
-                                @error('value')
-                                <span class="invalid-feedback" role="alert">
-                                    {{ $message }}
-                                </span>
-                                @enderror
-                            </div>
-                        </li>
+                    <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
+                    <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
+                    <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
+                    Digite o Valor da Aposta
+                    <input type="text" id="value" onchange="altera();" value="" name="value" required>
+                    Valor do Prêmio R$
+                    <input type="text" id="premio" value="" name="premio">
+                    <button  class="btn btn-success" type="button">Calcular</button>
                     @endforeach
                 @else
-                    <li class="list-group-item">
-                        Valor da Aposta: R$0 <br/>
-                        @error('value')
-                        <small class="text-danger" role="alert">
-                            É necessario selecionar o valor
-                        </small>
-                        @enderror
-                    </li>
+                
                 @endif
-            </ul>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-md-12">
             @if(isset($matriz))
@@ -126,6 +111,28 @@
             });
             $('#sort_date').inputmask("99/99/9999 99:99:99");
         });
+        //Função para realizar o calculo do multiplicador
+         function altera(){
+            var multiplicador = document.getElementById("multiplicador").value;
+            var valor = document.getElementById("value").value;
+            var Campovalor = document.getElementById("value");
+            var campoDoCalculo = document.getElementById("premio");
+            var maxreais = document.getElementById("maxreais").value;
+            var resultado;
+            var numberValor = parseInt(valor);
+            var numberReais = parseInt(maxreais);
+
+            //evento dispara quando retira o foco do campo texto
+                if( numberReais >= numberValor ){
+                 resultado = valor * multiplicador;
+                campoDoCalculo.value = resultado;
+                }else{
+                resultado = maxreais * multiplicador;
+                campoDoCalculo.value = resultado;
+                Campovalor.value = maxreais;
+                }
+            
+         }
 
     </script>
 

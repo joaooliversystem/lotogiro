@@ -14,7 +14,10 @@
                                 <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
                                       method="post">
                                     @csrf
+                                    
+                                   
                                     <button type="submit" class="btn btn-warning btn-sm">Finalizar Aposta</button>
+                                     
                                 </form>
                             </div>
                         @endif
@@ -130,15 +133,15 @@
                                                     <td>{{$game->typeGame->name}}</td>
                                                     <td>{{$game->numbers}}</td>
                                                     <td>
-                                                        R${{\App\Helper\Money::toReal($game->typeGameValue->value)}}</td>
+                                                        R${{\App\Helper\Money::toReal($game->value)}}</td>
                                                     <td>
-                                                        R${{\App\Helper\Money::toReal($game->typeGameValue->prize)}}</td>
+                                                        R${{\App\Helper\Money::toReal($game->premio)}}</td>
                                                 </tr>
-                                                @php($totalValue += $game->typeGameValue->value)
-                                                @php($totalPrize += $game->typeGameValue->prize)
+                                                @php($totalValue += $game->value)
+                                                @php($totalPrize += $game->premio)
                                             @empty
                                                 <tr class="text-center">
-                                                    <td colspan="4">Não existem jogos criados para essa aposta!</td>
+                                                    <td colspan="4">Não existem jogos criados para essa  aposta!</td>
                                                 </tr>
                                             </tbody>
                                             @endforelse
