@@ -40,7 +40,9 @@ class Create extends Component
             }
         } else {
             array_push($this->selectedNumbers, $number);
-        }
+        } 
+        $this->reset('vv');
+        $this->reset('premio');
         $this->verifyValue();
 
     }
@@ -63,7 +65,7 @@ class Create extends Component
     public function verifyValue()
     {
         $numbers = count($this->selectedNumbers);
-
+       
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $this->typeGame->id],
             ['numbers', $numbers],
@@ -72,6 +74,8 @@ class Create extends Component
         if (!empty($typeGameValue)) {
             $this->values = $typeGameValue;
             $this->reset('value');
+            $this->reset('vv');
+            $this->reset('premio');
         }
 
     }

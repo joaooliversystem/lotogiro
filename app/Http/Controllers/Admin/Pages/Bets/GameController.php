@@ -319,7 +319,7 @@ class GameController extends Controller
             'numbers' => $numbers,
             'typeGameValue' => $typeGameValue,
             'matriz' => $matriz,
-            'prize' => $game->premio,
+            'prize' => $prize,
         ];
         if ($format == "pdf") {
             $pdf = PDF::loadView('admin.layouts.pdf.receipt', $data);
