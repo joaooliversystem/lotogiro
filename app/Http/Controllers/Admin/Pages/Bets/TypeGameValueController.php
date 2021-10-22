@@ -148,19 +148,21 @@ class TypeGameValueController extends Controller
 
         $validatedData = $request->validate([
             'dozens' => 'required',
-            'amount' => 'required',
-            'prize' => 'required',
+            //'amount' => 'required',
+            //'prize' => 'required',
+            'multiplicador' => 'required',
+            'maxreais' => 'required',
         ]);
 
         $request['dozens'] = preg_replace('/[^0-9]/', '', $request->dozens);
-        $request['amount'] = Money::toDatabase($request->amount);
-        $request['prize'] = Money::toDatabase($request->prize);
+       // $request['multiplicador'] = $request->amount;
+         $request['maxreais'] = Money::toDatabase($request->maxreais);
 
         try {
             $value->type_game_id = $typeGame->id;
             $value->numbers = $request->dozens;
-            $value->value = $request->amount;
-            $value->prize = $request->prize;
+            $value->multiplicador = $request->multiplicador;
+            $value->maxreais = $request->maxreais;
             $value->save();
 
             return redirect()->route('admin.bets.type_games.edit', ['type_game' => $typeGame->id])->withErrors([
