@@ -116,6 +116,28 @@
 
 </div>
 
+  <div class="modal fade" id="modal_delete_type_game_value" data-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Deseja excluir este tipo de jogo?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Está ação não pode ser revertida
+                </div>
+                <div class="modal-footer">
+                    <form id="destroy2" action="" method="POST">
+                        @csrf
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @push('styles')
     <link rel="stylesheet"
@@ -134,10 +156,12 @@
             $(document).on('click', '#btn_delete_type_game_value', function () {
                 var type_game_value = $(this).attr('type_game_value');
                 var type_game = $(this).attr('type_game');
-                var url = '{{ route("admin.bets.type_games.values.destroy", ['type_game' => ":type_game", 'value' => ":type_game_value"]) }}';
+               var url = '{{ route("admin.bets.type_games.values.destroy", ['type_game' => ":type_game", 'value' => ":type_game_value"]) }}';
                 url = url.replace(':type_game_value', type_game_value);
                 url = url.replace(':type_game', type_game);
-                $.ajax({
+                console.log(url);
+                  $("#destroy2").attr('action', url);
+              /*  $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -146,7 +170,7 @@
                     success: function (result) {
                         window.location.reload();
                     }
-                });
+                });*/
             });
 
             var table = $('#type_game_values_table').DataTable({
