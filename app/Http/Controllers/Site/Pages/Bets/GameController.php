@@ -135,7 +135,7 @@ class GameController extends Controller
 
         
         try {
-            if($bet->botao_finalizar = 3){
+            if($bet->botao_finalizar == 3){
                 return view('site.bets.games.bets.bet-create', compact('bet'));
             }else{
 
