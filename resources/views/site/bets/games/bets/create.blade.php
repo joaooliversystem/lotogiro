@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        @if(isset($bet) && !$bet->status && $bet->botao_finalizar == 3) 
+                        @if(isset($bet) && $bet->botao_finalizar == 3) 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-danger" role="alert">
