@@ -9,13 +9,11 @@
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Apostas</h3>
-                        @if(!empty($bet) && $bet->status)
-                            <div class=" text-right">
+                        @if(!empty($bet) && $bet->status && $bet->botao_finalizar == 0)
+                         <div class=" text-right">
                                 <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
                                       method="post">
                                     @csrf
-                                    
-                                   
                                     <button type="submit" class="btn btn-warning btn-sm">Finalizar Aposta</button>
                                      
                                 </form>
@@ -23,7 +21,7 @@
                         @endif
                     </div>
                     <div class="card-body">
-                        @if(isset($bet) && !$bet->status)
+                        @if(isset($bet) && !$bet->status && $bet->botao_finalizar == 3) 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-danger" role="alert">

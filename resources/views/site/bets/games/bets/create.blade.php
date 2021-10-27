@@ -18,7 +18,23 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if(isset($bet) && $bet->botao_finalizar == 3) 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="alert alert-danger" role="alert">
+                                        <h4 class="alert-heading">Atenção!</h4>
+                                        <p>Não é possível adicionar novos jogos para a aposta pois a mesmo já foi
+                                            finalizada:</p>
+                                        <hr>
+                                        <p class="mb-0">Se desejar criar novos jogos, incie uma nova aposta <a
+                                                href="{{route('games.bet', ['user' => $bet->user_id])}}">clicando aqui</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
                         @livewire('site.pages.bets.games.bet.create', ['bet' => $bet, 'typeGame' => $typeGame])
+                        @endif
                     </div>
                 </div>
             </div>
