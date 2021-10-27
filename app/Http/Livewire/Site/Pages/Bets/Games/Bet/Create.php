@@ -14,6 +14,7 @@ class Create extends Component
     public $selecionado = 0;
     public $premio, $vv;
     public $valueId;
+    public $typeGameValue;
 
     protected $rules = [
        // 'value' => 'required'
@@ -66,13 +67,13 @@ class Create extends Component
     {
         $numbers = count($this->selectedNumbers);
        
-        $typeGameValue = TypeGameValue::where([
+        $this->typeGameValue = TypeGameValue::where([
             ['type_game_id', $this->typeGame->id],
             ['numbers', $numbers],
         ])->get();
 
-        if (!empty($typeGameValue)) {
-            $this->values = $typeGameValue;
+        if (!empty($this->typeGameValue)) {
+            $this->values = $this->typeGameValue;
             $this->reset('value');
             $this->reset('vv');
             $this->reset('premio');
@@ -101,15 +102,10 @@ class Create extends Component
     }
 
     public function calcular(){
-        $numeros = count($this->selectedNumbers);
-            $typeGameValue = TypeGameValue::where([
-            ['type_game_id', $this->typeGame->id],
-            ['numbers', $numeros]
-        ])->get();
         $multiplicador = 0; 
         $valueid=0;
         $numMax=0;       
-        foreach($typeGameValue as $type){
+        foreach($this->typeGameValue as $type){
             $multiplicador = $type->multiplicador;
             $valueid = $type->id;
             $numMax = $type->maxreais;
