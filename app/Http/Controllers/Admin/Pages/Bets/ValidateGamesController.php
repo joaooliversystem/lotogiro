@@ -69,10 +69,17 @@ class ValidateGamesController extends Controller
 
     public function update(Bet $validate_game,Request $request)
     {
+
+
         $balance = auth()->user()->balance;
         $value = $request->valor;
         $ID_VALUE = auth()->user()->indicador;
         try {
+            $date = Carbon::now();    
+            if ( $date->hour >= 20 || $date->hour < 00) {
+            throw new \Exception('Banca Fechada!');
+       
+        }
             $games = $validate_game->games;
             
             $balance = Balance::calculationValidation($value);
