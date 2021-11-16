@@ -81,8 +81,13 @@ class GameController extends Controller
             abort(403);
         }
 
+        $typeGames = TypeGame::find($typeGame)->first();
+        $clients = collect([]);
+
+    /*
         $typeGames = TypeGame::get();
         $clients = Client::get();
+        */
 
         return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients'));
     }
@@ -122,7 +127,7 @@ class GameController extends Controller
 
             if (empty($competition)) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Não existe concurso cadastrado!'
+                    'error' => 'N達o existe concurso cadastrado!'
                 ]);
             }
 
