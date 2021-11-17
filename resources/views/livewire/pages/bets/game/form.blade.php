@@ -21,22 +21,44 @@
     </table>
     <div class="form-row">
         <div class="form-group col-md-12">
-            <div wire:ignore>
-                <label for="client">Cliente</label>
-                <select class="custom-select @error('client') is-invalid @enderror" name="client" id="clients">
-                    <option selected value="">Selecione o Cliente</option>
-                    @if(isset($clients) && $clients->count() > 0)
-                        @foreach($clients as $client)
-                            <option value="{{$client->id}}">{{\App\Helper\Mask::addMaskCpf($client->cpf) .' - '. $client->name.' '. $client->last_name . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)  }}</option>
-                        @endforeach
+<div wire:ignore>
+                <h4>Cliente</h4>
+        
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="input-group mb-3">
+                    <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Cliente"autocomplete="off">
+                   
+                    <div class="input-group-append">
+                        <span wire:click="clearUser" class="input-group-text" title="Limpar"><i class="fas fa-user-times"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+<input type="hidden" name="client" value="{{$clientId}}">
+    <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
+        <div class="col-md-12">
+            @if($showList)
+                <ul class="list-group">
+                     @if(isset($clients) && $clients->count() > 0)
+                     @foreach($clients as $client)
+                      
+                        <li wire:click="setId({{ $client }})"
+                            class="list-group-item" style="cursor:pointer;">{{ $client->name . ' - ' . \App\Helper\Mask::addMaskCpf($client->cpf) . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
+                    @endforeach
                     @endif
-                </select>
+                </ul>
+            @endif
+        </div>
+    </div>
                 @error('client')
                 <span class="invalid-feedback" role="alert">
                             {{ $message }}
                         </span>
                 @enderror
-            </div>
+            
             <input type="hidden" name="numbers" value="{{implode(',', $selectedNumbers) ?? null}}">
         </div>
         <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
