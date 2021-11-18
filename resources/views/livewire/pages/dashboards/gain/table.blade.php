@@ -199,7 +199,7 @@
                                 @if($game->commission_payment) Pago @else Aberto @endif
                             </td>
                             <td>
-                                {{ 'R$' . \App\Helper\Money::toReal($game->typeGameValue->value) }}
+                                {{ 'R$' . \App\Helper\Money::toReal($game->value) }}
                             </td>
                             <td>
                                 {{ $game->commission_percentage ?? 0 }}%

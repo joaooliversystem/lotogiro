@@ -28,8 +28,8 @@ HORA SORTEIO: {{\Carbon\Carbon::parse($game->competition->sort_date)->format('H:
 
 QTDE DEZENAS: {{$typeGameValue->numbers}}
 
-VALOR APOSTADO: R${{\App\Helper\Money::toReal($typeGameValue->value)}}
+VALOR APOSTADO: R${{\App\Helper\Money::toReal($game->value)}}
 
-GANHO MÁXIMO: R${{\App\Helper\Money::toReal($typeGameValue->prize)}}
+GANHO MÁXIMO: R${{\App\Helper\Money::toReal($game->premio)}}
 
 

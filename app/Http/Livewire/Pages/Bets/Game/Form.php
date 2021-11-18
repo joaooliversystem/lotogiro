@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Pages\Bets\Game;
 use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use Livewire\Component;
+use App\Models\Client;
 
 class Form extends Component
 {
+    public $showList = false;
+    public $clientId;
     public $typeGame;
     public $clients;
     public $numbers;
@@ -15,6 +18,8 @@ class Form extends Component
     public $selectedNumbers;
     public $values;
     public $selecionado = 0;
+    public $search;
+
 
     public function mount($typeGame, $clients)
     {
@@ -26,6 +31,7 @@ class Form extends Component
             $this->numbers = $typeGame->numbers;
             $this->matriz($typeGame->numbers, $typeGame->columns);
         }
+
     }
     public function selecionaTudo(){
          $startnumberselected = 0;
@@ -40,6 +46,20 @@ class Form extends Component
         }
         $this->selecionado = 1;
          }
+
+    }
+     public function setId($client)
+    {
+            $this->clientId = $client["id"];
+            $this->search = $client["name"] . ' - ' . $client["cpf"]. ' - ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
+            $this->showList = false;
+        
+    }
+    public function updatedSearch($value)
+    {
+        
+            $this->clients = Client::where("name", "like", "%{$this->search}%")->get();
+            $this->showList = true;
 
     }
 

@@ -9,18 +9,19 @@
                 <div class="card card-info">
                     <div class="card-header">
                         <h3 class="card-title">Apostas</h3>
-                        @if(!empty($bet) && $bet->status)
-                            <div class=" text-right">
+                        @if(!empty($bet) && $bet->status && $bet->botao_finalizar == 0)
+                         <div class=" text-right">
                                 <form action="{{route('games.bet.update', ['user' => $bet->user->id, 'bet' => $bet])}}"
                                       method="post">
                                     @csrf
                                     <button type="submit" class="btn btn-warning btn-sm">Finalizar Aposta</button>
+                                     
                                 </form>
                             </div>
                         @endif
                     </div>
                     <div class="card-body">
-                        @if(isset($bet) && !$bet->status)
+                        @if(isset($bet) && !$bet->status && $bet->botao_finalizar == 3) 
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="alert alert-danger" role="alert">
@@ -130,15 +131,15 @@
                                                     <td>{{$game->typeGame->name}}</td>
                                                     <td>{{$game->numbers}}</td>
                                                     <td>
-                                                        R${{\App\Helper\Money::toReal($game->typeGameValue->value)}}</td>
+                                                        R${{\App\Helper\Money::toReal($game->value)}}</td>
                                                     <td>
-                                                        R${{\App\Helper\Money::toReal($game->typeGameValue->prize)}}</td>
+                                                        R${{\App\Helper\Money::toReal($game->premio)}}</td>
                                                 </tr>
-                                                @php($totalValue += $game->typeGameValue->value)
-                                                @php($totalPrize += $game->typeGameValue->prize)
+                                                @php($totalValue += $game->value)
+                                                @php($totalPrize += $game->premio)
                                             @empty
                                                 <tr class="text-center">
-                                                    <td colspan="4">Não existem jogos criados para essa aposta!</td>
+                                                    <td colspan="4">Não existem jogos criados para essa  aposta!</td>
                                                 </tr>
                                             </tbody>
                                             @endforelse

@@ -43,7 +43,7 @@ class Table extends Component
 
                 $extract = [
                     'type' => 2,
-                    'value' => $game->typeGameValue->prize,
+                    'value' => $game->premio,
                     'type_game_id' => $game->type_game_id,
                     'description' => 'Prêmio - Jogo de id: ' . $game->id,
                     'user_id' => $game->user_id,
@@ -125,7 +125,7 @@ class Table extends Component
         $value = 0;
 
         foreach ($query->get() as $item) {
-            $value += $item->typeGameValue->prize;
+            $value += $item->premio;
         }
 
         $this->value = $value;

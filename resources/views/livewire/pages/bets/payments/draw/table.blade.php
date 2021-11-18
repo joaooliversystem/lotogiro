@@ -101,7 +101,7 @@
                                 {{ $game->numbers }}
                             </td>
                             <td>
-                                {{ 'R$' . \App\Helper\Money::toReal($game->typeGameValue->prize) }}
+                                {{ 'R$' . \App\Helper\Money::toReal($game->premio) }}
                             </td>
                             <td>
                                 {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}

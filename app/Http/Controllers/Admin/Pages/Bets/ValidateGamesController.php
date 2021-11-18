@@ -69,10 +69,17 @@ class ValidateGamesController extends Controller
 
     public function update(Bet $validate_game,Request $request)
     {
+
+
         $balance = auth()->user()->balance;
         $value = $request->valor;
         $ID_VALUE = auth()->user()->indicador;
         try {
+            $date = Carbon::now();    
+            if ( $date->hour >= 20 || $date->hour < 00) {
+            throw new \Exception('Banca Fechada!');
+       
+        }
             $games = $validate_game->games;
             
             $balance = Balance::calculationValidation($value);
@@ -82,7 +89,7 @@ class ValidateGamesController extends Controller
 
           if ($games->count() > 0) {
                 foreach ($games as $game) {
-                    $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->typeGameValue->value,$ID_VALUE);
+                    $commissionCalculation = Commision::calculationPai($game->commission_percentage, $game->value,$ID_VALUE);
                     $game->status = true;
                     $game->checked = 1;
                     $game->commision_value_pai = $commissionCalculation;

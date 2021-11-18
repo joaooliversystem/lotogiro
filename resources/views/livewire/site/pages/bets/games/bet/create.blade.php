@@ -36,35 +36,21 @@
         </tr>
         </tbody>
     </table>
-    <form wire:submit.prevent="store" class="text-left">
+    <form wire:submit.prevent="submit" class="text-left">
         <div class="row mb-2">
             <div class="col-md-12">
-                <ul class="list-group list-group-horizontal-sm">
                     @if(isset($values) && $values->count() > 0)
                         @foreach($values as $value)
-                            <li class="list-group-item">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input wire:model="value" type="radio" id="value_{{$value->id}}"
-                                           value="{{$value->id}}" name="value"
-                                           class="custom-control-input @error('value') is-invalid @enderror">
-                                    <label class="custom-control-label" for="value_{{$value->id}}">
-                                        Valor da Aposta: R${{\App\Helper\Money::toReal($value->value)}}<br/>
-                                        Valor do Prêmio: R${{\App\Helper\Money::toReal($value->prize)}}
-                                    </label>
-                                </div>
-                            </li>
+                    <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
+                    <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
+                    <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
+                    Digite o Valor da Aposta
+                    <input wire:model="vv" type="text" id="vv" value="{{old('vv', $vv ?? null)}}" name="vv" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                    Valor do Prêmio R$
+                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" disabled>
+                    <button  class="btn btn-success" wire:click="calcular()" type="button">Calcular</button>
                         @endforeach
-                    @else
-                        <li class="list-group-item">
-                            Valor da Aposta: R$0 <br/>
-                            @error('value')
-                            <small class="text-danger" role="alert">
-                                É necessario selecionar o valor
-                            </small>
-                            @enderror
-                        </li>
                     @endif
-                </ul>
             </div>
         </div>
         <div class="row">
@@ -106,5 +92,28 @@
         </div>
     </form>
 </div>
+<script>
+     //Função para realizar o calculo do multiplicador
+         function altera(){
+            var multiplicador = document.getElementById("multiplicador").value;
+            var valor = document.getElementById("value").value;
+            var Campovalor = document.getElementById("value");
+            var campoDoCalculo = document.getElementById("premio");
+            var maxreais = document.getElementById("maxreais").value;
+            var resultado;
+            var numberValor = parseInt(valor);
+            var numberReais = parseInt(maxreais);
 
+            //evento dispara quando retira o foco do campo texto
+                if( numberReais >= numberValor ){
+                 resultado = valor * multiplicador;
+                campoDoCalculo.value = resultado;
+                }else{
+                resultado = maxreais * multiplicador;
+                campoDoCalculo.value = resultado;
+                Campovalor.value = maxreais;
+                }
+            
+         }
+</script>
 

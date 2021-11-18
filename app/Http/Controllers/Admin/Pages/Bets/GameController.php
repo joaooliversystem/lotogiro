@@ -81,8 +81,13 @@ class GameController extends Controller
             abort(403);
         }
 
+        $typeGames = TypeGame::find($typeGame)->first();
+        $clients = collect([]);
+
+    /*
         $typeGames = TypeGame::get();
         $clients = Client::get();
+        */
 
         return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients'));
     }
@@ -216,8 +221,8 @@ class GameController extends Controller
 
         $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
         $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
-
-        try {
+        
+       try {
             $date = Carbon::now();
              if ( $date->hour >=20 || $date->hour < 00) {
              return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
@@ -237,7 +242,7 @@ class GameController extends Controller
 
             if (empty($competition)) {
                 return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
-                    'error' => 'Não existe concurso cadastrado!'
+                    'error' => 'N達o existe concurso cadastrado!'
                 ]);
             }
 
@@ -245,7 +250,9 @@ class GameController extends Controller
             $game->client_id = $request->client;
             $game->user_id = auth()->id();
             $game->type_game_id = $request->type_game;
-            $game->type_game_value_id = $request->value;
+            $game->type_game_value_id =$request->valueId;
+            $game->value = $request->value;
+            $game->premio = $request->premio;
             $game->numbers = $request->numbers;
             $game->competition_id = $competition->id;
             $game->checked = 1;
@@ -254,7 +261,7 @@ class GameController extends Controller
 
             $extract = [
                 'type' => 1,
-                'value' => $game->typeGameValue->value,
+                'value' => $request->value,
                 'type_game_id' => $game->type_game_id,
                 'description' => 'Venda - Jogo de id: ' . $game->id,
                 'user_id' => $game->user_id,
@@ -262,8 +269,8 @@ class GameController extends Controller
             ];
             $ID_VALUE = auth()->user()->indicador;
             $storeExtact = ExtractController::store($extract);
-            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->typeGameValue->value,$ID_VALUE);
-            $commissionCalculation = Commision::calculation($game->commission_percentage, $game->typeGameValue->value);
+            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $request->value,$ID_VALUE);
+            $commissionCalculation = Commision::calculation($game->commission_percentage, $request->value);
 
             $game->commission_value = $commissionCalculation;
             $game->commision_value_pai = $commissionCalculationPai;
@@ -433,7 +440,7 @@ class GameController extends Controller
             'numbers' => $numbers,
             'typeGameValue' => $typeGameValue,
             'matriz' => $matriz,
-            'prize' => $prize
+            'prize' => $prize,
         ];
         if ($format == "pdf") {
             $pdf = PDF::loadView('admin.layouts.pdf.receipt', $data);
