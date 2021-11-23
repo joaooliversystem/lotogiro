@@ -45,6 +45,7 @@ class Form extends Component
         array_push($this->selectedNumbers, $startnumberselected);
         }
         $this->selecionado = 1;
+        $this->verifyValue();
          }
 
     }

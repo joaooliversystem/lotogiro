@@ -121,6 +121,7 @@ final class Versions
   'vlucas/phpdotenv' => 'v5.2.0@fba64139db67123c7a57072e5f8d3db10d160b66',
   'voku/portable-ascii' => '1.5.6@80953678b19901e5165c56752d087fc11526017c',
   'yajra/laravel-datatables-oracle' => 'v9.14.1@7e45885588225b31a9e7bdf4b04733c44432531c',
+  'barryvdh/laravel-debugbar' => 'v3.6.4@3c2d678269ba60e178bcd93e36f6a91c36b727f1',
   'doctrine/instantiator' => '1.4.0@d56bf6102915de5702778fe20f2de3b2fe570b5b',
   'facade/flare-client-php' => '1.3.7@fd688d3c06658f2b3b5f7bb19f051ee4ddf02492',
   'facade/ignition' => '2.5.2@08668034beb185fa2ac6f09b1034eaa440952ace',
@@ -129,6 +130,7 @@ final class Versions
   'filp/whoops' => '2.9.1@307fb34a5ab697461ec4c9db865b20ff2fd40771',
   'hamcrest/hamcrest-php' => 'v2.0.1@8c3d0a3f6af734494ad8f6fbbee0ba92422859f3',
   'lucascudo/laravel-pt-br-localization' => 'v1.1.4@19f60fa3dc7246ff20a478d79da3015a8e03c86b',
+  'maximebf/debugbar' => 'v1.17.3@e8ac3499af0ea5b440908e06cc0abe5898008b3c',
   'mockery/mockery' => '1.4.2@20cab678faed06fac225193be281ea0fddb43b93',
   'myclabs/deep-copy' => '1.10.2@776f831124e9c62e1a2c601ecc52e776d8bb7220',
   'nunomaduro/collision' => 'v5.1.0@7c2b95589bf81e274e61e47f7672a1b2c3e06eaa',
@@ -160,9 +162,10 @@ final class Versions
   'sebastian/resource-operations' => '3.0.3@0f4443cb3a1d92ce809899753bc0d5d5a8dd19a8',
   'sebastian/type' => '2.3.1@81cd61ab7bbf2de744aba0ea61fae32f721df3d2',
   'sebastian/version' => '3.0.2@c6c1022351a901512170118436c764e473f6de8c',
+  'symfony/debug' => 'v4.4.31@43ede438d4cb52cd589ae5dc070e9323866ba8e0',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.9.1@bafc69caeb4d49c39fd0779086c03a3738cbb389',
-  'laravel/laravel' => 'dev-main@f77e4fb96a56a18bbdfed3d906c49bcbe253f8bd',
+  'laravel/laravel' => 'dev-main@d91dafec8964947b59dd69e7501c755c5929625a',
 );
 
     private function __construct()

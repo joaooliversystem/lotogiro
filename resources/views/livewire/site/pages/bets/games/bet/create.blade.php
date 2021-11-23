@@ -47,8 +47,8 @@
                     Digite o Valor da Aposta
                     <input wire:model="vv" type="text" id="vv" value="{{old('vv', $vv ?? null)}}" name="vv" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                     Valor do Prêmio R$
-                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" disabled>
-                    <button  class="btn btn-success" wire:click="calcular()" type="button">Calcular</button>
+                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" required disabled>
+                    <button  class="btn btn-success" wire:click="calcular()"  type="button">Calcular</button>
                         @endforeach
                     @endif
             </div>
@@ -68,7 +68,7 @@
                                 <tr>
                                     @foreach($lines as $cols)
                                         <td>
-                                            <button wire:click="selectNumber({{$cols}})" type="button"
+                                            <button wire:click="selectNumber({{$cols}})"  type="button"
                                                     class="btn btn-success btn-block {{in_array($cols, $selectedNumbers) ? 'btn-success' : 'btn-warning'}}"
                                                     id="number_{{$cols}}">
                                                 {{$cols}}
@@ -85,35 +85,20 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                @if($premio > 0 && $vv > 0)
                 <button type="submit" id="button_game"
                         class="btn btn-block btn-outline-success">Criar Jogo
                 </button>
+                    
+                @else
+                <button type="submit" id="button_game"
+                class="btn btn-block btn-outline-success" disabled>Criar Jogo
+                </button>
+                      
+                @endif
             </div>
         </div>
     </form>
 </div>
-<script>
-     //Função para realizar o calculo do multiplicador
-         function altera(){
-            var multiplicador = document.getElementById("multiplicador").value;
-            var valor = document.getElementById("value").value;
-            var Campovalor = document.getElementById("value");
-            var campoDoCalculo = document.getElementById("premio");
-            var maxreais = document.getElementById("maxreais").value;
-            var resultado;
-            var numberValor = parseInt(valor);
-            var numberReais = parseInt(maxreais);
 
-            //evento dispara quando retira o foco do campo texto
-                if( numberReais >= numberValor ){
-                 resultado = valor * multiplicador;
-                campoDoCalculo.value = resultado;
-                }else{
-                resultado = maxreais * multiplicador;
-                campoDoCalculo.value = resultado;
-                Campovalor.value = maxreais;
-                }
-            
-         }
-</script>
 
