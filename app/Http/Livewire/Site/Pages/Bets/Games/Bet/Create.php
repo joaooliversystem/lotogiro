@@ -17,9 +17,10 @@ class Create extends Component
     public $typeGameValue;
 
     protected $rules = [
-       // 'value' => 'required'
+        'value' => 'required',
+        'premio' => 'required'
     ];
-
+ 
     public function mount($bet, $typeGame)
     {
  
@@ -59,6 +60,7 @@ class Create extends Component
         array_push($this->selectedNumbers, $startnumberselected);
         }
         $this->selecionado = 1;
+        $this->verifyValue();
          }
 
     }

@@ -14,6 +14,9 @@ use App\Models\Draw;
 use App\Models\Game;
 use App\Models\HashGame;
 use App\Models\TypeGame;
+use App\Models\Bet;
+use App\Models\TypeGameValue;
+
 use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -74,6 +77,11 @@ class GameController extends Controller
 
         return view('admin.pages.bets.game.index', compact('typeGame'));
     }
+    public function carregarJogo(TypeGame $typeGame){
+          $typeGames = TypeGame::get();
+          $clients = Client::get();
+          return view('admin.pages.bets.game.carregar', compact('typeGames', 'typeGame', 'clients'));
+    }
 
     public function create(TypeGame $typeGame)
     {
@@ -94,6 +102,113 @@ class GameController extends Controller
 
     public function store(Request $request)
     {
+
+        if($request->controle == 1){
+        if (!auth()->user()->hasPermissionTo('create_game')) {
+            abort(403);
+        }
+
+        $validatedData = $request->validate([
+        'type_game' => 'required',
+        'client' => 'required',
+        'value' => 'required',
+        ]);
+
+        
+        $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
+        $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
+        try {
+            $date = Carbon::now();
+             if ( $date->hour >=20 || $date->hour < 00) {
+             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                    'error' => 'Apostas Encerradas!'
+                ]);
+             }
+                $user = Auth()->user()->id;
+                $bet = new Bet();
+                $bet->user_id = Auth()->user()->id;
+                $bet->client_id = $request->client;
+                $bet->status_xml = 1;
+                $bet->save();
+                $bet = Bet::where('user_id', $user)->where('status_xml',1)->first();
+
+        $typeGameValue = TypeGameValue::where([
+            ['type_game_id', $request->type_game],
+            ['numbers', $request->qtdDezena],
+        ])->get();
+        $id_type_value = $request->valueId;
+       $dezenas = explode(",", $request->dezena);
+       $totaldeJogos = count($dezenas);
+       $totaldeAposta = $totaldeJogos * $request->value;
+       $dezenasSeparadas;
+       $competition = TypeGame::find($request->type_game)->competitions->last();
+            if (empty($competition)) {
+                $bet->status_xml = 3;
+                $bet->save();
+                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                    'error' => 'Não existe concurso cadastrado!'
+                ]);
+            }
+        $balance = Balance::calculation($totaldeAposta);
+
+            if (!$balance) {
+            $bet->status_xml = 3;
+            $bet->save();
+                return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                   'error' => 'Saldo Insuficiente!'
+                ]);
+            }
+       foreach($dezenas as $dez){
+            //$dezenaconvertida = string.split(/,(?! )/);
+            $dezenaconvertida2 = explode(" ", $dez);
+            $dezenaconvertida = implode(",", $dezenaconvertida2);
+            $game = new $this->game;
+            $game->client_id = $request->client;
+            $game->user_id = auth()->id();
+            $game->type_game_id = $request->type_game;
+            $game->type_game_value_id =$request->valueId;
+            $game->value = $request->value;
+            $game->premio = $request->premio;
+            $game->numbers = $dezenaconvertida;
+            $game->competition_id = $competition->id;
+            $game->checked = 1;
+            $game->bet_id = $bet->id;
+            $game->commission_percentage = auth()->user()->commission;
+            $game->save();
+
+            $extract = [
+                'type' => 1,
+                'value' => $game->value,
+                'type_game_id' => $game->type_game_id,
+                'description' => 'Venda - Jogo de id: ' . $game->id,
+                'user_id' => $game->user_id,
+                'client_id' => $game->client_id
+            ];
+            $ID_VALUE = auth()->user()->indicador;
+            $storeExtact = ExtractController::store($extract);
+            $commissionCalculationPai = Commision::calculationPai($game->commission_percentage, $game->value,$ID_VALUE);
+            $commissionCalculation = Commision::calculation($game->commission_percentage, $game->value);
+
+            $game->commission_value = $commissionCalculation;
+            $game->commision_value_pai = $commissionCalculationPai;
+            $game->save();
+
+        }
+            $bet->status_xml = 2;
+            $bet->save();
+
+              return redirect()->route('admin.bets.validate-games.edit', ['validate_game' => $bet->id])->withErrors([
+                'success' => 'Jogo cadastrado com sucesso'
+            ]);
+        } catch (\Exception $exception) {
+            $bet->status_xml = 3;
+            $bet->save();
+            return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
+                'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
+            ]);
+        }
+    }else{
+        
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -169,6 +284,7 @@ class GameController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao criar o jogo, tente novamente'
             ]);
         }
+    }
     }
 
     public function createLink()

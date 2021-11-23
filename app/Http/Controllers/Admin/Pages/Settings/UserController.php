@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin\Pages\Settings;
 
 use App\Helper\Money;
 use App\Http\Controllers\Controller;
+use App\Models\TransactBalance;
 use App\Models\User;
+use phpDocumentor\Reflection\Types\Integer;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -96,17 +98,26 @@ class UserController extends Controller
             'password_confirmation' => 'required|max:15',
             'commission' => 'required|integer|between:0,100',
         ]);
-                $indicador = $request->indicador;
+        $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
 
         $auxRole;
-         foreach ($request->roles as $role){
-              $auxRole = $role;
-         }
+        foreach ($request->roles as $role){
+            $auxRole = $role;
+        }
 
         try {
+            $balanceRequest = 0;
+            if($request->has('balance') && !is_null($request->balance)){
+                $balanceRequest = Money::toDatabase($request->balance);
+            }
+
+            if($request->has('commission') && !is_null($request->commission)){
+                $balanceRequest += Money::toDatabase(($request->commission/100) * $balanceRequest);
+            }
+
             $user = new $this->user;
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -115,10 +126,13 @@ class UserController extends Controller
             $user->commission = $request->commission;
             $user->indicador = $indicador;
             if($auxRole == 6){
-            $user->type_client = 1;    
+                $user->type_client = 1;
             }
-            $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
+            $user->balance = $balanceRequest;
             $user->save();
+
+            $this->storeTransact($user, $balanceRequest);
+
 
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
@@ -188,22 +202,34 @@ class UserController extends Controller
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'required|integer|between:0,100',
         ]);
-                    
-            $indicador = $request->indicador;        
-            if($indicador == null || $indicador == 0){
+
+        $indicador = $request->indicador;
+        if($indicador == null || $indicador == 0){
             $indicador = 1;
+        }
+
+        try
+        {
+            $newBalance = 0;
+            if($request->has('balance') && !is_null($request->balance)){
+                $balanceRequest = Money::toDatabase($request->balance);
+                $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
+                $newBalance = Money::toDatabase($user->balance) +  $newBalanceRequest;
             }
 
-        try {
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
-            $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
+            $user->balance = $newBalance;
             $user->indicador = $indicador;
             $user->save();
+
+            if((float) $newBalance > 0){
+                $this->storeTransact($user, $newBalanceRequest);
+            }
 
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
@@ -254,5 +280,14 @@ class UserController extends Controller
             ]);
 
         }
+    }
+
+    public function storeTransact(User $user, string $value)
+    {
+        TransactBalance::create([
+            'user_id_sender' => auth()->id(),
+            'user_id' => $user->id,
+            'value' => $value,
+        ]);
     }
 }

@@ -20,6 +20,7 @@ class Form extends Component
     public $selecionado = 0;
     public $search;
 
+
     public function mount($typeGame, $clients)
     {
         $this->selectedNumbers = [];
@@ -44,6 +45,7 @@ class Form extends Component
         array_push($this->selectedNumbers, $startnumberselected);
         }
         $this->selecionado = 1;
+        $this->verifyValue();
          }
 
     }
@@ -59,7 +61,7 @@ class Form extends Component
         
             $this->clients = Client::where("name", "like", "%{$this->search}%")->get();
             $this->showList = true;
-        
+
     }
 
 

@@ -5,6 +5,7 @@
             <th scope="col">Tipo</th>
             <th scope="col">Concurso</th>
             <th scope="col">Data do Sorteio</th>
+            <th scope="col">Importar Jogo</th>
         </tr>
         </thead>
         <tbody>
@@ -15,16 +16,17 @@
             @else
             <td>{{$typeGame->competitions->last()->number}}</td>
             <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
+            <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-primary" type="button">Carregar </button></a></td>
+       
             @endif
         </tr>
         </tbody>
     </table>
     <div class="form-row">
         <div class="form-group col-md-12">
-<div wire:ignore>
+        <div wire:ignore>
                 <h4>Cliente</h4>
-        
-        </div>
+            </div>        
         <div class="dropdown-divider"></div>
         <div class="row">
             <div class="col-md-12">
@@ -37,6 +39,7 @@
                 </div>
             </div>
         </div>
+           
 <input type="hidden" name="client" value="{{$clientId}}">
     <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
         <div class="col-md-12">
@@ -53,16 +56,11 @@
             @endif
         </div>
     </div>
-                @error('client')
-                <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                @enderror
-            
             <input type="hidden" name="numbers" value="{{implode(',', $selectedNumbers) ?? null}}">
-        </div>
+            </div>
         <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
     </div>
+
     <div class="row mb-2">
         <div class="col-md-12">
                 @if(isset($values) && $values->count() > 0)
