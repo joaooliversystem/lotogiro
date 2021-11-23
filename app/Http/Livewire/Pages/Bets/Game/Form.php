@@ -54,12 +54,12 @@ class Form extends Component
             $this->clientId = $client["id"];
             $this->search = $client["name"] . ' - ' . $client["cpf"]. ' - ' . $client["email"]. ' - ' . $client["ddd"].' - ' . $client["phone"];
             $this->showList = false;
-        
+
     }
     public function updatedSearch($value)
     {
-        
-            $this->clients = Client::where("name", "like", "%{$this->search}%")->get();
+
+            $this->clients = Client::where("name", "like", "{$this->search}%")->get();
             $this->showList = true;
 
     }
