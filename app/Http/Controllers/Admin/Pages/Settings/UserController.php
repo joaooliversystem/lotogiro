@@ -288,6 +288,9 @@ class UserController extends Controller
             ->where('user_id', $userId)
             ->paginate(10);
 
+        if($historybalance->total() <= 0){
+            $user = User::where('id', $userId)->first();
+        }
         foreach ($historybalance as $h){
             $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
             $h->responsavel = $h->userSender->name;
