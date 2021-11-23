@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Pages\Settings;
 
 use App\Helper\Money;
 use App\Http\Controllers\Controller;
+use App\Models\TransactBalance;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
@@ -96,17 +97,26 @@ class UserController extends Controller
             'password_confirmation' => 'required|max:15',
             'commission' => 'required|integer|between:0,100',
         ]);
-                $indicador = $request->indicador;
+        $indicador = $request->indicador;
         if($indicador == null || $indicador == 0){
             $indicador = 1;
         }
 
         $auxRole;
-         foreach ($request->roles as $role){
-              $auxRole = $role;
-         }
+        foreach ($request->roles as $role){
+            $auxRole = $role;
+        }
 
         try {
+            $balanceRequest = 0;
+            if($request->has('balance') && !is_null($request->balance)){
+                $balanceRequest = Money::toDatabase($request->balance);
+            }
+
+            if($request->has('commission') && !is_null($request->commission)){
+                $balanceRequest += Money::toDatabase(($request->commission/100) * $balanceRequest);
+            }
+
             $user = new $this->user;
             $user->name = $request->name;
             $user->last_name = $request->last_name;
@@ -115,10 +125,13 @@ class UserController extends Controller
             $user->commission = $request->commission;
             $user->indicador = $indicador;
             if($auxRole == 6){
-            $user->type_client = 1;    
+                $user->type_client = 1;
             }
-            $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
+            $user->balance = $balanceRequest;
             $user->save();
+
+            $this->storeTransact($user, $balanceRequest);
+
 
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
@@ -188,22 +201,35 @@ class UserController extends Controller
             'password_confirmation' => 'sometimes|required_with:password|max:15',
             'commission' => 'required|integer|between:0,100',
         ]);
-                    
-            $indicador = $request->indicador;        
-            if($indicador == null || $indicador == 0){
+
+        $indicador = $request->indicador;
+        if($indicador == null || $indicador == 0){
             $indicador = 1;
+        }
+
+        try
+        {
+            $newBalance = 0;
+            if($request->has('balance') && !is_null($request->balance)){
+                $oldBalance = $user->balance;
+                $balanceRequest = (float) Money::toDatabase($request->balance);
+                $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
+                $newBalance = $user->balance +  $newBalanceRequest;
             }
 
-        try {
             $user->name = $request->name;
             $user->last_name = $request->last_name;
             $user->email = $request->email;
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
-            $user->balance = !empty($request->balance) ? Money::toDatabase($request->balance) : 0;
+            $user->balance = $newBalance;
             $user->indicador = $indicador;
             $user->save();
+
+            if((float) $newBalance > 0){
+                $this->storeTransact($user, $newBalanceRequest, $oldBalance);
+            }
 
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
@@ -254,5 +280,31 @@ class UserController extends Controller
             ]);
 
         }
+    }
+
+    public function statementBalance($userId)
+    {
+        $historybalance = TransactBalance::with('user', 'userSender')
+            ->where('user_id', $userId)
+            ->paginate(10);
+
+        foreach ($historybalance as $h){
+            $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
+            $h->responsavel = $h->userSender->name;
+            $h->value = Money::toReal($h->value);
+            $h->old_value = Money::toReal($h->old_value);
+            $user = $h->user;
+        }
+        return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
+    }
+
+    public function storeTransact(User $user, string $value, string $oldValue)
+    {
+        TransactBalance::create([
+            'user_id_sender' => auth()->id(),
+            'user_id' => $user->id,
+            'value' => $value,
+            'old_value' => $oldValue,
+        ]);
     }
 }

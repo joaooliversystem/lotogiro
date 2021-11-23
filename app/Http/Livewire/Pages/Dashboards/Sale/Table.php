@@ -182,7 +182,7 @@ class Table extends Component
             $result = $query->where('checked', 1)->where('user_id', $id)->get();
             //Game::where('checked', 1)->where('user_id', $id)->get();
                 foreach ($result as $item) {
-            $value += $item->typeGameValue->value;
+            $value += $item->value;
             
             
         }
@@ -205,7 +205,7 @@ class Table extends Component
             $result = $query->where('checked', 1)->get();
             //Game::where('checked', 1)->get();
                 foreach ($result as $item) {
-            $value += $item->typeGameValue->value;
+            $value += $item->value;
             
             
         }
@@ -227,7 +227,7 @@ class Table extends Component
             $result = $query->where('checked', 1)->where('user_id', $id)->get();
             //Game::where('checked', 1)->where('user_id', $id)->get();
                 foreach ($result as $item) {
-            $value += $item->typeGameValue->value;
+            $value += $item->value;
             
             
         }

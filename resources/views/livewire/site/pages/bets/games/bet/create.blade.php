@@ -36,41 +36,28 @@
         </tr>
         </tbody>
     </table>
-    <form wire:submit.prevent="store" class="text-left">
+    <form wire:submit.prevent="submit" class="text-left">
         <div class="row mb-2">
             <div class="col-md-12">
-                <ul class="list-group list-group-horizontal-sm">
                     @if(isset($values) && $values->count() > 0)
                         @foreach($values as $value)
-                            <li class="list-group-item">
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input wire:model="value" type="radio" id="value_{{$value->id}}"
-                                           value="{{$value->id}}" name="value"
-                                           class="custom-control-input @error('value') is-invalid @enderror">
-                                    <label class="custom-control-label" for="value_{{$value->id}}">
-                                        Valor da Aposta: R${{\App\Helper\Money::toReal($value->value)}}<br/>
-                                        Valor do Prêmio: R${{\App\Helper\Money::toReal($value->prize)}}
-                                    </label>
-                                </div>
-                            </li>
+                    <input type="text" id="multiplicador" value="{{$value->multiplicador}}" name="multiplicador" hidden>
+                    <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
+                    <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
+                    Digite o Valor da Aposta
+                    <input wire:model="vv" type="text" id="vv" value="{{old('vv', $vv ?? null)}}" name="vv" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                    Valor do Prêmio R$
+                    <input wire:model="premio" type="text" id="premio" value="{{old('premio', $premio ?? null)}}"name="premio" required disabled>
+                    <button  class="btn btn-success" wire:click="calcular()"  type="button">Calcular</button>
                         @endforeach
-                    @else
-                        <li class="list-group-item">
-                            Valor da Aposta: R$0 <br/>
-                            @error('value')
-                            <small class="text-danger" role="alert">
-                                É necessario selecionar o valor
-                            </small>
-                            @enderror
-                        </li>
                     @endif
-                </ul>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 @if(isset($matriz))
                     <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
+
                     @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
                     <button wire:click="selecionaTudo()" class="btn btn-success" type="button">Seleciona todos os Números</button>
                     @endif
@@ -81,7 +68,7 @@
                                 <tr>
                                     @foreach($lines as $cols)
                                         <td>
-                                            <button wire:click="selectNumber({{$cols}})" type="button"
+                                            <button wire:click="selectNumber({{$cols}})"  type="button"
                                                     class="btn btn-success btn-block {{in_array($cols, $selectedNumbers) ? 'btn-success' : 'btn-warning'}}"
                                                     id="number_{{$cols}}">
                                                 {{$cols}}
@@ -98,9 +85,17 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                @if($premio > 0 && $vv > 0)
                 <button type="submit" id="button_game"
                         class="btn btn-block btn-outline-success">Criar Jogo
                 </button>
+                    
+                @else
+                <button type="submit" id="button_game"
+                class="btn btn-block btn-outline-success" disabled>Criar Jogo
+                </button>
+                      
+                @endif
             </div>
         </div>
     </form>

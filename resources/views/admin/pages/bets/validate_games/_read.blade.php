@@ -80,9 +80,9 @@
                                         <td>{{$game->competition->number}}</td>
                                         <td>{{$game->numbers}}</td>
                                         <td>
-                                            R${{\App\Helper\Money::toReal($game->typeGameValue->value)}}</td>
+                                            R${{\App\Helper\Money::toReal($game->value)}}</td>
                                         <td>
-                                            R${{\App\Helper\Money::toReal($game->typeGameValue->prize)}}</td>
+                                            R${{\App\Helper\Money::toReal($game->premio)}}</td>
                                             <td>                             @if($game->checked == 1)
                               <div class="card-body">
                 <div class="row mb-2">
@@ -101,7 +101,7 @@
                         </a>
                     </div>
                     <div class="col-md-6 ">
-                        <a href="https://api.whatsapp.com/send?phone=55{{$validate_game->client->ddd.$validate_game->client->phone}}&text=Jogo de {{$game->typeGame->name }} cadastrado com sucesso! Id da Aposta: {{$game->id}}, Cliente: {{$validate_game->client->name. ' ' . $validate_game->client->last_name}}, Dezenas: {{$game->numbers}}, Valor R${{\App\Helper\Money::toReal($game->typeGameValue->value)}}, Prêmio R${{\App\Helper\Money::toReal($game->typeGameValue->prize)}}, Data: {{\Carbon\Carbon::parse($game->crated_at)->format('d/m/Y') }}" target="_blank">
+                        <a href="https://api.whatsapp.com/send?phone=55{{$validate_game->client->ddd.$validate_game->client->phone}}&text=Jogo de {{$game->typeGame->name }} cadastrado com sucesso! Id da Aposta: {{$game->id}}, Cliente: {{$validate_game->client->name. ' ' . $validate_game->client->last_name}}, Dezenas: {{$game->numbers}}, Valor R${{\App\Helper\Money::toReal($game->value)}}, Prêmio R${{\App\Helper\Money::toReal($game->premio)}}, Data: {{\Carbon\Carbon::parse($game->crated_at)->format('d/m/Y') }}" target="_blank">
                             <button type="button" class="btn btn-info btn-block">
                                 WhatsApp
                             </button>
@@ -110,8 +110,8 @@
                 </div>
                                 @endif</td>
                                     </tr>
-                                    @php($totalValue += $game->typeGameValue->value)
-                                    @php($totalPrize += $game->typeGameValue->prize)
+                                    @php($totalValue += $game->value)
+                                    @php($totalPrize += $game->premio)
                                 @empty
                                     <tr class="text-center">
                                         <td colspan="4">Não existem jogos criados para essa aposta!</td>

@@ -12,12 +12,15 @@ class Create extends Component
     public $bet, $typeGame, $user, $cpf, $name, $last_name, $pix, $phone, $value;
     public $numbers, $matriz, $selectedNumbers, $values;
     public $selecionado = 0;
-
+    public $premio, $vv;
+    public $valueId;
+    public $typeGameValue;
 
     protected $rules = [
-        'value' => 'required'
+        'value' => 'required',
+        'premio' => 'required'
     ];
-
+ 
     public function mount($bet, $typeGame)
     {
  
@@ -39,7 +42,9 @@ class Create extends Component
             }
         } else {
             array_push($this->selectedNumbers, $number);
-        }
+        } 
+        $this->reset('vv');
+        $this->reset('premio');
         $this->verifyValue();
 
     }
@@ -55,6 +60,7 @@ class Create extends Component
         array_push($this->selectedNumbers, $startnumberselected);
         }
         $this->selecionado = 1;
+        $this->verifyValue();
          }
 
     }
@@ -62,15 +68,17 @@ class Create extends Component
     public function verifyValue()
     {
         $numbers = count($this->selectedNumbers);
-
-        $typeGameValue = TypeGameValue::where([
+       
+        $this->typeGameValue = TypeGameValue::where([
             ['type_game_id', $this->typeGame->id],
             ['numbers', $numbers],
         ])->get();
 
-        if (!empty($typeGameValue)) {
-            $this->values = $typeGameValue;
+        if (!empty($this->typeGameValue)) {
+            $this->values = $this->typeGameValue;
             $this->reset('value');
+            $this->reset('vv');
+            $this->reset('premio');
         }
 
     }
@@ -95,19 +103,45 @@ class Create extends Component
         $this->matriz = $matriz;
     }
 
-    public function store()
+    public function calcular(){
+        $multiplicador = 0; 
+        $valueid=0;
+        $numMax=0;       
+        foreach($this->typeGameValue as $type){
+            $multiplicador = $type->multiplicador;
+            $valueid = $type->id;
+            $numMax = $type->maxreais;
+        }
+        //evento dispara quando retira o foco do campo texto
+        if( $numMax >= $this->vv ){
+            $resultado = $this->vv  * $multiplicador;
+            $this->premio = $resultado;
+            }else{
+            $resultado = $numMax * $multiplicador;
+            $this->premio = $resultado;
+            $this->vv =  $numMax;
+            }
+    
+     $this->valueId = $valueid;
+    
+    }
+
+    public function submit()
     {
-        $data = $this->validate();
-        if (!empty($this->typeGame->competitions->last())) {
+        //$data = $this->validate();
+        $valor = $this->vv;
+        $premio =$this->premio;
+        $valueid = $this->valueId;
+       if (!empty($this->typeGame->competitions->last())) {
             try {
-                $store = (new GameController())->store($this->bet, $this->typeGame, $this->selectedNumbers, $data);
+                $store = (new GameController())->store($this->bet, $this->typeGame, $this->selectedNumbers, $valor, $premio, $valueid );
 
                 session()->flash('success', 'Jogo criado com sucesso!');
                 return redirect()->route('games.bet', ['user' => $this->bet->user->id, 'bet' => $this->bet->id]);
 
             } catch (\Exception $exception) {
-                session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
-                return redirect()->route('games.bet', ['user' => $this->bet->user->id, 'bet' => $this->bet->id]);
+             session()->flash('error', config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro no processo!');
+             return redirect()->route('games.bet', ['user' => $this->bet->user->id, 'bet' => $this->bet->id]);
             }
         }
     }

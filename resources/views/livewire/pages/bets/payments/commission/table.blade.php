@@ -120,7 +120,7 @@
                                 {{ $game->user->name . ' ' . $game->user->last_name }}
                             </td>
                             <td>
-                                {{ 'R$' . \App\Helper\Money::toReal($game->typeGameValue->value) }}
+                                {{ 'R$' . \App\Helper\Money::toReal($game->value) }}
                             </td>
                             <td>
                                 {{ $game->commission_percentage ?? 0 }}%

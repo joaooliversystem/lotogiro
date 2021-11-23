@@ -68,6 +68,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/create-link', [GameController::class, 'createLink'])->name('games.link');
             Route::get('/games/receipt/{game}/{format}/{prize?}', [GameController::class, 'getReceipt'])->name('games.receipt');
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
+            Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
             Route::resource('games', GameController::class)->except([
                 'index', 'create'
@@ -87,6 +88,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::resource('users', UserController::class);
+            Route::get('users/{userId}/statementBalance', [UserController::class, 'statementBalance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);
         });

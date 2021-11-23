@@ -53,22 +53,22 @@
                     </div>
                 </div>
                 <div class="form-row">
-                        <div class="form-group col-md-4">
+                    <div class="form-group col-md-4">
                         <label for="indicador">ID Indicador</label>
                         <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                     </div>
-                <div class="form-group col-md-8">
-                    <label for="email">E-mail</label>
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                           name="email"
-                           maxlength="100" value="{{old('email', $user->email ?? null)}}">
-                    @error('email')
-                    <span class="invalid-feedback" role="alert">
+                    <div class="form-group col-md-8">
+                        <label for="email">E-mail</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                               name="email"
+                               maxlength="100" value="{{old('email', $user->email ?? null)}}">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
                        {{ $message }}
                     </span>
-                    @enderror
+                        @enderror
+                    </div>
                 </div>
-            </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="password">Senha</label>
@@ -117,16 +117,26 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="balance">Saldo</label>
-                    <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance"
-                           name="balance"
+                    <label for="balanceAtual">Saldo Atual</label>
+                    <input type="text" readonly class="form-control text-right" id="balanceAtual"
+                           name="balanceAtual"
                            maxlength="100"
                            value="{{old('balance', !empty($user->balance) ? \App\Helper\Money::toReal($user->balance) : null)}}">
+
+                    <label for="balance">Adicionar Saldo</label>
+                    <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance"
+                           name="balance"
+                           maxlength="100">
                     @error('balance')
                     <span class="invalid-feedback" role="alert">
                        {{ $message }}
                     </span>
                     @enderror
+                </div>
+                <div class="form-group">
+                    @if(Route::currentRouteName() == 'admin.settings.users.edit')
+                        <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
+                    @endif
                 </div>
             </div>
         </div>

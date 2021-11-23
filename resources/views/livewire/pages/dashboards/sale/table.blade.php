@@ -174,7 +174,7 @@
                                @if($game->commission_payment) Pago @else Aberto @endif
                             </td>
                             <td>
-                                {{ 'R$' . \App\Helper\Money::toReal($game->typeGameValue->value) }}
+                                {{ 'R$' . \App\Helper\Money::toReal($game->value) }}
                             </td>
                             <td>
                                 {{ \Carbon\Carbon::parse($game->created_at)->format('d/m/Y') }}
