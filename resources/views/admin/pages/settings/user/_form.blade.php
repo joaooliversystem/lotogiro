@@ -133,6 +133,11 @@
                     </span>
                     @enderror
                 </div>
+                <div class="form-group">
+                    @if(Route::currentRouteName() == 'admin.settings.users.edit')
+                        <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
+                    @endif
+                </div>
             </div>
         </div>
         <div class="card card-secondary">

@@ -6,7 +6,6 @@ use App\Helper\Money;
 use App\Http\Controllers\Controller;
 use App\Models\TransactBalance;
 use App\Models\User;
-use phpDocumentor\Reflection\Types\Integer;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -212,9 +211,10 @@ class UserController extends Controller
         {
             $newBalance = 0;
             if($request->has('balance') && !is_null($request->balance)){
-                $balanceRequest = Money::toDatabase($request->balance);
+                $oldBalance = $user->balance;
+                $balanceRequest = (float) Money::toDatabase($request->balance);
                 $newBalanceRequest = $balanceRequest + (($user->commission/100) * $balanceRequest);
-                $newBalance = Money::toDatabase($user->balance) +  $newBalanceRequest;
+                $newBalance = $user->balance +  $newBalanceRequest;
             }
 
             $user->name = $request->name;
@@ -228,7 +228,7 @@ class UserController extends Controller
             $user->save();
 
             if((float) $newBalance > 0){
-                $this->storeTransact($user, $newBalanceRequest);
+                $this->storeTransact($user, $newBalanceRequest, $oldBalance);
             }
 
             if (!empty($request->roles)) {
@@ -282,12 +282,29 @@ class UserController extends Controller
         }
     }
 
-    public function storeTransact(User $user, string $value)
+    public function statementBalance($userId)
+    {
+        $historybalance = TransactBalance::with('user', 'userSender')
+            ->where('user_id', $userId)
+            ->paginate(10);
+
+        foreach ($historybalance as $h){
+            $h->data = Carbon::parse($h->created_at)->format('d/m/y à\\s H:i');
+            $h->responsavel = $h->userSender->name;
+            $h->value = Money::toReal($h->value);
+            $h->old_value = Money::toReal($h->old_value);
+            $user = $h->user;
+        }
+        return view('admin.pages.settings.user.statementBalance', ['historybalance' => $historybalance, 'user' => $user]);
+    }
+
+    public function storeTransact(User $user, string $value, string $oldValue)
     {
         TransactBalance::create([
             'user_id_sender' => auth()->id(),
             'user_id' => $user->id,
             'value' => $value,
+            'old_value' => $oldValue,
         ]);
     }
 }

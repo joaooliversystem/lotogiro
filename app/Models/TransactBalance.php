@@ -10,10 +10,20 @@ class TransactBalance extends Model
     use HasFactory;
 
     public $table = 'transact_balance';
-    public $timestamps = true;
     protected $fillable = [
         'user_id_sender',
         'user_id',
-        'value'
+        'value',
+        'old_value',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function userSender()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id_sender');
+    }
 }
