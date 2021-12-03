@@ -43,7 +43,15 @@
                 <input type="text" id="maxreais" value="{{$value->maxreais}}" name="maxreais" hidden>
                 <input type="text" id="valueId" value="{{$value->id}}" name="valueId" hidden>
                 Digite o Valor da Aposta
-                <input type="text" id="value" onchange="altera();" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
+                <input type="text" id="value" onchange="altera();" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1'); 
+                
+                var valor = document.getElementById('value').value;
+                var contadorJogos = document.getElementById('contadorJogos').value;
+                var contadorJogos =  parseFloat(contadorJogos);
+                var numberValor = parseInt(valor);
+                var valorTotal = contadorJogos * numberValor;
+                document.getElementById('ValorTotal').value = valorTotal;">
+                
                 Valor do Prêmio R$
                 <input type="text" id="premio" value="" name="premio" readonly>
                 <button  class="btn btn-success" type="button">Calcular</button>
@@ -85,8 +93,9 @@
    
 </div>    
   @push('scripts')
+
+{{-- evento dispara quando retira o foco do campo texto --}}
 <script>
-    
         //para realizar o calculo do multiplicador
          function altera(){
             var multiplicador = document.getElementById("multiplicador").value;
@@ -95,32 +104,51 @@
             var campoDoCalculo = document.getElementById("premio");
             var maxreais = document.getElementById("maxreais").value;
             var resultado;
+
             var numberValor = parseInt(valor);
-            var numberReais = parseInt(maxreais);
+            var numberReais = parseInt(maxreais);   
 
-            var contadorJogos = document.getElementById("contadorJogos").value;
+            if( numberReais >= numberValor ){
+                resultado = valor * multiplicador;
+            campoDoCalculo.value = resultado;
+            }
+            else
+            {
+            resultado = maxreais * multiplicador;
+            campoDoCalculo.value = resultado;
+            Campovalor.value = maxreais;
+            }
+            
+            var controlervar = document.getElementById("controle").value; 
+            var textdezena = document.getElementById("dezena");
 
-            var contadorJogos =  parseFloat(contadorJogos);
-            var valorTotal = contadorJogos *numberValor;
-
-            document.getElementById("ValorTotal").value = valorTotal;
-
-            //evento dispara quando retira o foco do campo texto
-                if( numberReais >= numberValor ){
-                 resultado = valor * multiplicador;
-                campoDoCalculo.value = resultado;
-                }else{
-                resultado = maxreais * multiplicador;
-                campoDoCalculo.value = resultado;
-                Campovalor.value = maxreais;
-                }
-                var controlervar = document.getElementById("controle").value; 
-                var textdezena = document.getElementById("dezena");
-                if(controlervar == 1){
+            if(controlervar == 1){
                 textdezena.readOnly = true;
-                }     
-    
-//Função 
+            }     
+
+            var valor = document.getElementById('value').value;
+                var contadorJogos = document.getElementById('contadorJogos').value;
+                var contadorJogos =  parseFloat(contadorJogos);
+                var numberValor = parseInt(valor);
+                var valorTotal = contadorJogos * numberValor;
+                document.getElementById('ValorTotal').value = valorTotal;
+
+            // var contadorJogos = document.getElementById("contadorJogos").value;
+            // var contadorJogos =  parseFloat(contadorJogos);
+            // var valorTotal = contadorJogos *numberValor;
+
+            // if (valorTotal > maxreais)
+            // {
+            //     var contadorJogos = document.getElementById("contadorJogos").value;
+            //     var contadorJogos =  parseFloat(contadorJogos);
+            //     var valorTotal = contadorJogos *numberValor;
+            //     document.getElementById("ValorTotal").value = valorTotal;
+            // }
+            // else
+            // {
+            //     document.getElementById("ValorTotal").value = valorTotal;
+            // }
+
          }
          </script>
-         @endpush
+@endpush
