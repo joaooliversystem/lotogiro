@@ -47,7 +47,16 @@
                 Valor do Prêmio R$
                 <input type="text" id="premio" value="" name="premio" readonly>
                 <button  class="btn btn-success" type="button">Calcular</button>
-            @endforeach              
+            @endforeach
+
+                {{-- onde vou trabalhar --}}
+                <br>
+                <label for="quantidadeJogos">Quantidade Jogos:</label>
+                <input type="text" id="contadorJogos" disabled value="{{$contadorJogos}}" name="contadorJogos">
+                
+                {{-- valor total --}}
+                <label for="quantidadeJogos">Valor Total R$</label>
+                <input type="text" id="ValorTotal" value="" disabled name="ValorTotal">       
         @endif
 </div>
                 @if(!@empty($msg))
@@ -88,6 +97,13 @@
             var resultado;
             var numberValor = parseInt(valor);
             var numberReais = parseInt(maxreais);
+
+            var contadorJogos = document.getElementById("contadorJogos").value;
+
+            var contadorJogos =  parseFloat(contadorJogos);
+            var valorTotal = contadorJogos *numberValor;
+
+            document.getElementById("ValorTotal").value = valorTotal;
 
             //evento dispara quando retira o foco do campo texto
                 if( numberReais >= numberValor ){
