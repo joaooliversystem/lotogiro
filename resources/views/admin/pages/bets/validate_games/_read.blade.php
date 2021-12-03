@@ -61,6 +61,7 @@
                             <table class="table table-sm">
                                 <thead>
                                 <tr>
+                                    <th scope="col">Id Jogo</th>
                                     <th scope="col">Tipo de Jogo</th>
                                     <th scope="col">Concurso</th>
                                     <th scope="col">Dezenas</th>
@@ -75,7 +76,7 @@
                                 @forelse($validate_game->games as $game)
    
                                     <tr>
-                                        
+                                        <td>{{$game->id}}</td>
                                         <td>{{$game->typeGame->name}}</td>
                                         <td>{{$game->competition->number}}</td>
                                         <td>{{$game->numbers}}</td>
