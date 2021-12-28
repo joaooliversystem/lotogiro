@@ -135,7 +135,14 @@
                 </div>
                 <div class="form-group">
                     @if(Route::currentRouteName() == 'admin.settings.users.edit')
+                        <div class="row">
+                            <div class="col-md-6">
                         <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
+                            </div>
+                            <div class="col-md-6">
+                        <button type="button" class="btn btn-primary btn-block" onclick="habilitarcampo();">Ajuste Manual</button>
+                            </div>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -202,5 +209,12 @@
                 unmaskAsNumber: true
             });
         });
+
+        function habilitarcampo(){
+            var campoSaldoAtual = document.getElementById('balanceAtual');
+            var campoSaldo = document.getElementById('balance');
+            campoSaldoAtual.readOnly = false;
+            campoSaldo.readOnly = true;
+        }
     </script>
 @endpush

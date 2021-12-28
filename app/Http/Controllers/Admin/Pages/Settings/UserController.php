@@ -130,7 +130,12 @@ class UserController extends Controller
             $user->balance = $balanceRequest;
             $user->save();
 
-            $this->storeTransact($user, $balanceRequest);
+        TransactBalance::create([
+            'user_id_sender' => auth()->id(),
+            'user_id' => $user->id,
+            'value' => (float) Money::toDatabase($request->balance),
+            'old_value' => (float) Money::toDatabase(0),
+        ]);
 
 
             if (!empty($request->roles)) {
@@ -189,6 +194,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
+
         if(!auth()->user()->hasPermissionTo('update_user')){
             abort(403);
         }
@@ -210,6 +217,7 @@ class UserController extends Controller
         try
         {
             $newBalance = 0;
+            $ajuste = 0;
             if($request->has('balance') && !is_null($request->balance)){
                 $oldBalance = $user->balance;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
@@ -223,12 +231,21 @@ class UserController extends Controller
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            if($newBalance > 0){
             $user->balance = $newBalance;
+            }else{
+            $ajuste = 1;
+            $oldBalance = $user->balance;
+            $user->balance = (float) Money::toDatabase($request->balanceAtual); 
+            }
             $user->indicador = $indicador;
             $user->save();
 
             if((float) $newBalance > 0){
                 $this->storeTransact($user, $newBalanceRequest, $oldBalance);
+            }
+            if($ajuste == 1 && $oldBalance != $request->balanceAtual){
+                $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
             }
 
             if (!empty($request->roles)) {
@@ -306,5 +323,7 @@ class UserController extends Controller
             'value' => $value,
             'old_value' => $oldValue,
         ]);
+         $retornof = "sucesso";
+        return $retornof;
     }
 }

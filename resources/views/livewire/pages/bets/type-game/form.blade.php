@@ -116,7 +116,7 @@
 
 </div>
 
-  <div class="modal fade" id="modal_delete_type_game_value" data-backdrop="static" tabindex="-1" role="dialog">
+  <!--<div class="modal fade" id="modal_delete_type_game_value" data-backdrop="static" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -131,13 +131,14 @@
                 <div class="modal-footer">
                     <form id="destroy2" action="" method="POST">
                         @csrf
+                        
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-danger">Excluir</button>
+                        <button type="button" id="btn_delete_type_game_value2" class="btn btn-danger">Excluir</button>
                     </form>
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 @push('styles')
     <link rel="stylesheet"
@@ -160,8 +161,8 @@
                 url = url.replace(':type_game_value', type_game_value);
                 url = url.replace(':type_game', type_game);
                 console.log(url);
-                  $("#destroy2").attr('action', url);
-              /*  $.ajax({
+                  //$("#destroy2").attr('action', url);
+                $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -170,7 +171,7 @@
                     success: function (result) {
                         window.location.reload();
                     }
-                });*/
+                })
             });
 
             var table = $('#type_game_values_table').DataTable({

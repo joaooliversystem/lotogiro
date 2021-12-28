@@ -21,6 +21,7 @@ class Copiacola extends Component
     public $qtdDezena;
     public $msg;
     public $controle;
+    public $contadorJogos = 0;
 
     public function mount($typeGame, $clients)
     {
@@ -45,6 +46,7 @@ class Copiacola extends Component
         $contadorLinhas;
         $contador = 0;
         foreach($this->dezena as $dezenaConvert){
+            $this->contadorJogos++;
             $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
             //$string = preg_replace('/\s+/', ' ', trim($dezenaConvert));
             $words = explode(" ", $string);
