@@ -23,7 +23,7 @@
         </tbody>
     </table>
 
-<div wire:ignore>
+{{-- <div wire:ignore>
     @if($teste['type_client'] == 2)
 
     <input type="text" value="{{ $teste['name'] }}" disabled class="form-control">
@@ -37,7 +37,7 @@
     <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
 @endif
 
-@if($teste['type_client'] == 1)
+@if($teste['type_client'] == 1) --}}
 
     {{-- INPUT DO SEARCH SE NÃO TIVER AUTENTICADO --}}
 
@@ -83,7 +83,7 @@
         <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
     </div>
 
-    @endif
+    {{-- @endif --}}
 
         {{-- PARTE DE CALCULO DE VALORES DO JOGO --}}
 
@@ -112,9 +112,8 @@
             @if(isset($matriz))
                 <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
                     @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                    <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
-                    
-                    @endif
+                    <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>      
+            @endif
 
             {{-- puxar do banco de dados quantos numeros pode se jogar --}}
             @foreach ($busca as $buscas)
