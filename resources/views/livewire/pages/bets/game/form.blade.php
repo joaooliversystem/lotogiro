@@ -17,7 +17,7 @@
             <td>{{$typeGame->competitions->last()->number}}</td>
             <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
             <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-primary" type="button">Carregar </button></a></td>
-            
+
             @endif
         </tr>
         </tbody>
@@ -45,7 +45,7 @@
         <div class="form-group col-md-12">
             <div wire:ignore>
                 <h4>Cliente</h4>
-            </div>        
+            </div>
         <div class="dropdown-divider"></div>
             <div class="row">
                 <div class="col-md-12">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-        
+
         {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
 
         <input type="hidden" name="client" value="{{$clientId}}">
@@ -101,45 +101,13 @@
                         <button  class="btn btn-success" type="button" onclick="altera();">Calcular</button>
                     @endforeach
                 @else
-                
+
                 @endif
         </div>
     </div>
 
     {{-- PARTE DE ESCOLHER NUMEROS DO  JOGO --}}
-    <div class="row">
-        <div class="col-md-12">
-            @if(isset($matriz))
-                <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
-                    @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                    <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
-                    
-                    @endif
-
-            {{-- puxar do banco de dados quantos numeros pode se jogar --}}
-            @foreach ($busca as $buscas)
-              <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>
-            @endforeach          
-
-                <div class="table-responsive">
-                    <table class="table  text-center">
-                        <tbody>
-                        @foreach($matriz as $lines)
-                            <tr>
-                                @foreach($lines as $cols)
-                                    <td>
-                                        <button wire:click="selectNumber({{$cols}})" id="number_{{$cols}}" type="button"
-                                                class="btn btn-success {{in_array($cols, $selectedNumbers) ? 'btn-success' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
-                                    </td>
-                                @endforeach
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            @endif
-        </div>
-    </div>
+    <livewire:pages.bets.game.numbers-select :type-game="$typeGame" />
 </div>
 
 @push('styles')
@@ -167,7 +135,7 @@
             $('#sort_date').inputmask("99/99/9999 99:99:99");
         });
     </script> --}}
-    
+
     <script>
         //Função para realizar o calculo do multiplicador
          function altera(){
