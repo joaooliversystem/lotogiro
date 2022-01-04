@@ -1,8 +1,8 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
         <a href="#" class="navbar-brand">
-            <img src="{{asset('site/images/painel/logo.png')}}" alt="Logo" class="brand-image bg-info rounded-circle"
-                 style="height: 50px">Lotogiro
+            <img src="{{asset('site/images/painel/Trevo.png')}}" alt="Logo" class="brand-image  rounded-circle"
+                 style="height: 50px"> - LoteriaBR
         </a>
 {{--        <button class="navbar-toggler order-1" type="button" data-toggle="collapse"--}}
 {{--                data-target="#navbarCollapse"--}}
