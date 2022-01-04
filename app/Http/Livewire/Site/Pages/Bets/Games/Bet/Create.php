@@ -138,6 +138,9 @@ class Create extends Component
             $numMax = $type->maxreais;
         }
         //evento dispara quando retira o foco do campo texto
+        if($this->vv > 1){
+
+        
         if( $numMax >= $this->vv ){
             $resultado = $this->vv  * $multiplicador;
             $this->premio = $resultado;
@@ -146,6 +149,11 @@ class Create extends Component
             $this->premio = $resultado;
             $this->vv =  $numMax;
             }
+        }else{
+             $resultado = 1  * $multiplicador;
+             $this->premio = $resultado;
+             $this->vv =  1;
+        }
     
      $this->valueId = $valueid;
     

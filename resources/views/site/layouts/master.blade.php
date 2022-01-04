@@ -8,7 +8,7 @@
     <title>@yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('site/layouts/css/master.css')}}">
-    <link rel="shortcut icon" href="{{{ asset('admin/images/painel/logo.png') }}}">
+    <link rel="shortcut icon" href="{{{ asset('admin/images/painel/Trevo.png') }}}">
     @stack('style')
     @livewireStyles
 
