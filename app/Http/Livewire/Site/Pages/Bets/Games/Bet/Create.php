@@ -48,6 +48,32 @@ class Create extends Component
         $this->verifyValue();
 
     }
+
+    public function randomNumbers($quantidadeAletorizar){
+        $selectedNumbers = 0;
+        $numerosAletatorios = array();
+        $loopVezes = $quantidadeAletorizar;
+        $rangeMax = $this->typeGame->numbers;
+
+        for($i = 0; $i != $loopVezes ; $i++){
+
+            $addNumeroAleatorio =  rand(1, $rangeMax);
+            
+            // condição pra checar se o número já existe na lista
+            while (in_array($addNumeroAleatorio, $numerosAletatorios)){
+                $addNumeroAleatorio =  rand(1, $rangeMax);
+            }
+
+            array_push($numerosAletatorios, $addNumeroAleatorio);
+
+        }
+        // $selectedNumbers = array();
+        // $numerosAletatorios = json_decode($numerosAletatorios);
+        $selectedNumbers = $numerosAletatorios;
+        $this->selectedNumbers = $numerosAletatorios;
+        $this->verifyValue();
+    }
+
     public function selecionaTudo(){
          $startnumberselected = 0;
 
@@ -148,6 +174,8 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.site.pages.bets.games.bet.create');
+        $busca = TypeGameValue::select('numbers')->where('type_game_id', $this->typeGame->id)->orderBy('numbers', 'asc')->get();
+        $this->busca = $busca;
+        return view('livewire.site.pages.bets.games.bet.create', compact('busca'));
     }
 }

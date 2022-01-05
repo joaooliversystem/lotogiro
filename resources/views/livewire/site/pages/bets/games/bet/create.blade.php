@@ -61,6 +61,12 @@
                     @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
                     <button wire:click="selecionaTudo()" class="btn btn-success" type="button">Seleciona todos os Números</button>
                     @endif
+
+                    {{-- puxar do banco de dados quantos numeros pode se jogar --}}
+                    @foreach ($busca as $buscas)
+                        <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>
+                    @endforeach   
+
                     <div class="table-responsive">
                         <table class="table text-center">
                             <tbody>
