@@ -164,7 +164,7 @@
             var numberReais = parseInt(maxreais);
             var typeGame = document.getElementById("idTypeGame").value;
             //evento dispara quando retira o foco do campo texto
-            if(typeGame == 16){
+            if(typeGame == 17){
                 resultado = 2000;
                 campoDoCalculo.value = resultado;
                 Campovalor.value = 10;

@@ -139,7 +139,7 @@ class Create extends Component
             $numMax = $type->maxreais;
         }
         //evento dispara quando retira o foco do campo texto
-        if($this->typeGame->id == 16){
+        if($this->typeGame->id == 17){
             $resultado = 2000;
             $valor = 10;
             $this->premio = $resultado;
