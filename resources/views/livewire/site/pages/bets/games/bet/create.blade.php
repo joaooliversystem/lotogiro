@@ -62,6 +62,8 @@
                     <button wire:click="selecionaTudo()" class="btn btn-success" type="button">Seleciona todos os Números</button>
                     @endif
 
+                    <br>
+                    <br>
                     {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                     @foreach ($busca as $buscas)
                         <button wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>

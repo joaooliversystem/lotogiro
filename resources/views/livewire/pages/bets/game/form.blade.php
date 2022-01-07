@@ -11,6 +11,7 @@
         <tbody>
         <tr>
             <td>{{$typeGame->name}}</td>
+            <input id="idTypeGame" hidden value="{{$typeGame->id}}">
             @if(empty($typeGame->competitions->last()))
                 <td colspan="2" class="text-danger">NÃO EXISTE CONCURSO CADASTRADO, NÃO É POSSIVEL CRIAR O JOGO</td>
             @else
@@ -161,17 +162,32 @@
             var resultado;
             var numberValor = parseInt(valor);
             var numberReais = parseInt(maxreais);
-
+            var typeGame = document.getElementById("idTypeGame").value;
             //evento dispara quando retira o foco do campo texto
+            if(typeGame == 16){
+                resultado = 2000;
+                campoDoCalculo.value = resultado;
+                Campovalor.value = 10;
+            }else{
                 if( numberReais >= numberValor ){
-                 resultado = valor * multiplicador;
-                campoDoCalculo.value = resultado;
-                }else{
-                resultado = maxreais * multiplicador;
-                campoDoCalculo.value = resultado;
-                Campovalor.value = maxreais;
+                    if(numberValor > 1){
+                        if( numberReais >= numberValor){
+                            resultado = valor * multiplicador;
+                            campoDoCalculo.value = resultado;
+                        }else{
+                            resultado = maxreais * multiplicador;
+                            campoDoCalculo.value = resultado;
+                            Campovalor.value = maxreais;
+                        }
+                    }else{
+                        resultado = 1 * multiplicador;
+                        campoDoCalculo.value = resultado;
+                        Campovalor.value = 1;
                 }
+            
          }
+    }
+     }
 
 
 
