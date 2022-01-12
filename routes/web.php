@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
 use App\Http\Controllers\Admin\Pages\Settings\UserController;
@@ -58,6 +59,14 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
+            });
+
+
+            Route::prefix('wallet')->name('wallet.')->group(function () {
+                Route::get('/', [WalletController::class, 'index'])->name('index');
+//                Route::post('/{user}/store', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betStore'])->name('bet.store');
+//                Route::post('/{user}/{bet?}/update', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betUpdate'])->name('bet.update');
+//                Route::get('/{user}/{bet}/{typeGame}/game-create', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'gameCreate'])->name('bet.game.create');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
