@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+    use App\Http\Livewire\Pages\Bets\Game\GameCreate;
+    use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
 use App\Http\Controllers\Admin\Pages\Settings\UserController;
@@ -61,6 +62,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
+            Route::get('/games/create/v2/{type_game}', GameCreate::class);
             Route::resource('clients', ClientController::class);
             Route::resource('competitions', CompetitionController::class);
             Route::resource('type_games', TypeGameController::class);
