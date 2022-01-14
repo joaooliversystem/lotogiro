@@ -11,4 +11,16 @@ class WalletController extends Controller
     {
         return view('admin.pages.dashboards.wallet.index');
     }
+    public function recharge()
+    {
+        return view('admin.pages.dashboards.wallet.index');
+    }
+    public function transfer()
+    {
+        return view('admin.pages.dashboards.wallet.transfer');
+    }
+    public function withdraw()
+    {
+        return view('admin.pages.dashboards.wallet.withdraw');
+    }
 }

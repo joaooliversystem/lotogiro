@@ -10,18 +10,22 @@
                         <h4>Saldo: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
                     </div>
                     <div class="col-sm-4 right">
-                        <a type="button" class="btn btn-block btn-dark text-light text-bold">Extrato</a>
+                        <a href="{{ route('admin.dashboards.extracts.index') }}" type="button" class="btn btn-block btn-dark text-light
+                        text-bold">Extrato</a>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-sm-4">
-                        <a type="button" class="btn btn-block btn-success text-light text-bold">Transferir</a>
+                        <a href="{{ route('admin.dashboards.wallet.transfer') }}" type="button" class="btn btn-block btn-success text-light
+                        text-bold">Transferir</a>
                     </div>
                     <div class="col-sm-4">
-                        <a type="button" class="btn btn-block btn-success text-light text-bold">Recarregar</a>
+                        <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
+                        text-bold">Recarregar</a>
                     </div>
                     <div class="col-sm-4">
-                        <a type="button" class="btn btn-block btn-success text-light text-bold">Retirar</a>
+                        <a href="{{ route('admin.dashboards.wallet.withdraw') }}" type="button" class="btn btn-block btn-success text-light
+                        text-bold">Retirar</a>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,58 @@
+<div>
+    <div class="col-md-12">
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Carteira - Transferência de Saldo</h3>
+            </div>
+            <div class="card-body">
+                <div x-data="{data: @entangle('client')}">
+                    <form wire:submit.prevent="transferToClient()">
+                        <div class="row mt-5">
+                            <div class="col-sm-7">
+                                <h6>Dados do Recebedor</h6>
+                                <div class="col-sm-12">
+                                    <b>Nome: </b> <span x-text="data.name"></span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <b>E-Mail: </b> <span x-text="data.email"></span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <b>Telefone: </b> <span x-text="data.phone"></span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <b>PIX: </b> <input x-model="data.name" class='col-sm-10' type="text" />
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <h6>Valor a transferir</h6>
+                                <div class="input-group">
+                                    <input wire:model.debounce="valueTransfer" x-on:focus="formatInput()" type="text"
+                                           class="search-query form-control" placeholder="Valor a transferir"
+                                           id="valueTransfer" inputmode="numeric" value="0,00" />
+                                </div>
+                            </div>
+                            <div class="col-sm-12 mt-5">
+                                <div class="input-group">
+                                    <button type="submit" class="btn btn-dark btn-block">
+                                        Transferir <span class="fa fa-send" style="color: #fff938"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js"></script>
+
+    <script type="text/javascript">
+        function formatInput(){
+            VMasker(document.getElementById("valueTransfer")).maskMoney();
+        }
+    </script>
+@endpush

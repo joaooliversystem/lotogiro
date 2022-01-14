@@ -64,9 +64,9 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');
-//                Route::post('/{user}/store', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betStore'])->name('bet.store');
-//                Route::post('/{user}/{bet?}/update', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'betUpdate'])->name('bet.update');
-//                Route::get('/{user}/{bet}/{typeGame}/game-create', [\App\Http\Controllers\Site\Pages\Bets\GameController::class, 'gameCreate'])->name('bet.game.create');
+                Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
+                Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
+                Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
