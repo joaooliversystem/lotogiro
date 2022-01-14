@@ -4,7 +4,7 @@
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 15px">LoteriaBR</span>
+        <span class="brand-text font-weight-light" style="font-size: 15px">SuperLotogiro</span>
     </a>
 
     <div class="sidebar">

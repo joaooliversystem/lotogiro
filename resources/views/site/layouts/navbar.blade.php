@@ -2,7 +2,7 @@
     <div class="container">
         <a href="#" class="navbar-brand">
             <img src="{{asset('site/images/painel/Trevo.png')}}" alt="Logo" class="brand-image  rounded-circle"
-                 style="height: 50px"> - LoteriaBR
+                 style="height: 50px"> - SuperLotogiro
         </a>
 {{--        <button class="navbar-toggler order-1" type="button" data-toggle="collapse"--}}
 {{--                data-target="#navbarCollapse"--}}
