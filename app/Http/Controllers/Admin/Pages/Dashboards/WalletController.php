@@ -23,4 +23,8 @@ class WalletController extends Controller
     {
         return view('admin.pages.dashboards.wallet.withdraw');
     }
+    public function extract()
+    {
+        return view('admin.pages.dashboards.wallet.extract');
+    }
 }

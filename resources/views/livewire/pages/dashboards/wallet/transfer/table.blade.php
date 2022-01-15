@@ -42,9 +42,10 @@
                                     <div class="col-sm-12">
                                         <b>Salvar contato? </b>
 
-                                        <div class="col-sm-5">
-                                            <button type="button" class="btn btn-sm btn-toggle active"
-                                                    data-toggle="button" aria-pressed="true" autocomplete="off">
+                                        <div x-data="{storeContact: @entangle('storeContact').defer}" class="col-sm-5">
+                                            <button x-on:click.prevent="storeContact = !storeContact" type="button"
+                                                class="btn btn-sm btn-toggle active" data-toggle="button"
+                                                aria-pressed="true" autocomplete="off">
                                                 <div class="handle"></div>
                                             </button>
                                         </div>
@@ -53,9 +54,9 @@
                                 <div class="col-sm-5">
                                     <h6>Valor a transferir</h6>
                                     <div class="input-group">
-                                        <input wire:model.debounce="valueTransfer" x-on:focus="formatInput()" type="text"
-                                               class="search-query form-control" placeholder="Valor a transferir"
-                                               id="valueTransfer" inputmode="numeric" value="0,00" />
+                                        <input wire:model="valueTransfer" x-on:focus="formatInput()" type="text"
+                                           class="search-query form-control" placeholder="Valor a transferir"
+                                           id="valueTransfer" inputmode="numeric" value="0,00" />
                                     </div>
                                 </div>
                                 <div class="col-sm-12 mt-5">
@@ -447,6 +448,10 @@
 @endpush
 
 @push('scripts')
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+
     <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js"></script>
 
     <script type="text/javascript">

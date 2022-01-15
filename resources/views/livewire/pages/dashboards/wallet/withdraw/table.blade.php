@@ -5,7 +5,7 @@
                 <h3 class="card-title">Carteira - Transferência de Saldo</h3>
             </div>
             <div class="card-body">
-                <div x-data="{data: @entangle('client')}">
+                <div x-data="{data: @entangle('user')}">
                     <form wire:submit.prevent="transferToClient()">
                         <div class="row mt-5">
                             <div class="col-sm-7">
@@ -20,20 +20,24 @@
                                     <b>Telefone: </b> <span x-text="data.phone"></span>
                                 </div>
                                 <div class="col-sm-12">
-                                    <b>PIX: </b> <input x-model="data.name" class='col-sm-10' type="text" />
+                                    <b>PIX: </b>
+                                    <small>Ao alterar essa informação, ela passa a ser sua principal.</small>
+                                </div>
+                                <div class="col-sm-12">
+                                    <input wire:model.defer="pixSaque" class='col-sm-10' type="text" />
                                 </div>
                             </div>
                             <div class="col-sm-5">
-                                <h6>Valor a transferir</h6>
+                                <h6>Valor a retirar</h6>
                                 <div class="input-group">
-                                    <input wire:model.debounce="valueTransfer" x-on:focus="formatInput()" type="text"
-                                           class="search-query form-control" placeholder="Valor a transferir"
+                                    <input wire:model.defer="valueTransfer" x-on:focus="formatInput()" type="text"
+                                           class="search-query form-control" placeholder="Valor a retirar"
                                            id="valueTransfer" inputmode="numeric" value="0,00" />
                                 </div>
                             </div>
                             <div class="col-sm-12 mt-5">
                                 <div class="input-group">
-                                    <button type="submit" class="btn btn-dark btn-block">
+                                    <button wire:click="requestWithdraw" type="button" class="btn btn-dark btn-block">
                                         Transferir <span class="fa fa-send" style="color: #fff938"></span>
                                     </button>
                                 </div>
@@ -48,6 +52,10 @@
 
 
 @push('scripts')
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+
     <script src="https://cdn.jsdelivr.net/npm/vanilla-masker@1.1.1/build/vanilla-masker.min.js"></script>
 
     <script type="text/javascript">

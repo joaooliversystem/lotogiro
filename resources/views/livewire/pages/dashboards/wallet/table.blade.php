@@ -10,7 +10,7 @@
                         <h4>Saldo: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
                     </div>
                     <div class="col-sm-4 right">
-                        <a href="{{ route('admin.dashboards.extracts.index') }}" type="button" class="btn btn-block btn-dark text-light
+                        <a href="{{ route('admin.dashboards.wallet.extract') }}" type="button" class="btn btn-block btn-dark text-light
                         text-bold">Extrato</a>
                     </div>
                 </div>
@@ -32,3 +32,9 @@
         </div>
     </div>
 </div>
+
+
+@push('scripts')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <x-livewire-alert::scripts />
+@endpush

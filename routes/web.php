@@ -67,6 +67,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
                 Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
                 Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {

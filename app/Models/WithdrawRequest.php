@@ -5,12 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClientContact extends Model
+class WithdrawRequest extends Model
 {
     use HasFactory;
 
+    public $table = 'withdraw_request';
     protected $fillable = [
         'user_id',
-        'user_id_contact',
+        'value',
     ];
 }
