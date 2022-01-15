@@ -58,7 +58,7 @@
                 @if(isset($matriz))
                     <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
 
-                    @if($typeGame->name == "BR - Lotofácil 15" || $typeGame->name == "BR - LotoMania 20" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
+                    @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
                     <button wire:click="selecionaTudo()" class="btn btn-info" type="button">Seleciona todos os Números</button>
                     @endif
                     
