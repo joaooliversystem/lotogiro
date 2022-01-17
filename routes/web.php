@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
 use App\Http\Controllers\Admin\Pages\Settings\UserController;
@@ -58,6 +59,15 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
+            });
+
+
+            Route::prefix('wallet')->name('wallet.')->group(function () {
+                Route::get('/', [WalletController::class, 'index'])->name('index');
+                Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
+                Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
+                Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
