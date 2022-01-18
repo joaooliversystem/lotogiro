@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Admin\Pages\Bets;
 
 use App\Http\Controllers\Controller;
+use App\Mail\reportDrawsByDay;
 use App\Models\Draw;
 use App\Models\Game;
 use App\Models\TypeGame;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
 class DrawController extends Controller
@@ -152,5 +155,32 @@ class DrawController extends Controller
             ]);
 
         }
+    }
+
+
+    public function reportDraws()
+    {
+        $drawsByDay = Draw::with('typeGame')
+            ->whereDate('created_at', Carbon::today())
+            ->orderBy('type_game_id')
+            ->get();
+
+        foreach($drawsByDay as $draw) {
+            $games = DB::table('games')
+                ->join('clients', 'clients.id', '=', 'games.client_id')
+                ->whereIn('games.id', explode(',', $draw->games))
+                ->select(
+                    DB::raw('concat(clients.name, " ", clients.last_name) as fullName'),
+                    'clients.pix',
+                    'client_id',
+                    DB::raw('count(*) as cupons, sum(premio) as total'))
+                ->groupBy('client_id')->get()->toArray();
+
+            $draw->setAttribute('game', $games);
+        }
+
+//        return new reportDrawsByDay($drawsByDay);
+//        \App\Jobs\reportDrawsByDay::dispatch($drawsByDay);
+        Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
     }
 }
