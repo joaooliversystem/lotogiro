@@ -215,10 +215,9 @@
 
                 <li class="nav-item has-treeview @if(request()->is('admin/wallet/*')) menu-open @endif">
                     <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is('admin/wallet/*')) active @endif">
-                        <i class="nav-icon fas fa-ticket-alt"></i>
+                        <i class="nav-icon fas fa-wallet"></i>
                         <p>
                             Carteira
-                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
                 </li>
