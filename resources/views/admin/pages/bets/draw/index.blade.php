@@ -22,7 +22,9 @@
             @can('create_draw')
                 <a href="{{route('admin.bets.draws.create')}}">
                     <button class="btn btn-info my-2">Novo Sorteio</button>
-
+                </a>
+                <a href="{{route('admin.bets.report-draws')}}" class="btn btn-dark my-2">
+                    Enviar relatório diário
                 </a>
             @endcan
             <div class="table-responsive">
