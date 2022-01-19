@@ -93,13 +93,13 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'caf31cc6ec7cf2241cb6f12c226c3846' => __DIR__ . '/..' . '/tightenco/collect/src/Collect/Support/alias.php',
         '9cdd7b9056abc3081735233ba9dd9c7f' => __DIR__ . '/..' . '/facade/flare-client-php/src/helpers.php',
         '136e53dbd9e10cf4f87df4067d0ef0d2' => __DIR__ . '/..' . '/laravie/parser/src/helpers.php',
+        '40275907c8566c390185147049ef6e5d' => __DIR__ . '/..' . '/livewire/livewire/src/helpers.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
+        '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
-        '40275907c8566c390185147049ef6e5d' => __DIR__ . '/..' . '/livewire/livewire/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
         '0b47d6d4a00ca9112ba3953b49e7c9a4' => __DIR__ . '/..' . '/yajra/laravel-datatables-oracle/src/helper.php',
-        '4a1f389d6ce373bda9e57857d3b61c84' => __DIR__ . '/..' . '/barryvdh/laravel-debugbar/src/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -212,6 +212,10 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
             'Laravie\\Parser\\' => 15,
             'Laravel\\Ui\\' => 11,
             'Laravel\\Tinker\\' => 15,
+        ),
+        'J' => 
+        array (
+            'Jantinnerezo\\LivewireAlert\\' => 27,
         ),
         'I' => 
         array (
@@ -550,6 +554,10 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
+        'Jantinnerezo\\LivewireAlert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jantinnerezo/livewire-alert/src',
+        ),
         'Illuminate\\Support\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Macroable',
@@ -742,6 +750,7 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'App\\Http\\Controllers\\Admin\\Pages\\Dashboards\\ExtractController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/Dashboards/ExtractController.php',
         'App\\Http\\Controllers\\Admin\\Pages\\Dashboards\\GainController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/Dashboards/GainController.php',
         'App\\Http\\Controllers\\Admin\\Pages\\Dashboards\\SaleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/Dashboards/SaleController.php',
+        'App\\Http\\Controllers\\Admin\\Pages\\Dashboards\\WalletController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/Dashboards/WalletController.php',
         'App\\Http\\Controllers\\Admin\\Pages\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/HomeController.php',
         'App\\Http\\Controllers\\Admin\\Pages\\Settings\\PermissionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/Settings/PermissionController.php',
         'App\\Http\\Controllers\\Admin\\Pages\\Settings\\RoleController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/Pages/Settings/RoleController.php',
@@ -750,6 +759,7 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'App\\Http\\Controllers\\Site\\Pages\\Bets\\GameController' => __DIR__ . '/../..' . '/app/Http/Controllers/Site/Pages/Bets/GameController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Livewire\\Pages\\Bets\\Draw\\Form' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Bets/Draw/Form.php',
+        'App\\Http\\Livewire\\Pages\\Bets\\Game\\Copiacola' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Bets/Game/Copiacola.php',
         'App\\Http\\Livewire\\Pages\\Bets\\Game\\Form' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Bets/Game/Form.php',
         'App\\Http\\Livewire\\Pages\\Bets\\Payments\\Commission\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Bets/Payments/Commission/Table.php',
         'App\\Http\\Livewire\\Pages\\Bets\\Payments\\Draw\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Bets/Payments/Draw/Table.php',
@@ -757,6 +767,10 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'App\\Http\\Livewire\\Pages\\Dashboards\\Extract\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Extract/Table.php',
         'App\\Http\\Livewire\\Pages\\Dashboards\\Gain\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Gain/Table.php',
         'App\\Http\\Livewire\\Pages\\Dashboards\\Sale\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Sale/Table.php',
+        'App\\Http\\Livewire\\Pages\\Dashboards\\Wallet\\Extract\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Wallet/Extract/Table.php',
+        'App\\Http\\Livewire\\Pages\\Dashboards\\Wallet\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Wallet/Table.php',
+        'App\\Http\\Livewire\\Pages\\Dashboards\\Wallet\\Transfer\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Wallet/Transfer/Table.php',
+        'App\\Http\\Livewire\\Pages\\Dashboards\\Wallet\\Withdraw\\Table' => __DIR__ . '/../..' . '/app/Http/Livewire/Pages/Dashboards/Wallet/Withdraw/Table.php',
         'App\\Http\\Livewire\\Site\\Pages\\Bets\\Games\\Bet\\Client' => __DIR__ . '/../..' . '/app/Http/Livewire/Site/Pages/Bets/Games/Bet/Client.php',
         'App\\Http\\Livewire\\Site\\Pages\\Bets\\Games\\Bet\\Create' => __DIR__ . '/../..' . '/app/Http/Livewire/Site/Pages/Bets/Games/Bet/Create.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
@@ -767,8 +781,11 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\TrustProxies' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustProxies.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
+        'App\\Jobs\\reportDrawsByDay' => __DIR__ . '/../..' . '/app/Jobs/reportDrawsByDay.php',
+        'App\\Mail\\reportDrawsByDay' => __DIR__ . '/../..' . '/app/Mail/reportDrawsByDay.php',
         'App\\Models\\Bet' => __DIR__ . '/../..' . '/app/Models/Bet.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
+        'App\\Models\\ClientContact' => __DIR__ . '/../..' . '/app/Models/ClientContact.php',
         'App\\Models\\Competition' => __DIR__ . '/../..' . '/app/Models/Competition.php',
         'App\\Models\\Draw' => __DIR__ . '/../..' . '/app/Models/Draw.php',
         'App\\Models\\Extract' => __DIR__ . '/../..' . '/app/Models/Extract.php',
@@ -776,9 +793,11 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'App\\Models\\HashGame' => __DIR__ . '/../..' . '/app/Models/HashGame.php',
         'App\\Models\\Permission' => __DIR__ . '/../..' . '/app/Models/Permission.php',
         'App\\Models\\Role' => __DIR__ . '/../..' . '/app/Models/Role.php',
+        'App\\Models\\TransactBalance' => __DIR__ . '/../..' . '/app/Models/TransactBalance.php',
         'App\\Models\\TypeGame' => __DIR__ . '/../..' . '/app/Models/TypeGame.php',
         'App\\Models\\TypeGameValue' => __DIR__ . '/../..' . '/app/Models/TypeGameValue.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\WithdrawRequest' => __DIR__ . '/../..' . '/app/Models/WithdrawRequest.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -3259,6 +3278,9 @@ class ComposerStaticInit40a02c06d14855ab090fdfa2697c28be
         'Illuminate\\View\\ViewFinderInterface' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewFinderInterface.php',
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
+        'Jantinnerezo\\LivewireAlert\\Exceptions\\AlertException' => __DIR__ . '/..' . '/jantinnerezo/livewire-alert/src/Exceptions/AlertException.php',
+        'Jantinnerezo\\LivewireAlert\\LivewireAlert' => __DIR__ . '/..' . '/jantinnerezo/livewire-alert/src/LivewireAlert.php',
+        'Jantinnerezo\\LivewireAlert\\LivewireAlertServiceProvider' => __DIR__ . '/..' . '/jantinnerezo/livewire-alert/src/LivewireAlertServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
