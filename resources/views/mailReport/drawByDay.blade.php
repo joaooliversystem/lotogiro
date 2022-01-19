@@ -2,31 +2,37 @@
     {{-- Header --}}
     @slot('header')
         @component('mail::header', ['url' => config('app.url')])
-            {{ config('app.name') }}
-
-            <h1>Relatório de sorteios</h1>
         @endcomponent
     @endslot
 
     <div style="width: 100%;">
     @php $gameName = '' @endphp
+        <div style="width: 100%; background-color: #2b97ff">
+            <h2 style="color: #FFF; font-size: 2rem; text-align: center">🤑 SLG  🤑</h2>
+            <h2 style="color: #FFF; text-align: center;"> SORTEIOS DO DIA:  17/01/2022</h2>
+            <h2 style="color: #FFF; text-align: center;"> 88 BILHETES PREMIADOS🤑</h2>
+            <h2 style="color: #FFF; text-align: center;"> Total de Premios 💰 R$ 12,131.90 💰</h2>
+            <hr>
+        </div>
     @forelse($drawsByDay as $draw)
         @if($draw->typeGame->name != $gameName)
             @php $gameName = $draw->typeGame->name  @endphp
             <div style="padding: 3px; background-color: #0080ff">
-                <h1 style="color: #FFF; font-size: 2rem;">Jogo: {{ $gameName }}</h1>
+                <h1 style="color: #FFF; font-size: 2rem;">🟡 {{ $gameName }}</h1>
             </div>
         @endif
         @forelse($draw->game as $game)
             <div style="border: 1px #333 solid; padding: 3px 2px; margin: 3px 1px;">
-                <span style="font-size: 10px !important; display: flex; flex-flow: row;">
-                    <b>Nome: </b> {{ $game->fullName }} | <b>Pix: </b> {{ $game->pix }}</span>
-                <span style="font-size: 10px !important; display: flex; flex-flow: row;">
-                    <b>{{ $game->cupons }} Cupons</b>
-                </span>
-                <span style="font-size: 10px !important; display: flex; flex-flow: row;">
-                    <b>Prêmio: R$ {!! \App\Helper\Money::toReal($game->total) !!}</b>
-                </span>
+                <h3 style="width:100%; display: flex; flex-flow: row;">
+                    <b>✓ {{ $game->fullName }}, {{ $game->cupons }} Cupons</b>
+                </h3>
+                <h3 style="width:100%; display: flex; flex-flow: row;">
+                     <b>💳 Pix: {{ $game->pix }}</b>
+                </h3>
+                <h3 style="width:100%; display: flex; flex-flow: row;">
+                    <b>💰 Prêmio: R$ {!! \App\Helper\Money::toReal($game->total) !!} 💰</b>
+                </h3>
+                <br>
             </div>
         @empty
             <p>Nenhum ganhador.</p>

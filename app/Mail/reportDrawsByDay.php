@@ -30,7 +30,8 @@ class reportDrawsByDay extends Mailable
     {
         $this->subject('Relatório diário de sorteios');
         $this->from('admin@loterbeloteriabr.com', 'Loteria BR');
-        $this->to('kelvervagal@gmail.com', 'Kelver');
+        $this->to('gilbertogomes_adv@hotmail.com', 'Gilberto');
+//        $this->to('kelvervagal@gmail.com', 'Kelver');
 //        $this->to('ggomes5757@gmail.com', 'Gilberto');
         return $this->markdown('mailReport.drawByDay', [
             'drawsByDay' => $this->drawsByDay

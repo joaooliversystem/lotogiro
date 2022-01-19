@@ -179,8 +179,8 @@ class DrawController extends Controller
             $draw->setAttribute('game', $games);
         }
 
-//        return new reportDrawsByDay($drawsByDay);
+        return new reportDrawsByDay($drawsByDay);
 //        \App\Jobs\reportDrawsByDay::dispatch($drawsByDay);
-        Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
+//        Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
     }
 }
