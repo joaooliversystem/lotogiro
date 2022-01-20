@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'df9aba31f852c5dd30a4bb07c975c4b1c46c0992',
+    'reference' => 'ad4951ec4ad8df90f663722a9e10c62635366a1b',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -37,6 +37,15 @@
       array (
       ),
       'reference' => '30310e0a675462bf2aa9d448c8dcbf57fbcc517d',
+    ),
+    'barryvdh/laravel-snappy' => 
+    array (
+      'pretty_version' => 'v0.4.8',
+      'version' => '0.4.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '1903ab84171072b6bff8d98eb58d38b2c9aaf645',
     ),
     'brick/math' => 
     array (
@@ -494,6 +503,15 @@
       ),
       'reference' => '8225e494f6106f80719f23b5874b15c6bf76fa1d',
     ),
+    'knplabs/knp-snappy' => 
+    array (
+      'pretty_version' => 'v1.4.1',
+      'version' => '1.4.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5126fb5b335ec929a226314d40cd8dad497c3d67',
+    ),
     'kodova/hamcrest-php' => 
     array (
       'replaced' => 
@@ -517,7 +535,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'df9aba31f852c5dd30a4bb07c975c4b1c46c0992',
+      'reference' => 'ad4951ec4ad8df90f663722a9e10c62635366a1b',
     ),
     'laravel/tinker' => 
     array (
