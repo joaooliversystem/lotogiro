@@ -18,11 +18,12 @@ use App\Models\Bet;
 use App\Models\TypeGameValue;
 
 use App\Models\User;
-use Barryvdh\DomPDF\Facade as PDF;
+// use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class GameController extends Controller
 {
@@ -473,10 +474,13 @@ class GameController extends Controller
             'jogosCliente' => $jogosCliente
         ];
         // dd($jogosCliente);
-        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-
+        // $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
+        // return $pdf->download($fileName);
+
+        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
+        // $pdf->generateFromHtml($html, $fileName);
 
     }
 }
