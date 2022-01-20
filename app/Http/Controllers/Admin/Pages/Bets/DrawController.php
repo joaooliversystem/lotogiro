@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Pages\Bets;
 
+use App\Helper\Money;
 use App\Http\Controllers\Controller;
 use App\Mail\reportDrawsByDay;
 use App\Models\Draw;
@@ -160,12 +161,16 @@ class DrawController extends Controller
 
     public function reportDraws()
     {
+        $totalCupons = 0;
+        $totalPremio = 0;
+        $type = request('type');
         $drawsByDay = Draw::with('typeGame')
             ->whereDate('created_at', Carbon::today())
             ->orderBy('type_game_id')
             ->get();
 
         foreach($drawsByDay as $draw) {
+            $totalCupons += count(explode(',', $draw->games));
             $games = DB::table('games')
                 ->join('clients', 'clients.id', '=', 'games.client_id')
                 ->whereIn('games.id', explode(',', $draw->games))
@@ -176,11 +181,17 @@ class DrawController extends Controller
                     DB::raw('count(*) as cupons, sum(premio) as total'))
                 ->groupBy('client_id')->get()->toArray();
 
+            $totalPremio += array_sum(array_column($games, 'total'));
             $draw->setAttribute('game', $games);
+            $draw->setAttribute('typeRequest', $type);
         }
+        $drawsByDay->totalCupons = $totalCupons;
+        $drawsByDay->totalPremio = Money::toReal($totalPremio);
 
 //        return new reportDrawsByDay($drawsByDay);
 //        \App\Jobs\reportDrawsByDay::dispatch($drawsByDay);
         Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
+
+        return redirect()->back();
     }
 }

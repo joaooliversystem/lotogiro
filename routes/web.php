@@ -74,7 +74,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 'index', 'create'
             ]);
             Route::resource('draws', DrawController::class);
-            Route::get('report-draws', [DrawController::class, 'reportDraws'])->name('report-draws');
+            Route::get('report-draws/{type}', [DrawController::class, 'reportDraws'])->name('report-draws');
             Route::resource('validate-games', ValidateGamesController::class)->except([
                 'store'
             ]);;
