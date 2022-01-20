@@ -17,7 +17,13 @@ class Table extends Component
     public $searchPhrase;
     public $valueTransfer;
     public $storeContact = true;
-
+    public $user;
+    public $userId;
+     public function mount()
+    {
+        $this->user = auth()->user();
+        $this->userId = auth()->user()->id;
+    }
     protected $rules = [
         'searchPhrase' => 'required|min:6',
     ];
@@ -31,20 +37,21 @@ class Table extends Component
 
     public function transferBalance(): void
     {
-        $myOldBalance = auth()->user()->balance;
+        
+        $myOldBalance = $this->user->balance;
         $oldBalanceClient = $this->client['balance'];
         $this->client['balance'] += (float) Money::toDatabase($this->valueTransfer);
-        auth()->user()->balance -= (float) Money::toDatabase($this->valueTransfer);
+        $this->user->balance -= (float) Money::toDatabase($this->valueTransfer);
 
         $client = User::find($this->client['id']);
         $client->balance = $this->client['balance'];
 
         $client->save();
-        auth()->user()->save();
+        $this->user->save();
 
-        $this->storeTransact(auth()->user(), $this->valueTransfer, $myOldBalance, "Saldo transferido para {$this->client['name']}");
+        $this->storeTransact($this->user, $this->valueTransfer, $myOldBalance, "Saldo transferido para {$this->client['name']}");
         $this->storeTransact($client, $this->valueTransfer, $oldBalanceClient, "Saldo recebido de " .
-                auth()->user()->name);
+                $this->user->name);
 
         if($this->storeContact){
             $this->storeContact($client);
@@ -62,7 +69,7 @@ class Table extends Component
     private function storeTransact(User $user, string $value, string $oldValue, string $type): void
     {
         TransactBalance::create([
-            'user_id_sender' => auth()->id(),
+            'user_id_sender' => $this->userId,
             'user_id' => $user->id,
             'value' => Money::toDatabase($value),
             'old_value' => $oldValue,
@@ -73,14 +80,14 @@ class Table extends Component
     private function storeContact(User $user): void
     {
         $verifyContact = ClientContact::where([
-                'user_id' => auth()->id(),
+                'user_id' => $this->userId,
                 'user_id_contact' => $user->id
             ])
             ->exists();
 
         if(!$verifyContact) {
             ClientContact::create([
-                'user_id' => auth()->id(),
+                'user_id' => $this->userId,
                 'user_id_contact' => $user->id
             ]);
         }
