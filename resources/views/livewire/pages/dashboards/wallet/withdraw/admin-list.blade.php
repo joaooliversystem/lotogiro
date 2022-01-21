@@ -2,8 +2,7 @@
     <div class="row bg-white p-3">
         <div class="col-md-12">
             <div class="table-responsive">
-                <h4 class="my-4">Extrato de Saldo | {{ auth()->user()->name }} - Saldo Total: {{ \App\Helper\Money::toReal
-                (auth()->user()->balance) }}</h4>
+                <h4 class="my-4">Solicitações de saque</h4>
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
