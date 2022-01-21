@@ -27,4 +27,8 @@ class WalletController extends Controller
     {
         return view('admin.pages.dashboards.wallet.extract');
     }
+    public function withdrawList()
+    {
+        return view('admin.pages.dashboards.wallet.admin-list');
+    }
 }
