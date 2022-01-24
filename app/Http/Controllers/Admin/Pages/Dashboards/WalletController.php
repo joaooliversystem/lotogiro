@@ -13,7 +13,7 @@ class WalletController extends Controller
     }
     public function recharge()
     {
-        return view('admin.pages.dashboards.wallet.index');
+        return view('admin.pages.dashboards.wallet.recharge');
     }
     public function transfer()
     {
