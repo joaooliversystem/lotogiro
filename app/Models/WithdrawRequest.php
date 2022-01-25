@@ -13,5 +13,11 @@ class WithdrawRequest extends Model
     protected $fillable = [
         'user_id',
         'value',
+        'status',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }
