@@ -14,30 +14,28 @@
             @if(empty($typeGame->competitions->last()))
                 <td colspan="2" class="text-danger">NÃO EXISTE CONCURSO CADASTRADO, NÃO É POSSIVEL CRIAR O JOGO</td>
             @else
-            <td>{{$typeGame->competitions->last()->number}}</td>
-            <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
-            <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-primary" type="button">Carregar </button></a></td>
-            
+                <td>{{$typeGame->competitions->last()->number}}</td>
+                <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
+                <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-primary" type="button">Carregar </button></a></td>
             @endif
         </tr>
         </tbody>
     </table>
 
-{{-- <div wire:ignore>
-    @if($teste['type_client'] == 2)
+    @if($User['type_client'] == 1)
 
-    <input type="text" value="{{ $teste['name'] }}" disabled class="form-control">
-    <input type="hidden" name="client" value="{{ $clientId }}">
+    <input type="text" value="{{ $FiltroUser['name'] }}" disabled class="form-control">
+    <input type="hidden" name="client" value="{{ $FiltroUser['id'] }}" readonly>
 
     @endif
-</div>
 
-@if($teste['type_client'] == 2)
-    <input type="hidden" name="numbers" id="numbers" value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach" readonly>
-    <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
-@endif
 
-@if($teste['type_client'] == 1) --}}
+    @if($FiltroUser['type_client'] == 1)
+        <input type="hidden" name="numbers" id="numbers" value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach" readonly>
+        <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}" readonly>
+    @endif
+
+@if($User['type_client'] == null)
 
     {{-- INPUT DO SEARCH SE NÃO TIVER AUTENTICADO --}}
 
@@ -60,18 +58,16 @@
         
         {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
 
-        <input type="hidden" name="client" value="{{$clientId}}">
+        <input type="" name="client" value="{{$clientId}}">
             <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
                 <div class="col-md-12">
                     @if($showList)
                         <ul class="list-group">
                             @if(isset($clients) && $clients->count() > 0)
-                            {{-- <h2>$client</h2> --}}
-                            @foreach($clients as $client)
-                                <li wire:click="setId({{ $client }})"
-                                    {{-- class="list-group-item" style="cursor:pointer;">{{ $client->name . ' - ' . \App\Helper\Mask::addMaskCpf($client->cpf) . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li> --}}
-                                    class="list-group-item" style="cursor:pointer;">{{ $client->name . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
-                            @endforeach
+                                    @foreach($clients as $client)
+                                        <li wire:click="setId({{ $client }})"
+                                            class="list-group-item" style="cursor:pointer;">{{ $client->name . ' - ' . $client->email . ' - '. \App\Helper\Mask::addMaksPhone($client->ddd.$client->phone)}} </li>
+                                    @endforeach
                             @endif
                         </ul>
                     @endif
@@ -80,10 +76,10 @@
 
             <input type="hidden" name="numbers" id="numbers" value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach" readonly>
             </div>
-        <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
+        <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}" readonly>
     </div>
 
-    {{-- @endif --}}
+    @endif
 
         {{-- PARTE DE CALCULO DE VALORES DO JOGO --}}
 
@@ -98,7 +94,7 @@
                         <input type="text" id="value" onchange="altera()" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                         Valor do Prêmio R$
                         <input type="text" id="premio" value="" name="premio" readonly>
-                        <button  class="btn btn-info" type="button" onclick="altera();">Calcular</button>
+                        <button  class="btn btn-success" type="button" onclick="altera();">Calcular</button>
                     @endforeach
                 @else
                 
@@ -111,8 +107,8 @@
         <div class="col-md-12">
             @if(isset($matriz))
                 <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
-                    @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                      <button wire:click="selecionaTudo()" class="btn btn-info" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
+                    @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
+                      <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
                     @endif
 
                     <br>
@@ -120,10 +116,8 @@
                     
                     {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                     @foreach ($busca as $buscas)
-                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-dark" type="button">{{ $buscas['numbers'] }}</button>
+                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>
                     @endforeach 
-
-         
 
                 <div class="table-responsive">
                     <table class="table  text-center">
@@ -133,7 +127,7 @@
                                 @foreach($lines as $cols)
                                     <td>
                                         <button wire:click="selectNumber({{$cols}})" id="number_{{$cols}}" type="button"
-                                                class="btn btn-info {{in_array($cols, $selectedNumbers) ? 'btn-info' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
+                                                class="btn btn-success {{in_array($cols, $selectedNumbers) ? 'btn-success' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
                                     </td>
                                 @endforeach
                             </tr>

@@ -143,13 +143,13 @@ class Form extends Component
 
     public function render()
     {
-        // $teste = Auth::user();
-        // $busca = client::where('name', $teste['name'])->get();
-        // $this->teste = $teste;
+        $User = Auth::user();
+        $FiltroUser = client::where('name', $User['name'])->first();
+        $this->FiltroUser = $FiltroUser;
 
         $busca = TypeGameValue::select('numbers')->where('type_game_id', $this->typeGame->id)->orderBy('numbers', 'asc')->get();
         $this->busca = $busca;
 
-        return view('livewire.pages.bets.game.form', compact('busca'));
+        return view('livewire.pages.bets.game.form', compact('busca', 'FiltroUser', 'User'));
     }
 }

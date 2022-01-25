@@ -95,6 +95,42 @@
                         </span>
                         @enderror
                     </div>
+
+                    {{-- parte de dados do cliente --}}
+                    <div class="form-group col-md-6">
+                        <label for="confirm_password">pix</label>
+                        <input type="" class="form-control @error('pix') is-invalid @enderror"
+                               id="pix"
+                               name="pix" maxlength="50">
+                        @error('pix')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="confirm_password">telefone</label>
+                        <input type="text" class="form-control @error('telefone') is-invalid @enderror"
+                               id="telefone"
+                               name="telefone" maxlength="15">
+                        @error('telefone')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="confirm_password">cpf</label>
+                        <input type="" class="form-control @error('cpf') is-invalid @enderror"
+                               id="cpf"
+                               name="cpf" maxlength="11">
+                        @error('cpf')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+
                 </div>
             </div>
         </div>

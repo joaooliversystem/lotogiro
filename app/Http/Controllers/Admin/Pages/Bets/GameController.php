@@ -473,14 +473,11 @@ class GameController extends Controller
             'prize' => $prize,
             'jogosCliente' => $jogosCliente
         ];
-        // dd($jogosCliente);
-        // $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+    
         $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
-        // return $pdf->download($fileName);
 
         $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
-        // $pdf->generateFromHtml($html, $fileName);
 
     }
 }

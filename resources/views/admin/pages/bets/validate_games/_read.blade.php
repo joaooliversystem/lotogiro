@@ -28,9 +28,9 @@
                             <table class="table table-sm">
                                 <thead>
                                 <tr>
-                                    <td>
+                                    {{-- <td>
                                         Cpf
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         Nome
                                     </td>
@@ -38,9 +38,9 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>
+                                    {{-- <td>
                                         {{\App\Helper\Mask::addMaskCpf($validate_game->client->cpf)}}
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         {{$validate_game->client->name}} {{$validate_game->client->last_name}}
                                     </td>
@@ -73,7 +73,7 @@
                         @endif
 
                         <div class="table-responsive">
-                            <table class="table table-sm">
+                            <table class="table table-sm" id="myTable">
                                 <thead>
                                 <tr>
                                     <th scope="col">Id Jogo</th>
@@ -180,9 +180,16 @@
 
 
 @push('scripts')
-
-    <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
     <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
+
+    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+   
+   <script>
         $(document).ready(function () {
             $('#cpf').inputmask("999.999.999-99");
             $('#phone').inputmask("(99) 9999[9]-9999");

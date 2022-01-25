@@ -100,6 +100,13 @@ class Copiacola extends Component
 
     public function render()
     {
-        return view('livewire.pages.bets.game.copiacola');
+        $User = Auth::user();
+        $FiltroUser = client::where('name', $User['name'])->first();
+        $this->FiltroUser = $FiltroUser;
+
+        $busca = TypeGameValue::select('numbers')->where('type_game_id', $this->typeGame->id)->orderBy('numbers', 'asc')->get();
+        $this->busca = $busca;
+
+        return view('livewire.pages.bets.game.copiacola', compact('User', 'FiltroUser', 'busca'));
     }
 }
