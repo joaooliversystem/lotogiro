@@ -30,7 +30,7 @@
     @endif
 
 
-    @if($FiltroUser['type_client'] == 1)
+    @if($User['type_client'] == 1)
         <input type="hidden" name="numbers" id="numbers" value="@foreach ($selectedNumbers as $selectedNumbers1) {{ $selectedNumbers1 }} @endforeach" readonly>
         <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}" readonly>
     @endif
