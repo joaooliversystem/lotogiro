@@ -94,9 +94,6 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
-            'pix' => 'required|max:60',
-            'telefone' => 'required|max:15',
-            'cpf' => 'required|max:11',
             'email' => 'unique:App\Models\User|email:rfc|required|max:100',
             'password' => 'min:8|same:password_confirmation|required|max:15',
             'password_confirmation' => 'required|max:15',
@@ -132,6 +129,13 @@ class UserController extends Controller
             
             // enviar pra cliente
             if($auxRole == 6){
+
+                $validatedData = $request->validate([
+                    'pix' => 'required|max:60',
+                    'telefone' => 'required|max:15',
+                    'cpf' => 'required|max:11'
+                ]);
+
                 $user->type_client = 1;
 
                 $data = $request->only('pix', 'telefone', 'cpf');

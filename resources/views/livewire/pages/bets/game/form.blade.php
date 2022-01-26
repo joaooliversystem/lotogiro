@@ -58,7 +58,7 @@
         
         {{-- PARTE DE PESQUISA DE CLIENTE SE NÃO TIVER AUTENTICAÇÃO --}}
 
-        <input type="" name="client" value="{{$clientId}}">
+        <input type="hidden" name="client" value="{{$clientId}}">
             <div class="row mb-3" id="list_group" style="max-height: 100px; overflow-y: auto">
                 <div class="col-md-12">
                     @if($showList)
