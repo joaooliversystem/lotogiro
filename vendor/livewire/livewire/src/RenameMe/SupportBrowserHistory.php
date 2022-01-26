@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Routing\UrlGenerator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use function Livewire\str;
 
 class SupportBrowserHistory
@@ -19,8 +20,6 @@ class SupportBrowserHistory
 
     function __construct()
     {
-        $this->mergedQueryParamsFromDehydratedComponents = collect($this->getExistingQueryParams());
-
         Livewire::listen('component.hydrate.initial', function ($component) {
             if (! $properties = $this->getQueryParamsFromComponentProperties($component)->keys()) return;
 
@@ -29,13 +28,15 @@ class SupportBrowserHistory
             foreach ($properties as $property) {
                 $fromQueryString = Arr::get($queryParams, $property);
 
+                if ($fromQueryString === null) {
+                    continue;
+                }
+
                 $decoded = is_array($fromQueryString)
                     ? json_decode(json_encode($fromQueryString), true)
                     : json_decode($fromQueryString, true);
 
-                if ($fromQueryString !== null) {
-                    $component->$property = $decoded === null ? $fromQueryString : $decoded;
-                }
+                $component->$property = $decoded === null ? $fromQueryString : $decoded;
             }
         });
 
@@ -73,9 +74,9 @@ class SupportBrowserHistory
         try {
             // See if we can get the route from the referer.
             return app('router')->getRoutes()->match(
-                Request::create($referer, 'GET')
+                Request::create($referer, Livewire::originalMethod())
             );
-        } catch (NotFoundHttpException $e) {
+        } catch (NotFoundHttpException|MethodNotAllowedHttpException $e) {
             // If not, use the current route.
             return app('router')->current();
         }
@@ -94,7 +95,7 @@ class SupportBrowserHistory
             // If the component is registered using `Route::get()`.
             && str($action)->contains(get_class($component))
             // AND, the component is tracking route params as its public properties
-            && count(array_intersect_key($component->getPublicPropertiesDefinedBySubClass(), $route->parametersWithoutNulls()))
+            && count(array_intersect_key($component->getPublicPropertiesDefinedBySubClass(), array_flip($route->parameterNames())))
         ) {
             return true;
         }
@@ -104,7 +105,7 @@ class SupportBrowserHistory
 
     protected function getExistingQueryParams()
     {
-        return Livewire::isLivewireRequest()
+        return Livewire::isDefinitelyLivewireRequest()
             ? $this->getQueryParamsFromRefererHeader()
             : request()->query();
     }
@@ -129,7 +130,7 @@ class SupportBrowserHistory
             $route->parametersWithoutNulls(),
             array_intersect_key(
                 $component->getPublicPropertiesDefinedBySubClass(),
-                $route->parametersWithoutNulls()
+                array_flip($route->parameterNames())
             )
         );
 
@@ -138,6 +139,10 @@ class SupportBrowserHistory
 
     protected function mergeComponentPropertiesWithExistingQueryParamsFromOtherComponentsAndTheRequest($component)
     {
+        if (! $this->mergedQueryParamsFromDehydratedComponents) {
+            $this->mergedQueryParamsFromDehydratedComponents = collect($this->getExistingQueryParams());
+        }
+
         $excepts = $this->getExceptsFromComponent($component);
 
         $this->mergedQueryParamsFromDehydratedComponents = collect(request()->query())
@@ -176,6 +181,6 @@ class SupportBrowserHistory
 
     protected function stringifyQueryParams($queryParams)
     {
-        return $queryParams->isEmpty() ? '' : '?'.http_build_query($queryParams->toArray());
+        return $queryParams->isEmpty() ? '' : '?'.Arr::query($queryParams->toArray());
     }
 }

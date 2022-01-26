@@ -12,7 +12,7 @@ import MethodAction from '@/action/method'
 import ModelAction from '@/action/model'
 import DeferredModelAction from '@/action/deferred-model'
 import MessageBus from '../MessageBus'
-import { alpinifyElementsForMorphdom } from './SupportAlpine'
+import { alpinifyElementsForMorphdom, getEntangleFunction } from './SupportAlpine'
 
 export default class Component {
     constructor(el, connection) {
@@ -78,7 +78,7 @@ export default class Component {
         // The .split() stuff is to support dot-notation.
         return name
             .split('.')
-            .reduce((carry, segment) => carry[segment], this.data)
+            .reduce((carry, segment) => typeof carry === 'undefined' ? carry : carry[segment], this.data)
     }
 
     getPropertyValueIncludingDefers(name) {
@@ -344,8 +344,6 @@ export default class Component {
 
             if (DOM.hasFocus(el) && ! dirtyInputs.includes(modelValue)) return
 
-            if (el.wasRecentlyAutofilled) return
-
             DOM.setInputValueFromModel(el, this)
         })
     }
@@ -557,7 +555,7 @@ export default class Component {
         if (this.modelDebounceCallbacks) {
             this.modelDebounceCallbacks.forEach(callbackRegister => {
                 callbackRegister.callback()
-                callbackRegister = () => { }
+                callbackRegister.callback = () => { }
             })
         }
 
@@ -627,15 +625,10 @@ export default class Component {
 
         return (this.dollarWireProxy = new Proxy(refObj, {
             get(object, property) {
+                if (['_x_interceptor'].includes(property)) return
+
                 if (property === 'entangle') {
-                    return (name, defer = false) => ({
-                        isDeferred: defer,
-                        livewireEntangle: name,
-                        get defer() {
-                            this.isDeferred = true
-                            return this
-                        },
-                    })
+                    return getEntangleFunction(component)
                 }
 
                 if (property === '__instance') return component
@@ -643,8 +636,9 @@ export default class Component {
                 // Forward "emits" to base Livewire object.
                 if (typeof property === 'string' && property.match(/^emit.*/)) return function (...args) {
                     if (property === 'emitSelf') return store.emitSelf(component.id, ...args)
+                    if (property === 'emitUp') return store.emitUp(component.el, ...args)
 
-                    return store[property].apply(component, args)
+                    return store[property](...args)
                 }
 
                 if (

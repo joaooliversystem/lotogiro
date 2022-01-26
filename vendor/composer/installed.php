@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'ad4951ec4ad8df90f663722a9e10c62635366a1b',
+    'reference' => 'e34d58304861c908c7a0dd998ae23b92c3b4ccad',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -535,7 +535,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'ad4951ec4ad8df90f663722a9e10c62635366a1b',
+      'reference' => 'e34d58304861c908c7a0dd998ae23b92c3b4ccad',
     ),
     'laravel/tinker' => 
     array (
@@ -593,12 +593,12 @@
     ),
     'livewire/livewire' => 
     array (
-      'pretty_version' => 'v2.3.2',
-      'version' => '2.3.2.0',
+      'pretty_version' => 'v2.5.5',
+      'version' => '2.5.5.0',
       'aliases' => 
       array (
       ),
-      'reference' => '8aa271bc3af74d8fea8480b372ecaa0d5ae3f6d2',
+      'reference' => 'de192292d68276d831e5fd9824c80c3b78a21ddf',
     ),
     'lucascudo/laravel-pt-br-localization' => 
     array (

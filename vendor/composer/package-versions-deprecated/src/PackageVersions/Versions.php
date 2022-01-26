@@ -62,7 +62,7 @@ final class Versions
   'league/commonmark' => '1.5.7@11df9b36fd4f1d2b727a73bf14931d81373b9a54',
   'league/flysystem' => '1.1.3@9be3b16c877d477357c015cec057548cf9b2a14a',
   'league/mime-type-detection' => '1.5.1@353f66d7555d8a90781f6f5e7091932f9a4250aa',
-  'livewire/livewire' => 'v2.3.2@8aa271bc3af74d8fea8480b372ecaa0d5ae3f6d2',
+  'livewire/livewire' => 'v2.5.5@de192292d68276d831e5fd9824c80c3b78a21ddf',
   'maatwebsite/excel' => '3.1.26@66f7c9584304ad0b6a267a5d8ffbfa2ff4272e85',
   'maennchen/zipstream-php' => '2.1.0@c4c5803cc1f93df3d2448478ef79394a5981cc58',
   'markbaker/complex' => '2.0.0@9999f1432fae467bc93c53f357105b4c31bb994c',
@@ -168,7 +168,7 @@ final class Versions
   'symfony/debug' => 'v4.4.31@43ede438d4cb52cd589ae5dc070e9323866ba8e0',
   'theseer/tokenizer' => '1.2.0@75a63c33a8577608444246075ea0af0d052e452a',
   'webmozart/assert' => '1.9.1@bafc69caeb4d49c39fd0779086c03a3738cbb389',
-  'laravel/laravel' => 'dev-main@03711e1b0f5a6f73da196229282fba6270d6634d',
+  'laravel/laravel' => 'dev-main@e34d58304861c908c7a0dd998ae23b92c3b4ccad',
 );
 
     private function __construct()
