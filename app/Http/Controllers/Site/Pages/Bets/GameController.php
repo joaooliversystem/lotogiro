@@ -29,7 +29,7 @@ class GameController extends Controller
         try {
             $date = Carbon::now();
 
-            if ( $date->hour >=20 || $date->hour < 21) {
+            if ( $date->hour >=20 && $date->hour < 21) {
             $bet = null;
             $typeGames = TypeGame::get();
             session()->flash('error', 'Apostas Encerradas!');
@@ -61,7 +61,7 @@ class GameController extends Controller
           throw new \Exception('Aposta Já finalizada');
         }
             $date = Carbon::now();
-            if ( $date->hour >=20 || $date->hour < 21) {
+            if ( $date->hour >=20 && $date->hour < 21) {
             throw new \Exception('Apostas encerradas');
 
         }
