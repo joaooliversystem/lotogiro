@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 
 class Copiacola extends Component
