@@ -6,7 +6,7 @@ use App\Helper\Money;
 use App\Http\Controllers\Controller;
 use App\Models\TransactBalance;
 use App\Models\User;
-use App\Models\client;
+use App\Models\Client;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -139,7 +139,7 @@ class UserController extends Controller
                 $user->type_client = 1;
 
                 $data = $request->only('pix', 'telefone', 'cpf');
-                $passardados = New client;
+                $passardados = New Client;
 
                 $passardados->cpf = $data['cpf'];
                 $passardados->name = $request->name;
