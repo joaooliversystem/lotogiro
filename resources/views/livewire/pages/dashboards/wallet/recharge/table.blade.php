@@ -16,32 +16,26 @@
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-7">
                                                         <h6 class="my-0">Valor a ser adicionado</h6>
-                                                        <small class="text-muted">O valor inserido, será creditado
-                                                            em sua conta.</small>
+                                                        <small class="text-muted">Valor mínimo de R$ 1,00
+
+                                                            <small class="text-muted"><p>O valor inserido, será creditado
+                                                                em sua conta assim que formos notificados.</p></small>
+                                                        </small>
                                                     </div>
 
                                                     <div class="col-sm-12 col-md-5 input-group">
-                                                        <input wire:model="valueTransfer" x-model="valueTransfer"
-                                                               x-on:focus="formatInput()" type="text" name="valueAdd" id="valueAdd"
-                                                               class="search-query form-control w-100"
-                                                               placeholder="Valor" />
+                                                        <input wire:model="valueAdd" x-on:focus="formatInput()"
+                                                               type="text" name="valueAdd" id="valueAdd"
+                                                               class="search-query form-control w-100" placeholder="Valor" />
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
 
-{{--                                        <form class="card p-2">--}}
-{{--                                            <div class="input-group">--}}
-{{--                                                <input type="text" class="form-control" placeholder="Código--}}
-{{--                                                    Promocional">--}}
-{{--                                                <div class="input-group-append">--}}
-{{--                                                    <button type="submit" class="btn btn-secondary">Confirmar</button>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </form>--}}
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-primary btn-lg
-                                            btn-block">Continuar</button>
+                                            <button wire:click.prevent="callMP" type="submit"
+                                                    @if($valueAdd <= .99) disabled @endif
+                                                    class="btn btn-primary btn-lg btn-block">Continuar {{$valueAdd}}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -70,6 +64,11 @@
     <script type="text/javascript">
         function formatInput(){
             VMasker(document.getElementById("valueAdd")).maskMoney();
+        }
+
+        function redirect(link){
+            window.open(link, "_blank");
+            window.location.href = 'recharge-order';
         }
     </script>
 @endpush

@@ -31,4 +31,12 @@ class WalletController extends Controller
     {
         return view('admin.pages.dashboards.wallet.admin-list');
     }
+    public function rechargeOrder()
+    {
+        return view('admin.pages.dashboards.wallet.recharge-order');
+    }
+    public function orderDetail()
+    {
+        return view('admin.pages.dashboards.wallet.order-detail');
+    }
 }

@@ -28,7 +28,7 @@ class AdminList extends Component
         $withdraws->each(function($item, $key){
             $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
             $item->responsavel = $item->user->name;
-            $item->data = Money::toReal($item->value);
+            $item->value = Money::toReal($item->value);
             $item->statusTxt = $item->status === 0 ? 'À fazer' : 'Feito';
         });
 
