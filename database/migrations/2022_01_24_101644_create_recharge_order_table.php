@@ -19,6 +19,7 @@ class CreateRechargeOrderTable extends Migration
             $table->bigInteger('user_id');
             $table->decimal('value', 4, 2);
             $table->char('status', '1');//0 - pending, 1 - approved, 2 - canceled, 3 - failure
+            $table->text('link');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });

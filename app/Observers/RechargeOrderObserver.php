@@ -15,6 +15,8 @@ class RechargeOrderObserver
      */
     public function creating(RechargeOrder $rechargeOrder)
     {
-        $rechargeOrder->reference = Str::uuid();
+        if(is_null($rechargeOrder->reference) || empty($rechargeOrder->reference)){
+            $rechargeOrder->reference = Str::uuid();
+        }
     }
 }

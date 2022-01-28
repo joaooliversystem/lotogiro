@@ -14,6 +14,7 @@ class RechargeOrder extends Model
         'reference',
         'user_id',
         'value',
+        'link',
         'status',
     ];
 

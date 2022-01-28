@@ -36,14 +36,16 @@ class Table extends Component
 
         $preference->items = array($item);
         $preference->back_urls = [
-            "success" => "http://lotogiro.pc/",
-            "failure" => "http://lotogiro.pc/",
-            "pending" => "http://lotogiro.pc/"
+            "success" => "http://lotogiro.pc/admin/dashboards/wallet/updateStatusPayment/",
+            "failure" => "http://lotogiro.pc/admin/dashboards/wallet/updateStatusPayment/",
+            "pending" => "http://lotogiro.pc/admin/dashboards/wallet/updateStatusPayment/"
         ];
 
         $preference->notification_url = "http://lotogiro.pc/";
         $preference->external_reference = $order->reference;
         $preference->save();
+
+        $order->update(['link' => $preference->init_point]);
 
         $this->alert('info', 'Pronto!!', [
             'position' => 'center',
