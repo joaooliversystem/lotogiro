@@ -7,6 +7,7 @@ use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Helper\UserValidate;
 
 class AdminList extends Component
 {
@@ -24,7 +25,14 @@ class AdminList extends Component
     public function render()
     {
         $withdraws = WithdrawRequest::with('user')
+            ->where('user_id', auth()->id())
             ->paginate(10);
+
+        if(UserValidate::iAmAdmin()){
+            $withdraws = WithdrawRequest::with('user')
+                ->paginate(10);
+        }
+
         $withdraws->each(function($item, $key){
             $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
             $item->responsavel = $item->user->name;

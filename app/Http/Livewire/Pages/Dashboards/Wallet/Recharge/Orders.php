@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Pages\Dashboards\Wallet\Recharge;
 
 use App\Helper\Money;
+use App\Helper\UserValidate;
 use App\Models\RechargeOrder;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use function App\Helper\UserValidate;
 
 class Orders extends Component
 {
@@ -21,9 +23,15 @@ class Orders extends Component
             'Pendente', 'Aprovado', 'Cancelado', 'Falha'
         ];
         $allOrders = RechargeOrder::with('user')
+            ->where('user_id', auth()->id())
             ->orderByDesc('id')
             ->paginate(10);
 
+        if(UserValidate::iAmAdmin()){
+            $allOrders = RechargeOrder::with('user')
+                ->orderByDesc('id')
+                ->paginate(10);
+        }
 
         $allOrders->each(function($item, $key) use ($allOrders, $orders, $typeStatus) {
 
