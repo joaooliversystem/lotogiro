@@ -16,21 +16,32 @@ class Orders extends Component
 
     public function render()
     {
+        $orders = collect([]);
         $typeStatus = [
             'Pendente', 'Aprovado', 'Cancelado', 'Falha'
         ];
-        $orders = RechargeOrder::with('user')
+        $allOrders = RechargeOrder::with('user')
             ->orderByDesc('id')
             ->paginate(10);
 
-        $orders->each(function($item, $key) use ($typeStatus) {
-            $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
-            $item->value = Money::toReal($item->value);
-            $item->statusTxt = $typeStatus[$item->status];
+
+        $allOrders->each(function($item, $key) use ($allOrders, $orders, $typeStatus) {
+
+            if($orders->contains('reference', $item->reference)) {
+                $allOrders->forget($key);
+            }
+
+            if(!$orders->contains('reference', $item->reference)) {
+                $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
+                $item->value = Money::toReal($item->value);
+                $item->statusTxt = $typeStatus[$item->status];
+
+                $orders->push($item);
+            }
         });
 
         return view('livewire.pages.dashboards.wallet.recharge.orders', [
-            'orders' => $orders
+            'orders' => $allOrders
         ]);
     }
 }

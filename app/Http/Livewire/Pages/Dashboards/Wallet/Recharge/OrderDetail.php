@@ -17,10 +17,13 @@ class OrderDetail extends Component
         ];
         $allOrder = RechargeOrder::where('reference', request('id'))->get();
 
+        $allOrder->each(function($item, $key) use ($typeStatus) {
+            $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
+            $item->value = Money::toReal($item->value);
+            $item->statusTxt = $typeStatus[$item->status];
+        });
+
         $order = $allOrder->last();
-        $order->value = Money::toReal($order->value);
-        $order->data = Carbon::parse($order->created_at)->format('d/m/y à\\s H:i:s');
-        $order->statusTxt = $typeStatus[$order->status];
 
         return view('livewire.pages.dashboards.wallet.recharge.order-detail', [
             'order' => $order,
