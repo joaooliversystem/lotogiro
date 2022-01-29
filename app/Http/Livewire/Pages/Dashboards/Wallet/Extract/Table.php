@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\Pages\Dashboards\Wallet\Extract;
 
 use App\Helper\Money;
+use App\Helper\UserValidate;
 use App\Models\TransactBalance;
 use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
+use function App\Helper\UserValidate;
 
 class Table extends Component
 {

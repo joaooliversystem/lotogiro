@@ -15,6 +15,9 @@
                         <a href="{{ route('admin.dashboards.wallet.withdraw-list') }}" type="button" class="btn
                         btn-block btn-outline-secondary text-black
                             text-bold">Solicitações de saque</a>
+                        <a href="{{ route('admin.dashboards.wallet.recharge-order') }}" type="button" class="btn
+                        btn-block btn-outline-secondary text-black
+                            text-bold">Pedidos de Recarga</a>
                     </div>
                 </div>
                 <div class="row mt-5">
