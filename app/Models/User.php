@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'pixSaque',
     ];
 
     /**
@@ -41,6 +42,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function client()
+    {
+        return $this->hasOne(Client::class, 'id', 'type_client');
+    }
 
     public function games()
     {

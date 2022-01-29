@@ -128,7 +128,7 @@
     <div class="border-bottom-dashed">
         <p class="text-danger text-center font text-size-2 text-bold">
             RELATÓRIO DE EXTRATO <br/>
-            LOTO GIRO
+            LOTERIABR
         </p>
     </div>
     <div class="border-bottom-dashed text-size-1">

@@ -57,6 +57,21 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h4>Jogos</h4>
+
+                        @foreach($validate_game->games as $game)
+                            @php
+                                $checar = $game->checked;
+                            @endphp
+                        @endforeach
+
+                        @if($checar == 1)
+                            <a href="{{ route('admin.bets.games.receiptTudo', ['idcliente' =>$idCliente ]) }}">
+                                <button type="button" class="btn btn-info btn-block">
+                                    imprimir Todos Recibos
+                                </button>
+                            </a>
+                        @endif
+
                         <div class="table-responsive">
                             <table class="table table-sm">
                                 <thead>

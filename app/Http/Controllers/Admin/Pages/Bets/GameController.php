@@ -458,4 +458,25 @@ class GameController extends Controller
             return response()->make($content, 200, $headers);
         }
     }
+    public function getReceiptTudo(Game $game, $idcliente, $prize = false){
+
+        // $jogosCliente = game::where('bet_id', $idcliente)->where('checked', null)->get();
+        $jogosCliente = game::where('bet_id', $idcliente)->get();
+        $typeGame = $game->typeGame;
+        $typeGameValue = $game->typeGameValue;
+
+        // informações para filename
+        $infoCliente =  $jogosCliente[0];
+
+        $data = [
+            'prize' => $prize,
+            'jogosCliente' => $jogosCliente
+        ];
+        // dd($jogosCliente);
+        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+
+        $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
+        return $pdf->download($fileName);
+
+    }
 }

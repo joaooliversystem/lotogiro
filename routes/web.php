@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
 use App\Http\Controllers\Admin\Pages\Settings\UserController;
@@ -59,6 +60,16 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
             });
+
+
+            Route::prefix('wallet')->name('wallet.')->group(function () {
+                Route::get('/', [WalletController::class, 'index'])->name('index');
+                Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
+                Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
+                Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
+                Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
+            });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
             Route::resource('clients', ClientController::class);
@@ -67,6 +78,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::resource('type_games.values', TypeGameValueController::class);
             Route::get('/games/create-link', [GameController::class, 'createLink'])->name('games.link');
             Route::get('/games/receipt/{game}/{format}/{prize?}', [GameController::class, 'getReceipt'])->name('games.receipt');
+            Route::get('/games/receiptTudo/{idcliente}', [GameController::class, 'getReceiptTudo'])->name('games.receiptTudo');
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');

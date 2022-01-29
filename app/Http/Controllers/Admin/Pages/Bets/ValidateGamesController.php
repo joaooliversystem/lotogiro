@@ -62,9 +62,12 @@ class ValidateGamesController extends Controller
 
     public function edit(Bet $validate_game)
     {
+        // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
+        $idCliente = $validate_game->id;
+
         if($validate_game->user->id != auth()->id())
             return redirect()->route('admin.bets.validate-games.index');
-        return view('admin.pages.bets.validate_games.edit', compact('validate_game'));
+        return view('admin.pages.bets.validate_games.edit', compact('validate_game', 'idCliente'));
     }
 
     public function update(Bet $validate_game,Request $request)
