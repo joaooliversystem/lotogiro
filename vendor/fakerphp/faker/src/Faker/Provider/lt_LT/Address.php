@@ -11,7 +11,7 @@ class Address extends \Faker\Provider\Address
         'g.', 'gatvė', 'prospektas', 'alėja',
     ];
 
-    protected static $buildingNumber = ['##'];
+    protected static $buildingNumber = ['%#'];
 
     protected static $postcode = ['LT-#####'];
 
@@ -50,31 +50,97 @@ class Address extends \Faker\Provider\Address
         'Urugvajus', 'Uzbekistanas', 'Vakarų Sachara', 'Vanuatu', 'Vatikanas', 'Venesuela', 'Vengrija', 'Vietnamas',
         'Vokietija', 'Wallisas ir Futuna', 'Zambija', 'Zimbabvė', 'Čadas', 'Čekija', 'Čilė', 'Šiaurės Korėja', 'Šri Lanka',
         'Švedija', 'Šveicarija', 'Šventasis Vincentas ir Grenadinai', 'Švento Baltramiejaus sala', 'Šventoji Elena',
-        'Šventoji Liucija', 'Žaliasis Kyšulys'];
+        'Šventoji Liucija', 'Žaliasis Kyšulys', ];
 
     /**
-     * @link https://lt.wikipedia.org/wiki/Lietuvos_etnokult%C5%ABriniai_regionai
+     * @see https://lt.wikipedia.org/wiki/Lietuvos_etnokult%C5%ABriniai_regionai
      */
     protected static $region = [
-        'Aukštaitija', 'Dzūkija', 'Suvalkija', 'Žemaitija'
+        'Aukštaitija', 'Dzūkija', 'Suvalkija', 'Žemaitija',
     ];
 
     /**
-     * @link https://lt.wikipedia.org/wiki/S%C4%85ra%C5%A1as:Lietuvos_miestai_pagal_gyventojus
+     * @see https://lt.wikipedia.org/wiki/S%C4%85ra%C5%A1as:Lietuvos_miestai_pagal_gyventojus
      */
     protected static $city = ['Vilnius', 'Kaunas', 'Klaipėda', 'Šiauliai', 'Panevėžys',
         'Alytus', 'Marijampolė', 'Mažeikiai', 'Jonava', 'Utena', 'Kėdainiai', 'Telšiai', 'Visaginas', 'Tauragė',
-        'Ukmergė'
+        'Ukmergė',
     ];
 
     protected static $street = [
-        'Klaipėdos', 'Vilniaus', 'Kauno', 'Žalgirio', 'Saltoniškių', 'Laisvės', 'Didžioji', 'Liepų'
+        'Klaipėdos', 'Vilniaus', 'Kauno', 'Žalgirio', 'Saltoniškių', 'Laisvės', 'Didžioji', 'Liepų',
     ];
 
     protected static $addressFormats = [
-        "{{street}} {{streetSuffix}} {{buildingNumber}}-{{buildingNumber}}, {{city}}",
-        "{{street}} {{streetSuffix}} {{buildingNumber}}, {{city}}",
-        "{{street}} {{streetSuffix}} {{buildingNumber}}, {{city}} {{postcode}}",
+        '{{street}} {{streetSuffix}} {{buildingNumber}}-{{buildingNumber}}, {{city}}',
+        '{{street}} {{streetSuffix}} {{buildingNumber}}, {{city}}',
+        '{{street}} {{streetSuffix}} {{buildingNumber}}, {{city}} {{postcode}}',
+    ];
+
+    /**
+     * @see https://en.wikipedia.org/wiki/Municipalities_of_Lithuania
+     */
+    private static $municipality = [
+        'Akmenės rajono savivaldybė',
+        'Alytaus miesto savivaldybė',
+        'Alytaus rajono savivaldybė',
+        'Anykščių rajono savivaldybė',
+        'Birštono savivaldybė',
+        'Biržų rajono savivaldybė',
+        'Druskininkų savivaldybė',
+        'Elektrėnų savivaldybė',
+        'Ignalinos rajono savivaldybė',
+        'Jonavos rajono savivaldybė',
+        'Joniškio rajono savivaldybė',
+        'Jurbarko rajono savivaldybė',
+        'Kaišiadorių rajono savivaldybė',
+        'Kalvarijos savivaldybė',
+        'Kauno miesto savivaldybė',
+        'Kauno rajono savivaldybė',
+        'Kazlų Rūdos savivaldybė',
+        'Kėdainių rajono savivaldybė',
+        'Kelmės rajono savivaldybė',
+        'Klaipėdos miesto savivaldybė',
+        'Klaipėdos rajono savivaldybė',
+        'Kretingos rajono savivaldybė',
+        'Kupiškio rajono savivaldybė',
+        'Lazdijų rajono savivaldybė',
+        'Marijampolės savivaldybė',
+        'Mažeikių rajono savivaldybė',
+        'Molėtų rajono savivaldybė',
+        'Neringos savivaldybė',
+        'Pagėgių savivaldybė',
+        'Pakruojo rajono savivaldybė',
+        'Palangos miesto savivaldybė',
+        'Panevėžio miesto savivaldybė',
+        'Panevėžio rajono savivaldybė',
+        'Pasvalio rajono savivaldybė',
+        'Plungės rajono savivaldybė',
+        'Prienų rajono savivaldybė',
+        'Radviliškio rajono savivaldybė',
+        'Raseinių rajono savivaldybė',
+        'Rietavo savivaldybė',
+        'Rokiškio rajono savivaldybė',
+        'Skuodo rajono savivaldybė',
+        'Šakių rajono savivaldybė',
+        'Šalčininkų rajono savivaldybė',
+        'Šiaulių miesto savivaldybė',
+        'Šiaulių rajono savivaldybė',
+        'Šilalės rajono savivaldybė',
+        'Šilutės rajono savivaldybė',
+        'Širvintų rajono savivaldybė',
+        'Švenčionių rajono savivaldybė',
+        'Tauragės rajono savivaldybė',
+        'Telšių rajono savivaldybė',
+        'Trakų rajono savivaldybė',
+        'Ukmergės rajono savivaldybė',
+        'Utenos rajono savivaldybė',
+        'Varėnos rajono savivaldybė',
+        'Vilkaviškio rajono savivaldybė',
+        'Vilniaus miesto savivaldybė',
+        'Vilniaus rajono savivaldybė',
+        'Visagino savivaldybė',
+        'Zarasų rajono savivaldybė',
     ];
 
     public static function buildingNumber()
@@ -127,5 +193,17 @@ class Address extends \Faker\Provider\Address
     public static function street()
     {
         return static::randomElement(static::$street);
+    }
+
+    /**
+     * Lithuania municipality
+     *
+     * @see https://en.wikipedia.org/wiki/Municipality
+     *
+     * @return string
+     */
+    public function municipality()
+    {
+        return static::randomElement(static::$municipality);
     }
 }

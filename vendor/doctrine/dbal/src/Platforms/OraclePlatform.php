@@ -11,6 +11,7 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Schema\TableDiff;
 use Doctrine\DBAL\TransactionIsolationLevel;
 use Doctrine\DBAL\Types\BinaryType;
+use Doctrine\Deprecations\Deprecation;
 use InvalidArgumentException;
 
 use function array_merge;
@@ -33,6 +34,8 @@ class OraclePlatform extends AbstractPlatform
 {
     /**
      * Assertion for Oracle identifiers.
+     *
+     * @deprecated
      *
      * @link http://docs.oracle.com/cd/B19306_01/server.102/b14200/sql_elements008.htm
      *
@@ -62,12 +65,20 @@ class OraclePlatform extends AbstractPlatform
     }
 
     /**
+     * @deprecated Generate dates within the application.
+     *
      * @param string $type
      *
      * @return string
      */
     public function getNowExpression($type = 'timestamp')
     {
+        Deprecation::trigger(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/pull/4753',
+            'OraclePlatform::getNowExpression() is deprecated. Generate dates within the application.'
+        );
+
         switch ($type) {
             case 'date':
             case 'time':
@@ -168,6 +179,19 @@ class OraclePlatform extends AbstractPlatform
 
     /**
      * {@inheritDoc}
+     */
+    public function getCreatePrimaryKeySQL(Index $index, $table): string
+    {
+        if ($table instanceof Table) {
+            $table = $table->getQuotedName($this);
+        }
+
+        return 'ALTER TABLE ' . $table . ' ADD CONSTRAINT ' . $index->getQuotedName($this)
+            . ' PRIMARY KEY (' . $this->getIndexFieldDeclarationListSQL($index) . ')';
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * Need to specifiy minvalue, since start with is hidden in the system and MINVALUE <= START WITH.
      * Therefore we can use MINVALUE to be able to get a hint what START WITH was for later introspection
@@ -194,10 +218,8 @@ class OraclePlatform extends AbstractPlatform
 
     /**
      * Cache definition for sequences
-     *
-     * @return string
      */
-    private function getSequenceCacheSQL(Sequence $sequence)
+    private function getSequenceCacheSQL(Sequence $sequence): string
     {
         if ($sequence->getCache() === 0) {
             return ' NOCACHE';
@@ -400,10 +422,8 @@ class OraclePlatform extends AbstractPlatform
             $sql = array_merge($sql, $this->getCreateAutoincrementSql($columnName, $name));
         }
 
-        if (isset($indexes) && ! empty($indexes)) {
-            foreach ($indexes as $index) {
-                $sql[] = $this->getCreateIndexSQL($index, $name);
-            }
+        foreach ($indexes as $index) {
+            $sql[] = $this->getCreateIndexSQL($index, $name);
         }
 
         return $sql;
@@ -442,6 +462,7 @@ class OraclePlatform extends AbstractPlatform
                            SELECT ucon.constraint_type
                            FROM   user_constraints ucon
                            WHERE  ucon.index_name = uind_col.index_name
+                             AND  ucon.table_name = uind_col.table_name
                        ) AS is_primary
              FROM      user_ind_columns uind_col
              WHERE     uind_col.table_name = " . $table . '
@@ -465,22 +486,8 @@ class OraclePlatform extends AbstractPlatform
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function getCreateViewSQL($name, $sql)
-    {
-        return 'CREATE VIEW ' . $name . ' AS ' . $sql;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getDropViewSQL($name)
-    {
-        return 'DROP VIEW ' . $name;
-    }
-
-    /**
+     * @internal The method should be only used from within the OraclePlatform class hierarchy.
+     *
      * @param string $name
      * @param string $table
      * @param int    $start
@@ -506,8 +513,10 @@ class OraclePlatform extends AbstractPlatform
         $sql[] = "DECLARE
   constraints_Count NUMBER;
 BEGIN
-  SELECT COUNT(CONSTRAINT_NAME) INTO constraints_Count FROM USER_CONSTRAINTS WHERE TABLE_NAME = '" . $unquotedTableName
-            . "' AND CONSTRAINT_TYPE = 'P';
+  SELECT COUNT(CONSTRAINT_NAME) INTO constraints_Count
+    FROM USER_CONSTRAINTS
+   WHERE TABLE_NAME = '" . $unquotedTableName . "'
+     AND CONSTRAINT_TYPE = 'P';
   IF constraints_Count = 0 OR constraints_Count = '' THEN
     EXECUTE IMMEDIATE '" . $this->getCreateConstraintSQL($idx, $quotedTableName) . "';
   END IF;
@@ -528,7 +537,6 @@ DECLARE
    last_Sequence NUMBER;
    last_InsertID NUMBER;
 BEGIN
-   SELECT ' . $sequenceName . '.NEXTVAL INTO :NEW.' . $quotedName . ' FROM DUAL;
    IF (:NEW.' . $quotedName . ' IS NULL OR :NEW.' . $quotedName . ' = 0) THEN
       SELECT ' . $sequenceName . '.NEXTVAL INTO :NEW.' . $quotedName . ' FROM DUAL;
    ELSE
@@ -539,6 +547,7 @@ BEGIN
       WHILE (last_InsertID > last_Sequence) LOOP
          SELECT ' . $sequenceName . '.NEXTVAL INTO last_Sequence FROM DUAL;
       END LOOP;
+      SELECT ' . $sequenceName . '.NEXTVAL INTO last_Sequence FROM DUAL;
    END IF;
 END;';
 
@@ -546,6 +555,8 @@ END;';
     }
 
     /**
+     * @internal The method should be only used from within the OracleSchemaManager class hierarchy.
+     *
      * Returns the SQL statements to drop the autoincrement for the given table name.
      *
      * @param string $table The table name to drop the autoincrement for.
@@ -575,10 +586,8 @@ END;';
      * to reflect Oracle's internal auto uppercasing strategy of unquoted identifiers.
      *
      * @param string $name The identifier to normalize.
-     *
-     * @return Identifier The normalized identifier.
      */
-    private function normalizeIdentifier($name)
+    private function normalizeIdentifier($name): Identifier
     {
         $identifier = new Identifier($name);
 
@@ -606,12 +615,8 @@ END;';
      *
      * Quotes the autoincrement primary key identifier name
      * if the given table name is quoted by intention.
-     *
-     * @param Identifier $table The table identifier to return the autoincrement primary key identifier name for.
-     *
-     * @return string
      */
-    private function getAutoincrementIdentifierName(Identifier $table)
+    private function getAutoincrementIdentifierName(Identifier $table): string
     {
         $identifierName = $this->addSuffix($table->getName(), '_AI_PK');
 
@@ -710,18 +715,6 @@ SQL
     /**
      * {@inheritDoc}
      */
-    public function getDropSequenceSQL($sequence)
-    {
-        if ($sequence instanceof Sequence) {
-            $sequence = $sequence->getQuotedName($this);
-        }
-
-        return 'DROP SEQUENCE ' . $sequence;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getDropForeignKeySQL($foreignKey, $table)
     {
         if (! $foreignKey instanceof ForeignKeyConstraint) {
@@ -783,9 +776,17 @@ SQL
     /**
      * {@inheritDoc}
      */
-    public function getDropDatabaseSQL($database)
+    public function getCreateDatabaseSQL($name)
     {
-        return 'DROP USER ' . $database . ' CASCADE';
+        return 'CREATE USER ' . $name;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDropDatabaseSQL($name)
+    {
+        return 'DROP USER ' . $name . ' CASCADE';
     }
 
     /**
@@ -1005,6 +1006,12 @@ SQL
      */
     public function getName()
     {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4749',
+            'OraclePlatform::getName() is deprecated. Identify platforms by their class.'
+        );
+
         return 'oracle';
     }
 
@@ -1160,9 +1167,18 @@ SQL
 
     /**
      * {@inheritDoc}
+     *
+     * @deprecated Implement {@see createReservedKeywordsList()} instead.
      */
     protected function getReservedKeywordsClass()
     {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4510',
+            'OraclePlatform::getReservedKeywordsClass() is deprecated,'
+            . ' use OraclePlatform::createReservedKeywordsList() instead.'
+        );
+
         return Keywords\OracleKeywords::class;
     }
 

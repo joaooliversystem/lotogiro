@@ -7,12 +7,14 @@ use Doctrine\DBAL\Driver\Exception\UnknownParameterType;
 use Doctrine\DBAL\Driver\Result as ResultInterface;
 use Doctrine\DBAL\Driver\Statement as StatementInterface;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\Deprecations\Deprecation;
 use PDO;
 use PDOException;
 use PDOStatement;
 
 use function array_slice;
 use function func_get_args;
+use function func_num_args;
 
 final class Statement implements StatementInterface
 {
@@ -58,16 +60,33 @@ final class Statement implements StatementInterface
      * @param mixed    $variable
      * @param int      $type
      * @param int|null $length
-     * @param mixed    $driverOptions
-     *
-     * @return bool
+     * @param mixed    $driverOptions The usage of the argument is deprecated.
      */
-    public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null, $driverOptions = null)
-    {
+    public function bindParam(
+        $param,
+        &$variable,
+        $type = ParameterType::STRING,
+        $length = null,
+        $driverOptions = null
+    ): bool {
+        if (func_num_args() > 4) {
+            Deprecation::triggerIfCalledFromOutside(
+                'doctrine/dbal',
+                'https://github.com/doctrine/dbal/issues/4533',
+                'The $driverOptions argument of Statement::bindParam() is deprecated.'
+            );
+        }
+
         $type = $this->convertParamType($type);
 
         try {
-            return $this->stmt->bindParam($param, $variable, $type, ...array_slice(func_get_args(), 3));
+            return $this->stmt->bindParam(
+                $param,
+                $variable,
+                $type,
+                $length ?? 0,
+                ...array_slice(func_get_args(), 4)
+            );
         } catch (PDOException $exception) {
             throw Exception::new($exception);
         }

@@ -2,13 +2,15 @@
 
 namespace Doctrine\DBAL\Driver\PDO\SQLSrv;
 
+use Doctrine\DBAL\Driver\Middleware\AbstractStatementMiddleware;
 use Doctrine\DBAL\Driver\PDO\Statement as PDOStatement;
-use Doctrine\DBAL\Driver\Result;
-use Doctrine\DBAL\Driver\Statement as StatementInterface;
 use Doctrine\DBAL\ParameterType;
+use Doctrine\Deprecations\Deprecation;
 use PDO;
 
-final class Statement implements StatementInterface
+use function func_num_args;
+
+final class Statement extends AbstractStatementMiddleware
 {
     /** @var PDOStatement */
     private $statement;
@@ -18,16 +20,35 @@ final class Statement implements StatementInterface
      */
     public function __construct(PDOStatement $statement)
     {
+        parent::__construct($statement);
+
         $this->statement = $statement;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param mixed $driverOptions
+     * @param string|int $param
+     * @param mixed      $variable
+     * @param int        $type
+     * @param int|null   $length
+     * @param mixed      $driverOptions The usage of the argument is deprecated.
      */
-    public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null, $driverOptions = null)
-    {
+    public function bindParam(
+        $param,
+        &$variable,
+        $type = ParameterType::STRING,
+        $length = null,
+        $driverOptions = null
+    ): bool {
+        if (func_num_args() > 4) {
+            Deprecation::triggerIfCalledFromOutside(
+                'doctrine/dbal',
+                'https://github.com/doctrine/dbal/issues/4533',
+                'The $driverOptions argument of Statement::bindParam() is deprecated.'
+            );
+        }
+
         switch ($type) {
             case ParameterType::LARGE_OBJECT:
             case ParameterType::BINARY:
@@ -44,22 +65,14 @@ final class Statement implements StatementInterface
                 break;
         }
 
-        return $this->statement->bindParam($param, $variable, $type, $length, $driverOptions);
+        return $this->statement->bindParam($param, $variable, $type, $length ?? 0, $driverOptions);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function bindValue($param, $value, $type = ParameterType::STRING)
+    public function bindValue($param, $value, $type = ParameterType::STRING): bool
     {
         return $this->bindParam($param, $value, $type);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function execute($params = null): Result
-    {
-        return $this->statement->execute($params);
     }
 }
