@@ -73,7 +73,6 @@ class ValidateGamesController extends Controller
     public function update(Bet $validate_game,Request $request)
     {
 
-
         $balance = auth()->user()->balance;
         $value = $request->valor;
         $ID_VALUE = auth()->user()->indicador;

@@ -6,6 +6,7 @@ use App\Helper\Money;
 use App\Http\Controllers\Controller;
 use App\Models\TransactBalance;
 use App\Models\User;
+use App\Models\Client;
 use Spatie\Permission\Models\Role;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -89,6 +90,7 @@ class UserController extends Controller
             abort(403);
         }
 
+        // parte de tratamento de erro
         $validatedData = $request->validate([
             'name' => 'required|max:50',
             'last_name' => 'required|max:100',
@@ -124,8 +126,29 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
+            
+            // enviar pra cliente
             if($auxRole == 6){
+
+                $validatedData = $request->validate([
+                    'pix' => 'required|max:60',
+                    'telefone' => 'required|max:15',
+                    'cpf' => 'required|max:11'
+                ]);
+
                 $user->type_client = 1;
+
+                $data = $request->only('pix', 'telefone', 'cpf');
+                $passardados = New Client;
+
+                $passardados->cpf = $data['cpf'];
+                $passardados->name = $request->name;
+                $passardados->last_name = $request->last_name;
+                $passardados->email = $request->email;
+                $passardados->phone = $data['telefone'];     
+                $passardados->pix  = $data['pix'];
+                $passardados->save();
+                
             }
             $user->balance = $balanceRequest;
             $user->save();

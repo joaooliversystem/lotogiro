@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'b22283dc2bb21880d23c9ea6be345eb607218b36',
+    'reference' => '22f2b78fb5de1bac10534fa6b409dca9f3faaa00',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -103,6 +103,15 @@ private static $installed = array (
       ),
       'reference' => '0992cc19268b259a39e86f296da5f0677841f42c',
     ),
+    'doctrine/annotations' => 
+    array (
+      'pretty_version' => '1.13.2',
+      'version' => '1.13.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5b668aef16090008790395c02c893b1ba13f7e08',
+    ),
     'doctrine/cache' => 
     array (
       'pretty_version' => '2.1.1',
@@ -111,6 +120,24 @@ private static $installed = array (
       array (
       ),
       'reference' => '331b4d5dbaeab3827976273e9356b3b453c300ce',
+    ),
+    'doctrine/collections' => 
+    array (
+      'pretty_version' => '1.6.8',
+      'version' => '1.6.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '1958a744696c6bb3bb0d28db2611dc11610e78af',
+    ),
+    'doctrine/common' => 
+    array (
+      'pretty_version' => '3.2.1',
+      'version' => '3.2.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'e927fc2410c8723d053b8032e591cdff76587cdb',
     ),
     'doctrine/dbal' => 
     array (
@@ -165,6 +192,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '9c50f840f257bbb941e6f4a0e94ccf5db5c3f76c',
+    ),
+    'doctrine/persistence' => 
+    array (
+      'pretty_version' => '2.3.0',
+      'version' => '2.3.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f8af155c1e7963f3d2b4415097d55757bbaa53d8',
     ),
     'dompdf/dompdf' => 
     array (
@@ -568,7 +604,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'b22283dc2bb21880d23c9ea6be345eb607218b36',
+      'reference' => '22f2b78fb5de1bac10534fa6b409dca9f3faaa00',
     ),
     'laravel/serializable-closure' => 
     array (
@@ -704,6 +740,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'e8ac3499af0ea5b440908e06cc0abe5898008b3c',
+    ),
+    'mercadopago/dx-php' => 
+    array (
+      'pretty_version' => '2.4.5',
+      'version' => '2.4.5.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'f10f278386baf7bf055681c67a95eeafc217d180',
     ),
     'mockery/mockery' => 
     array (
@@ -1070,8 +1115,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0|2.0',
-        1 => '1.0.0 || 2.0.0 || 3.0.0',
+        0 => '1.0.0 || 2.0.0 || 3.0.0',
+        1 => '1.0|2.0',
       ),
     ),
     'psr/simple-cache' => 
