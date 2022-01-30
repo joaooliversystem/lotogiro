@@ -68,6 +68,10 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
                 Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
                 Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
+                Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
+                Route::get('/recharge-order', [WalletController::class, 'rechargeOrder'])->name('recharge-order');
+                Route::get('/order-detail/{id}', [WalletController::class, 'orderDetail'])->name('order-detail');
+                Route::get('/updateStatusPayment/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
@@ -85,7 +89,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 'index', 'create'
             ]);
             Route::resource('draws', DrawController::class);
-            Route::get('report-draws', [DrawController::class, 'reportDraws'])->name('report-draws');
+            Route::get('report-draws/{type}', [DrawController::class, 'reportDraws'])->name('report-draws');
             Route::resource('validate-games', ValidateGamesController::class)->except([
                 'store'
             ]);;

@@ -4,15 +4,17 @@ namespace Doctrine\DBAL\Schema;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Exception;
+use Doctrine\DBAL\Platforms\SQLite;
+use Doctrine\DBAL\Platforms\SqlitePlatform;
 use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\TextType;
 use Doctrine\DBAL\Types\Type;
+use Doctrine\Deprecations\Deprecation;
 
 use function array_change_key_case;
 use function array_map;
 use function array_merge;
 use function array_reverse;
-use function array_values;
 use function explode;
 use function file_exists;
 use function preg_match;
@@ -20,7 +22,6 @@ use function preg_match_all;
 use function preg_quote;
 use function preg_replace;
 use function rtrim;
-use function sprintf;
 use function str_replace;
 use function strpos;
 use function strtolower;
@@ -32,14 +33,24 @@ use const CASE_LOWER;
 
 /**
  * Sqlite SchemaManager.
+ *
+ * @extends AbstractSchemaManager<SqlitePlatform>
  */
 class SqliteSchemaManager extends AbstractSchemaManager
 {
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Delete the database file using the filesystem.
      */
     public function dropDatabase($database)
     {
+        Deprecation::trigger(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4963',
+            'SqliteSchemaManager::dropDatabase() is deprecated. Delete the database file using the filesystem.'
+        );
+
         if (! file_exists($database)) {
             return;
         }
@@ -49,16 +60,24 @@ class SqliteSchemaManager extends AbstractSchemaManager
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated The engine will create the database file automatically.
      */
     public function createDatabase($database)
     {
-        $params  = $this->_conn->getParams();
-        $driver  = $params['driver'];
-        $options = [
-            'driver' => $driver,
-            'path' => $database,
-        ];
-        $conn    = DriverManager::getConnection($options);
+        Deprecation::trigger(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/issues/4963',
+            'SqliteSchemaManager::createDatabase() is deprecated.'
+                . ' The engine will create the database file automatically.'
+        );
+
+        $params = $this->_conn->getParams();
+
+        $params['path'] = $database;
+        unset($params['memory']);
+
+        $conn = DriverManager::getConnection($params);
         $conn->connect();
         $conn->close();
     }
@@ -87,9 +106,18 @@ class SqliteSchemaManager extends AbstractSchemaManager
 
     /**
      * {@inheritdoc}
+     *
+     * @deprecated Use {@see dropForeignKey()} and {@see createForeignKey()} instead.
      */
     public function dropAndCreateForeignKey(ForeignKeyConstraint $foreignKey, $table)
     {
+        Deprecation::trigger(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/pull/4897',
+            'SqliteSchemaManager::dropAndCreateForeignKey() is deprecated.'
+                . ' Use SqliteSchemaManager::dropForeignKey() and SqliteSchemaManager::createForeignKey() instead.'
+        );
+
         $tableDiff                       = $this->getTableDiffForAlterForeignKey($table);
         $tableDiff->changedForeignKeys[] = $foreignKey;
 
@@ -127,7 +155,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
                     '#
                     (?:CONSTRAINT\s+([^\s]+)\s+)?
                     (?:FOREIGN\s+KEY[^\)]+\)\s*)?
-                    REFERENCES\s+[^\s]+\s+(?:\([^\)]+\))?
+                    REFERENCES\s+[^\s]+\s+(?:\([^)]+\))?
                     (?:
                         [^,]*?
                         (NOT\s+DEFERRABLE|DEFERRABLE)
@@ -176,20 +204,25 @@ class SqliteSchemaManager extends AbstractSchemaManager
         $indexBuffer = [];
 
         // fetch primary
-        $indexArray = $this->_conn->fetchAllAssociative(sprintf(
-            'PRAGMA TABLE_INFO (%s)',
-            $this->_conn->quote($tableName)
-        ));
+        $indexArray = $this->_conn->fetchAllAssociative('SELECT * FROM PRAGMA_TABLE_INFO (?)', [$tableName]);
 
-        usort($indexArray, static function ($a, $b) {
-            if ($a['pk'] === $b['pk']) {
-                return $a['cid'] - $b['cid'];
+        usort(
+            $indexArray,
+            /**
+             * @param array<string,mixed> $a
+             * @param array<string,mixed> $b
+             */
+            static function (array $a, array $b): int {
+                if ($a['pk'] === $b['pk']) {
+                    return $a['cid'] - $b['cid'];
+                }
+
+                return $a['pk'] - $b['pk'];
             }
+        );
 
-            return $a['pk'] - $b['pk'];
-        });
         foreach ($indexArray as $indexColumnRow) {
-            if ($indexColumnRow['pk'] === '0') {
+            if ($indexColumnRow['pk'] === 0 || $indexColumnRow['pk'] === '0') {
                 continue;
             }
 
@@ -214,10 +247,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
             $idx['primary']    = false;
             $idx['non_unique'] = ! $tableIndex['unique'];
 
-            $indexArray = $this->_conn->fetchAllAssociative(sprintf(
-                'PRAGMA INDEX_INFO (%s)',
-                $this->_conn->quote($keyName)
-            ));
+            $indexArray = $this->_conn->fetchAllAssociative('SELECT * FROM PRAGMA_INDEX_INFO (?)', [$keyName]);
 
             foreach ($indexArray as $indexColumnRow) {
                 $idx['column_name'] = $indexColumnRow['name'];
@@ -240,7 +270,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
         $autoincrementCount  = 0;
 
         foreach ($tableColumns as $tableColumn) {
-            if ($tableColumn['pk'] === '0') {
+            if ($tableColumn['pk'] === 0 || $tableColumn['pk'] === '0') {
                 continue;
             }
 
@@ -362,7 +392,7 @@ class SqliteSchemaManager extends AbstractSchemaManager
 
         $options = [
             'length'   => $length,
-            'unsigned' => (bool) $unsigned,
+            'unsigned' => $unsigned,
             'fixed'    => $fixed,
             'notnull'  => $notnull,
             'default'  => $default,
@@ -412,16 +442,21 @@ class SqliteSchemaManager extends AbstractSchemaManager
                 ];
             }
 
-            $list[$name]['local'][]   = $value['from'];
+            $list[$name]['local'][] = $value['from'];
+
+            if ($value['to'] === null) {
+                continue;
+            }
+
             $list[$name]['foreign'][] = $value['to'];
         }
 
         $result = [];
         foreach ($list as $constraint) {
             $result[] = new ForeignKeyConstraint(
-                array_values($constraint['local']),
+                $constraint['local'],
                 $constraint['foreignTable'],
-                array_values($constraint['foreign']),
+                $constraint['foreign'],
                 $constraint['name'],
                 [
                     'onDelete' => $constraint['onDelete'],
@@ -438,22 +473,12 @@ class SqliteSchemaManager extends AbstractSchemaManager
     /**
      * @param Table|string $table
      *
-     * @return TableDiff
-     *
      * @throws Exception
      */
-    private function getTableDiffForAlterForeignKey($table)
+    private function getTableDiffForAlterForeignKey($table): TableDiff
     {
         if (! $table instanceof Table) {
-            $tableDetails = $this->tryMethod('listTableDetails', $table);
-
-            if ($tableDetails === false) {
-                throw new Exception(
-                    sprintf('Sqlite schema manager requires to modify foreign keys table definition "%s".', $table)
-                );
-            }
-
-            $table = $tableDetails;
+            $table = $this->listTableDetails($table);
         }
 
         $tableDiff            = new TableDiff($table->getName());
@@ -555,5 +580,27 @@ SQL
         }
 
         return $table;
+    }
+
+    public function createComparator(): Comparator
+    {
+        return new SQLite\Comparator($this->getDatabasePlatform());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @deprecated
+     */
+    public function getSchemaSearchPaths()
+    {
+        Deprecation::triggerIfCalledFromOutside(
+            'doctrine/dbal',
+            'https://github.com/doctrine/dbal/pull/4821',
+            'SqliteSchemaManager::getSchemaSearchPaths() is deprecated.'
+        );
+
+        // SQLite does not support schemas or databases
+        return [];
     }
 }

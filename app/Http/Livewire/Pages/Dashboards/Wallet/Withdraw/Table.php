@@ -13,6 +13,8 @@ class Table extends Component
     use LivewireAlert;
 
     public $user;
+    public $userObj;
+    public $userId;
     public $valueTransfer;
     public $pixSaque;
 
@@ -30,11 +32,11 @@ class Table extends Component
 
        if($this->valueTransfer > 0){
            WithdrawRequest::create([
-               'user_id' => auth()->id(),
+               'user_id' => $this->userId,
                'value' => Money::toDatabase($this->valueTransfer)
            ]);
 
-           auth()->user()->update([
+           $this->userObj->update([
                'pixSaque' => $this->pixSaque
            ]);
 
@@ -51,6 +53,8 @@ class Table extends Component
     public function mount(): void
     {
         $this->user = User::with('client')->find(auth()->id())->toArray();
+        $this->userId = auth()->user()->id;
+        $this->userObj = auth()->user();
         $this->pixSaque = $this->user['pixSaque'];
 
         if((empty($this->pixSaque) || is_null($this->pixSaque)) && !is_null($this->user['client'])){

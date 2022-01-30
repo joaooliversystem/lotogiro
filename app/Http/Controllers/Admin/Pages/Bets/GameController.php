@@ -18,11 +18,12 @@ use App\Models\Bet;
 use App\Models\TypeGameValue;
 
 use App\Models\User;
-use Barryvdh\DomPDF\Facade as PDF;
+// use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use PDF;
 
 class GameController extends Controller
 {
@@ -114,12 +115,12 @@ class GameController extends Controller
         'value' => 'required',
         ]);
 
-        
+
         $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
         $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
         try {
             $date = Carbon::now();
-             if ( $date->hour >=20 || $date->hour < 00) {
+             if ( $date->hour >=20 && $date->hour < 21) {
              return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                     'error' => 'Apostas Encerradas!'
                 ]);
@@ -208,7 +209,7 @@ class GameController extends Controller
             ]);
         }
     }else{
-        
+
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
         }
@@ -221,15 +222,15 @@ class GameController extends Controller
 
         $request['sort_date'] = str_replace('/', '-', $request['sort_date']);
         $request['sort_date'] = Carbon::parse($request['sort_date'])->toDateTime();
-        
+
        try {
             $date = Carbon::now();
-             if ( $date->hour >=20 || $date->hour < 00) {
+             if ( $date->hour >=20 && $date->hour < 21) {
              return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
                     'error' => 'Apostas Encerradas!'
                 ]);
              }
-        
+
             $balance = Balance::calculation($request->value);
 
             if (!$balance) {
@@ -472,10 +473,10 @@ class GameController extends Controller
             'prize' => $prize,
             'jogosCliente' => $jogosCliente
         ];
-        // dd($jogosCliente);
-        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-
+    
         $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
+
+        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
 
     }

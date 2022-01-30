@@ -11,9 +11,6 @@ use Doctrine\DBAL\ParameterType;
 use function assert;
 use function is_int;
 use function sqlsrv_execute;
-use function sqlsrv_fetch;
-use function sqlsrv_get_field;
-use function sqlsrv_next_result;
 use function SQLSRV_PHPTYPE_STREAM;
 use function SQLSRV_PHPTYPE_STRING;
 use function sqlsrv_prepare;
@@ -50,23 +47,16 @@ final class Statement implements StatementInterface
     /**
      * References to the variables bound as statement parameters.
      *
-     * @var mixed
+     * @var array<int, mixed>
      */
     private $variables = [];
 
     /**
      * Bound parameter types.
      *
-     * @var int[]
+     * @var array<int, int>
      */
     private $types = [];
-
-    /**
-     * The last insert ID.
-     *
-     * @var LastInsertId|null
-     */
-    private $lastInsertId;
 
     /**
      * Append to any INSERT query to retrieve the last insert id.
@@ -79,7 +69,7 @@ final class Statement implements StatementInterface
      * @param resource $conn
      * @param string   $sql
      */
-    public function __construct($conn, $sql, ?LastInsertId $lastInsertId = null)
+    public function __construct($conn, $sql)
     {
         $this->conn = $conn;
         $this->sql  = $sql;
@@ -88,14 +78,13 @@ final class Statement implements StatementInterface
             return;
         }
 
-        $this->sql         .= self::LAST_INSERT_ID_SQL;
-        $this->lastInsertId = $lastInsertId;
+        $this->sql .= self::LAST_INSERT_ID_SQL;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function bindValue($param, $value, $type = ParameterType::STRING)
+    public function bindValue($param, $value, $type = ParameterType::STRING): bool
     {
         assert(is_int($param));
 
@@ -108,7 +97,7 @@ final class Statement implements StatementInterface
     /**
      * {@inheritdoc}
      */
-    public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null)
+    public function bindParam($param, &$variable, $type = ParameterType::STRING, $length = null): bool
     {
         assert(is_int($param));
 
@@ -142,12 +131,6 @@ final class Statement implements StatementInterface
 
         if (! sqlsrv_execute($this->stmt)) {
             throw Error::new();
-        }
-
-        if ($this->lastInsertId !== null) {
-            sqlsrv_next_result($this->stmt);
-            sqlsrv_fetch($this->stmt);
-            $this->lastInsertId->setId(sqlsrv_get_field($this->stmt, 0));
         }
 
         return new Result($this->stmt);

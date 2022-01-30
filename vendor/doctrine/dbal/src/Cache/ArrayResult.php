@@ -14,7 +14,7 @@ use function reset;
  */
 final class ArrayResult implements Result
 {
-    /** @var mixed[] */
+    /** @var list<array<string, mixed>> */
     private $data;
 
     /** @var int */
@@ -24,7 +24,7 @@ final class ArrayResult implements Result
     private $num = 0;
 
     /**
-     * @param mixed[] $data
+     * @param list<array<string, mixed>> $data
      */
     public function __construct(array $data)
     {
@@ -98,10 +98,6 @@ final class ArrayResult implements Result
 
     public function rowCount(): int
     {
-        if ($this->data === null) {
-            return 0;
-        }
-
         return count($this->data);
     }
 
@@ -116,7 +112,7 @@ final class ArrayResult implements Result
     }
 
     /**
-     * @return mixed|false
+     * @return array<string, mixed>|false
      */
     private function fetch()
     {

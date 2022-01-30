@@ -13,7 +13,7 @@
                         <div id="custom-search-input">
                             <form wire:submit.prevent="searchClient()">
                                 <div class="input-group">
-                                    <input wire:model="searchPhrase" type="text" class="search-query form-control"
+                                    <input wire:model.defer="searchPhrase" type="text" class="search-query form-control"
                                            placeholder="Buscar" />
                                     <button type="submit" class="btn btn-dark">
                                         <span class="fa fa-search" style="color: #fff938"></span>
