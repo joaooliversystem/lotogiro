@@ -105,7 +105,7 @@
                     <div class="col-md-3 mb-3">
                         <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'pdf'])}}">
                             <button type="button" class="btn btn-info btn-block">
-                                PDF
+                                IMG
                             </button>
                         </a>
                     </div>

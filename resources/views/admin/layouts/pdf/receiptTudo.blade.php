@@ -5,8 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    {{--    <link href="https://fonts.googleapis.com/css2?family=Exo&display=swap" rel="stylesheet">--}}
-    {{--    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@700&display=swap" rel="stylesheet">--}}
     <style type="text/css">
 
         @page {
@@ -39,10 +37,6 @@
             margin-left: 1.5cm;
             margin-right: 1.5cm;
             margin-bottom: 1.5cm;
-        }
-
-        .page-break {
-            page-break-after: always;
         }
 
         .bg-danger {
@@ -116,21 +110,21 @@
         }
 
         .page-break {
-        page-break-after: always;
+            page-break-after: always;
         }
 
 
     </style>
 </head>
-<body>
-
+<body id="tudo">
+    <button onclick="gerarPDF()">imprimir</button>
     {{-- loop que vai trazer as paginas --}}
     @foreach ($jogosCliente as $jogos)
 
         <div class="">
             <div class="border-bottom-dashed py-2">
                 <p class="text-danger text-center font text-size-3 text-bold">
-                    APOSTA SUPERLOTOGIRO
+                    APOSTA SUPERLOTOGIRO TUDO
                 </p>
                 @if($prize)
                     <p class="text-success text-center font text-size-4 text-bold py-2">
@@ -139,16 +133,9 @@
                 @endif
             </div>
             <div class="border-bottom-dashed px-3">
-                <p class="text-right">
-                    <span class="font text-bold">ID APOSTA: </span>
-                    <span class="font">{{$jogos->id}}</span>
-                </p>
                 <p class="">
                     <span class="font text-bold">EMITIDO EM:</span>
                     <span class="font">{{\Carbon\Carbon::parse($jogos->created_at)->format('d/m/Y h:i:s')}}</span>
-                </p>
-                <p class="">
-                    <span class="font text-bold">CPF:</span><span class="font"> XXX.XXX.XXX-XX</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">PARTICIPANTE:</span>
@@ -166,9 +153,13 @@
                     <span class="font text-bold">HORA SORTEIO:</span>
                     <span class="font">{{\Carbon\Carbon::parse($jogos->competition->sort_date)->format('H:i:s') }}</span>
                 </p>
-                {{-- <h2 class="font text-bold text-center">{{mb_strtoupper($typeGame->name, 'UTF-8') }}</h2> --}}
             </div>
+            @break
+        @endforeach
+            {{-- quebra de pagina --}}
+            <div class="page-break"></div>
 
+        @foreach ($jogosCliente as $jogos)
             @php
                 $numbers = array();
                 $numbers = explode(',', $jogos->numbers);
@@ -194,39 +185,47 @@
 
             @endphp
 
-<div class="border-bottom-dashed px-3 text-center">
-    <table class="" style="width: 100%">
-        @foreach($matriz as $lines)
-            <tr>
-                @foreach($lines as $cols)
-                    <td class="font text-center">
-                        <div class="number text-white text-bold text-size-2 border-radius m-auto"
-                             style="background-color: {{$jogos->typeGame->color}}">
-                            {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
-                        </div>
-                    </td>
-                @endforeach
-            </tr>
-        @endforeach
-    </table>
-</div>
+                <h3>{{ json_encode($jogos->numbers) }}</h3>
+
+            {{-- <div class="border-bottom-dashed px-3 text-center">
+                <table class="" style="width: 100%">
+                    @foreach($matriz as $lines)
+                        <tr>
+                            @foreach($lines as $cols)
+                                <td class="font text-center">
+                                    <div class="number text-white text-bold text-size-2 border-radius m-auto"
+                                        style="background-color: {{$jogos->typeGame->color}}">
+                                        {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
+                                    </div>
+                                </td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </table>
+            </div> --}}
 
             
 
             <div class="py-2 px-3">
+                <p class="">
+                    <span class="font text-bold">ID APOSTA: </span>
+                    <span class="font">{{$jogos->id}}</span>
+                </p>
+
                 <p>
                     @php
                     $contDezenas = array();
                     $contDezenas = explode(',', $jogos->numbers);
                 @endphp
-
                     <span class="font text-bold">QTDE DEZENAS: </span>
                     <span class="font">{{ count($contDezenas) }}</span>
                 </p>
+
                 <p class="">
                     <span class="font text-bold">VALOR APOSTADO: </span>
                     <span class="font">R${{\App\Helper\Money::toReal($jogos->value)}}</span>
                 </p>
+                
                 <p class="">
                     <span class="font text-bold">GANHO MÁXIMO: </span>
                     <span class="font">R${{\App\Helper\Money::toReal($jogos->premio)}}</span>
@@ -238,7 +237,54 @@
         
         {{-- encerrar loop que trouxe tudo --}}
         @endforeach
+
         
 </div>
+{{-- 
+<script>
+    function gerarPDF(){
+        var minhaTabela = document.getElementById('tudo').innerHTML;
+        var win = window.open('', '', 'height=100%,width=100%');
+        win.document.write(minhaTabela);
+        win.document.close(); 	
+        // win.print(); 
+        win.save(); 
+
+    }
+</script> --}}
+
+{{-- <script type="text/javascript" src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script> --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
+
+<script>
+    function gerarPDF(){
+                var doc = new jsPDF();          
+        var elementHandler = {
+        '#tudo': function (element, renderer) {
+            return true;
+        }
+        };
+        var source = window.document.getElementsByTagName("body")[0];
+        doc.fromHTML(
+            source,
+            15,
+            15,
+            {
+            'width': 180,'elementHandlers': elementHandler
+            });
+
+        doc.output("dataurlnewwindow");
+    }
+</script>  --}}
+
+{{-- <script>
+    function gerarPDF()
+    {
+        const element = document.getElementById('tudo');
+        html2pdf()
+        .from(element)
+        .save();
+    }
+</script> --}}
 </body>
 </html>
