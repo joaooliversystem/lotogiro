@@ -68,7 +68,7 @@ class Table extends Component
                     'user_id' => $game->user_id,
                     'client_id' => $game->client_id
                 ];
-                $users = User::all();
+                $users = User::whereNotNull('bonus')->get();
                 foreach ($users as $user) {
                 $bonus = $user->bonus;
                 $balance = $user->balance;
