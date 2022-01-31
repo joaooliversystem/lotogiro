@@ -18,12 +18,12 @@ class Table extends Component
 
     public function callMP()
     {
-        SDK::setAccessToken("TEST-2909617305972251-012203-cf258239d677359e68197c8ab004e690-1011031176"); // Either Production or SandBox AccessToken
+        SDK::setAccessToken("APP_USR-2909617305972251-012203-1eb52e7fbfc50a7355b5beb6d5abbe79-1011031176"); // Either Production or SandBox AccessToken
 
         $preference = new Preference();
         $item = new Item();
 
-        $item->title = "Recarga Lotogiro";
+        $item->title = "Recarga SuperLotogiro";
         $item->quantity = 1;
         $item->unit_price = (double) $this->valueAdd;
 
@@ -36,12 +36,12 @@ class Table extends Component
 
         $preference->items = array($item);
         $preference->back_urls = [
-            "success" => "http://lotogiro.pc/admin/dashboards/wallet/updateStatusPayment/",
-            "failure" => "http://lotogiro.pc/admin/dashboards/wallet/updateStatusPayment/",
-            "pending" => "http://lotogiro.pc/admin/dashboards/wallet/updateStatusPayment/"
+            "success" => "https://superjogo.loteriabr.com/admin/dashboards/wallet/updateStatusPayment/",
+            "failure" => "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/",
+            "pending" => "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/"
         ];
 
-        $preference->notification_url = "http://lotogiro.pc/";
+        $preference->notification_url = "https://superjogo.loteriabr.com/";
         $preference->external_reference = $order->reference;
         $preference->save();
 

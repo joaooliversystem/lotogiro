@@ -47,7 +47,7 @@ class WalletController extends Controller
     {
         $typeStatus = [
             'pending' => 0,
-            'success' => 1,
+            'approved' => 1,
             'failure' => 3
         ];
 

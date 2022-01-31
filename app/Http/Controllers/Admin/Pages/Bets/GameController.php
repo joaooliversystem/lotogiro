@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
+use SnappyImage;
 
 class GameController extends Controller
 {
@@ -400,6 +401,7 @@ class GameController extends Controller
         }
     }
 
+
     public function getReceipt(Game $game, $format, $prize = false)
     {
         if (!auth()->user()->hasPermissionTo('read_game')) {
@@ -444,10 +446,11 @@ class GameController extends Controller
             'prize' => $prize,
         ];
         if ($format == "pdf") {
-            $pdf = PDF::loadView('admin.layouts.pdf.receipt', $data);
-            $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.pdf';
+            $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
+            $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
             return $pdf->download($fileName);
+
         } elseif ($format == "txt") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.txt';
             $content = view()->make('admin.layouts.txt.receipt')->with($data);
@@ -459,12 +462,16 @@ class GameController extends Controller
             return response()->make($content, 200, $headers);
         }
     }
-    public function getReceiptTudo(Game $game, $idcliente, $prize = false){
 
-        // $jogosCliente = game::where('bet_id', $idcliente)->where('checked', null)->get();
+    public function getReceiptTudo(Game $game, $idcliente, $prize = false, Bet $apostas){
+
         $jogosCliente = game::where('bet_id', $idcliente)->get();
+        
         $typeGame = $game->typeGame;
+        
         $typeGameValue = $game->typeGameValue;
+
+        // dd($jogosCliente);
 
         // informações para filename
         $infoCliente =  $jogosCliente[0];
@@ -476,6 +483,8 @@ class GameController extends Controller
     
         $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
 
+        // SendPdf::dispatch($fileName, $data);
+        // return view('admin.layouts.pdf.receiptTudo', $data);
         $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
 
