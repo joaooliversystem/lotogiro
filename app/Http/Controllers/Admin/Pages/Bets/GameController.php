@@ -450,10 +450,10 @@ class GameController extends Controller
         if ($format == "pdf") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
-            return view('admin.layouts.pdf.receipt', $data);
+            // return view('admin.layouts.pdf.receipt', $data);
 
-            // $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
-            // return $pdf->download($fileName);
+            $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
+            return $pdf->download($fileName);
 
         } elseif ($format == "txt") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.txt';
@@ -498,9 +498,9 @@ class GameController extends Controller
     
         $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $Nome . '.pdf';
 
-        return view('admin.layouts.pdf.receiptTudo', $data);
-        // $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-        // return $pdf->download($fileName);
+        // return view('admin.layouts.pdf.receiptTudo', $data);
+        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+        return $pdf->download($fileName);
 
     }
 }
