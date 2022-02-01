@@ -9,6 +9,7 @@ use App\Helper\Mask;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
+use App\Models\Competition;
 use App\Models\Commission;
 use App\Models\Draw;
 use App\Models\Game;
@@ -16,6 +17,7 @@ use App\Models\HashGame;
 use App\Models\TypeGame;
 use App\Models\Bet;
 use App\Models\TypeGameValue;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 // use Barryvdh\DomPDF\Facade as PDF;
@@ -448,8 +450,10 @@ class GameController extends Controller
         if ($format == "pdf") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
-            $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
-            return $pdf->download($fileName);
+            return view('admin.layouts.pdf.receipt', $data);
+
+            // $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
+            // return $pdf->download($fileName);
 
         } elseif ($format == "txt") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.txt';
@@ -465,28 +469,38 @@ class GameController extends Controller
 
     public function getReceiptTudo(Game $game, $idcliente, $prize = false, Bet $apostas){
 
+        // pegando jogos feitos
         $jogosCliente = game::where('bet_id', $idcliente)->get();
-        
-        $typeGame = $game->typeGame;
-        
-        $typeGameValue = $game->typeGameValue;
 
+        // pegando informações do user
+        $User = Auth::User();
+        $Nome = $User['name'] . ' ' . $User['last_name'];
         // dd($jogosCliente);
 
         // informações para filename
         $infoCliente =  $jogosCliente[0];
 
+        // pegando typegame
+        $TipoJogo = TypeGame::where('id', $infoCliente['type_game_id'])->get();
+        $TipoJogo = $TipoJogo[0];
+
+        // pegando datas do sorteio
+        $Datas = Competition::where('id', $infoCliente['competition_id'])->get();
+        $Datas = $Datas[0];
+
         $data = [
             'prize' => $prize,
-            'jogosCliente' => $jogosCliente
+            'jogosCliente' => $jogosCliente,
+            'Nome' => $Nome,
+            'Datas' => $Datas,
+            'TipoJogo' => $TipoJogo
         ];
     
-        $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
+        $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $Nome . '.pdf';
 
-        // SendPdf::dispatch($fileName, $data);
-        // return view('admin.layouts.pdf.receiptTudo', $data);
-        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
-        return $pdf->download($fileName);
+        return view('admin.layouts.pdf.receiptTudo', $data);
+        // $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+        // return $pdf->download($fileName);
 
     }
 }
