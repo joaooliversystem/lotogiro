@@ -178,7 +178,9 @@
             @endforeach
         </table>
     </div>
+
     <div class="py-2 px-3">
+
         <p>
             <span class="font text-bold">QTDE DEZENAS: </span>
             <span class="font">{{$typeGameValue->numbers}}</span>
@@ -192,7 +194,7 @@
             <span class="font">R${{\App\Helper\Money::toReal($game->premio)}}</span>
         </p>
     </div>
-
+</center>
 </div>
 </body>
 </html>

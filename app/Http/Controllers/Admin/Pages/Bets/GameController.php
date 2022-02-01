@@ -448,6 +448,8 @@ class GameController extends Controller
         if ($format == "pdf") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
+
+            // return view('admin.layouts.pdf.receipt', $data);
             $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
             return $pdf->download($fileName);
 
@@ -483,7 +485,6 @@ class GameController extends Controller
     
         $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $infoCliente->client->name . ' ' .  $infoCliente->client->last_name . '.pdf';
 
-        // SendPdf::dispatch($fileName, $data);
         // return view('admin.layouts.pdf.receiptTudo', $data);
         $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
         return $pdf->download($fileName);
