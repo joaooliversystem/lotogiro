@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Pages\Dashboards\Wallet\Withdraw;
 
 use App\Helper\Money;
+use App\Models\LockBalance;
 use App\Models\User;
 use App\Models\WithdrawRequest;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -31,16 +32,22 @@ class Table extends Component
         }
 
        if($this->valueTransfer > 0){
-           WithdrawRequest::create([
+           $withdrawRequest = WithdrawRequest::create([
                'user_id' => $this->userId,
                'value' => Money::toDatabase($this->valueTransfer)
            ]);
 
-           $this->userObj->update([
-               'pixSaque' => $this->pixSaque
+           LockBalance::create([
+               'withdraw_request_id' => $withdrawRequest->id,
+               'value' => Money::toDatabase($this->valueTransfer)
            ]);
 
-           $this->flash('success', 'Transferência realizada com sucesso!', [
+           $this->userObj->balance = $this->userObj->balance - Money::toDatabase($this->valueTransfer);
+           $this->userObj->pixSaque = $this->pixSaque;
+
+           $this->userObj->save();
+
+           $this->flash('success', 'Solicitação realizada com sucesso!', [
                'position' => 'center',
                'timer' => '2000',
                'toast' => false,

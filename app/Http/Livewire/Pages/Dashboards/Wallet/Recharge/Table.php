@@ -18,7 +18,7 @@ class Table extends Component
 
     public function callMP()
     {
-        SDK::setAccessToken("TEST-2909617305972251-012203-cf258239d677359e68197c8ab004e690-1011031176"); // Either Production or SandBox AccessToken
+        SDK::setAccessToken("APP_USR-2909617305972251-012203-1eb52e7fbfc50a7355b5beb6d5abbe79-1011031176"); // Either Production or SandBox AccessToken
 
         $preference = new Preference();
         $item = new Item();
