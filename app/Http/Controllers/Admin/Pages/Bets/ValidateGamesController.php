@@ -78,7 +78,7 @@ class ValidateGamesController extends Controller
         $ID_VALUE = auth()->user()->indicador;
         try {
             $date = Carbon::now();    
-            if ( $date->hour >= 20 || $date->hour < 00) {
+            if ( $date->hour >= 20 && $date->hour < 21) {
             throw new \Exception('Banca Fechada!');
        
         }
