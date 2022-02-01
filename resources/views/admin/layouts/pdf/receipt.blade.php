@@ -5,14 +5,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-
+    {{--    <link href="https://fonts.googleapis.com/css2?family=Exo&display=swap" rel="stylesheet">--}}
+    {{--    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@700&display=swap" rel="stylesheet">--}}
     <style type="text/css">
+
         @page {
             margin: 0cm 0cm;
         }
 
         .font {
-            font-family: 'reboto', serif;
+            font-family: 'Exo', serif;
         }
 
         .text-size-1 {
@@ -37,11 +39,26 @@
             margin-left: 1.5cm;
             margin-right: 1.5cm;
             margin-bottom: 1.5cm;
-            background-color: {{$typeGame->color}};
         }
 
         .page-break {
             page-break-after: always;
+        }
+
+        .bg-danger {
+            background-color: red;
+        }
+
+        .bg-success {
+            background-color: #28a745;
+        }
+
+        .text-danger {
+            color: red;
+        }
+
+        .text-success {
+            color: #28a745;
         }
 
         .text-white {
@@ -98,22 +115,13 @@
             vertical-align: middle;
         }
 
-        .wrapper{
-        max-width: 1080px;
-        width: 100%;
-        max-height: 1080px;
-        height: 100%;
-        margin: 0 auto;
-        }
-
 
     </style>
 </head>
-<body class="wrapper">
-
+<body>
 <div class="">
     <div class="border-bottom-dashed py-2">
-        <p class="text-center font text-size-3 text-bold text-white">
+        <p class="text-danger text-center font text-size-3 text-bold">
             APOSTA SUPERLOTOGIRO
         </p>
         @if($prize)
@@ -122,35 +130,37 @@
             </p>
         @endif
     </div>
-<center>
     <div class="border-bottom-dashed px-3">
-        <p class="text-right text-white">
+        <p class="text-right">
             <span class="font text-bold">ID APOSTA: </span>
             <span class="font">{{$game->id}}</span>
         </p>
-        <p class="text-white">
+        <p class="">
             <span class="font text-bold">EMITIDO EM:</span>
             <span class="font">{{\Carbon\Carbon::parse($game->created_at)->format('d/m/Y h:i:s')}}</span>
         </p>
-        <p class="text-white">
+        <p class="">
+            <span class="font text-bold">CPF:</span><span class="font"> XXX.XXX.XXX-XX</span>
+        </p>
+        <p class="">
             <span class="font text-bold">PARTICIPANTE:</span>
             <span class="font">{{mb_strtoupper($client->name . ' ' . $client->last_name, 'UTF-8') }}</span>
         </p>
-        <p class="text-white">
+        <p class="">
             <span class="font text-bold">CONCURSO:</span>
             <span class="font">{{$game->competition->number }}</span>
         </p>
-        <p class="text-white">
+        <p class="">
             <span class="font text-bold">DATA SORTEIO:</span>
             <span class="font">{{\Carbon\Carbon::parse($game->competition->sort_date)->format('d/m/Y') }}</span>
         </p>
-        <p class="text-white">
+        <p class="">
             <span class="font text-bold">HORA SORTEIO:</span>
             <span class="font">{{\Carbon\Carbon::parse($game->competition->sort_date)->format('H:i:s') }}</span>
         </p>
-        <h2 class="font text-bold text-center text-white">{{mb_strtoupper($typeGame->name, 'UTF-8') }}</h2>
+        <h2 class="font text-bold text-center">{{mb_strtoupper($typeGame->name, 'UTF-8') }}</h2>
     </div>
-</center>
+
     <div class="border-bottom-dashed px-3 text-center">
 
         <table class="" style="width: 100%">
@@ -158,8 +168,8 @@
                 <tr>
                     @foreach($lines as $cols)
                         <td class="font text-center">
-                            <div class="number text-white text-bold border-radius m-auto"
-                                 style="font-size: 38px; background-color: white; color: {{ $typeGame->color }}">
+                            <div class="number text-white text-bold text-size-2 border-radius m-auto"
+                                 style="background-color: {{$typeGame->color}}">
                                 {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
                             </div>
                         </td>
@@ -168,7 +178,7 @@
             @endforeach
         </table>
     </div>
-    <div class="py-2 px-3 text-white">
+    <div class="py-2 px-3">
         <p>
             <span class="font text-bold">QTDE DEZENAS: </span>
             <span class="font">{{$typeGameValue->numbers}}</span>
