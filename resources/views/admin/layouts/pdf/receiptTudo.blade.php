@@ -33,6 +33,10 @@
             padding-top:0%;
             font-size: 45px;
         }
+        .text-size-5 {
+            padding-top:0%;
+            font-size: 40px;
+        }
 
         body {
             margin-top: 1.5cm;
@@ -200,7 +204,7 @@
             <tr>
                 @foreach($lines as $cols)
                     <td class="font text-center">
-                        <div class="number text-white text-bold text-size-2 border-radius m-auto"
+                        <div class="number text-white text-bold text-size-5 border-radius m-auto"
                              style="background-color: {{$jogos->typeGame->color}}">
                             {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
                         </div>
