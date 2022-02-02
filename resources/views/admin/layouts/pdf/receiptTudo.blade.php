@@ -33,6 +33,7 @@
             padding-top:0%;
             font-size: 45px;
         }
+
         .text-size-5 {
             padding-top:0%;
             font-size: 40px;
@@ -134,7 +135,7 @@
         <div class="">
             <div class="border-bottom-dashed py-2">
                 <p class="text-danger text-center font text-size-3 text-bold">
-                    APOSTA LOTO GIRO
+                    APOSTA SUPERLOTOGIRO TUDO
                 </p>
                 @if($prize)
                     <p class="text-success text-center font text-size-4 text-bold py-2">
@@ -145,37 +146,34 @@
             <div class="border-bottom-dashed px-3">
                 <p class="text-right">
                     <span class="font text-bold">ID APOSTA: </span>
-                    <span class="font">{{$jogos->id}}</span>
+                    <span class="font">{{$jogos['id']}}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">EMITIDO EM:</span>
-                    <span class="font">{{\Carbon\Carbon::parse($jogos->created_at)->format('d/m/Y h:i:s')}}</span>
-                </p>
-                <p class="">
-                    <span class="font text-bold">CPF:</span><span class="font"> XXX.XXX.XXX-XX</span>
+                    <span class="font">{{\Carbon\Carbon::parse($jogos['created_at'])->format('d/m/Y h:i:s')}}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">PARTICIPANTE:</span>
-                    <span class="font">{{mb_strtoupper($jogos->client->name . ' ' . $jogos->client->last_name, 'UTF-8') }}</span>
+                    <span class="font">{{ $Nome }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">CONCURSO:</span>
-                    <span class="font">{{$jogos->competition->number }}</span>
+                    <span class="font">{{ $Datas['number'] }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">DATA SORTEIO:</span>
-                    <span class="font">{{\Carbon\Carbon::parse($jogos->competition->sort_date)->format('d/m/Y') }}</span>
+                    <span class="font">{{ \Carbon\Carbon::parse($Datas['sort_date'])->format('d/m/Y') }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">HORA SORTEIO:</span>
-                    <span class="font">{{\Carbon\Carbon::parse($jogos->competition->sort_date)->format('H:i:s') }}</span>
+                    <span class="font">{{ \Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s') }}</span>
                 </p>
-                <h2 class="font text-bold text-center">{{ $jogos->typeGame->name }}</h2>
+                <h2 class="font text-bold text-center">{{ $TipoJogo['name'] }}</h2>
             </div>
 
             @php
                 $numbers = array();
-                $numbers = explode(',', $jogos->numbers);
+                $numbers = explode(',', $jogos['numbers']);
                 asort($numbers, SORT_NUMERIC);
 
                 $matriz = [];
@@ -205,7 +203,7 @@
                 @foreach($lines as $cols)
                     <td class="font text-center">
                         <div class="number text-white text-bold text-size-5 border-radius m-auto"
-                             style="background-color: {{$jogos->typeGame->color}}">
+                             style="background-color: {{$TipoJogo['color']}}">
                             {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
                         </div>
                     </td>
@@ -221,7 +219,7 @@
                 <p>
                     @php
                     $contDezenas = array();
-                    $contDezenas = explode(',', $jogos->numbers);
+                    $contDezenas = explode(',', $jogos['numbers']);
                 @endphp
 
                     <span class="font text-bold">QTDE DEZENAS: </span>
@@ -229,11 +227,11 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">VALOR APOSTADO: </span>
-                    <span class="font">R${{\App\Helper\Money::toReal($jogos->value)}}</span>
+                    <span class="font">R${{\App\Helper\Money::toReal($jogos{'value'})}}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">GANHO MÁXIMO: </span>
-                    <span class="font">R${{\App\Helper\Money::toReal($jogos->premio)}}</span>
+                    <span class="font">R${{\App\Helper\Money::toReal($jogos['premio'])}}</span>
                 </p>
             </div>
 
