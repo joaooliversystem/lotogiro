@@ -8,6 +8,7 @@ use App\Models\RechargeOrder;
 use App\Models\TransactBalance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class WalletController extends Controller
 {
@@ -58,6 +59,7 @@ class WalletController extends Controller
         if($request->status !== 'null'){
             $reference = $request->external_reference;
             $rechargeOrder = RechargeOrder::where('reference', $reference)->get();
+            $user = User::find($rechargeOrder->first()->user_id);
 
             if($rechargeOrder->contains('status', 1) || $rechargeOrder->contains('status', 2)){
                 return response()->json(['status' => 403]);
@@ -75,13 +77,13 @@ class WalletController extends Controller
                 if($typeStatus[$request->status] === 1){
                     TransactBalance::create([
                         'user_id_sender' => 1,
-                        'user_id' => auth()->id(),
+                        'user_id' => $user->id(),
                         'value' => $newRechargeOrder->value,
-                        'old_value' => auth()->user()->balance,
+                        'old_value' => $user->balance,
                         'type' => 'Recarga efetuada por meio da plataforma.'
                     ]);
-                    auth()->user()->balance = auth()->user()->balance + $newRechargeOrder->value;
-                    auth()->user()->save();
+                    $user->balance = $user->balance + $newRechargeOrder->value;
+                    $user->save();
                 }
 
                 return response()->json(['status' => 201]);

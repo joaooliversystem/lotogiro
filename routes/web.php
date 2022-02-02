@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 |
 */
 Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPaymentCron');
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->middleware('guest:admin');
 
