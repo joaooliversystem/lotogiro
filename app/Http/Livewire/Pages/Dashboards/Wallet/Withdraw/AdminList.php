@@ -3,6 +3,9 @@
 namespace App\Http\Livewire\Pages\Dashboards\Wallet\Withdraw;
 
 use App\Helper\Money;
+use App\Models\LockBalance;
+use App\Models\TransactBalance;
+use App\Models\User;
 use App\Models\WithdrawRequest;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -17,7 +20,22 @@ class AdminList extends Component
 
     public function withdrawDone($withdrawId)
     {
-        WithdrawRequest::findOrFail($withdrawId)->update([
+        $withdrawRequest = WithdrawRequest::findOrFail($withdrawId);
+        $withdrawRequest->update([
+            'status' => 1
+        ]);
+
+        $userRequest = User::findOrFail($withdrawRequest->user_id);
+
+        TransactBalance::create([
+            'user_id_sender' => auth()->id(),
+            'user_id' => $userRequest->id,
+            'value' => $withdrawRequest->value,
+            'old_value' => $userRequest->balance,
+            'type' => 'Solicitação de saque finalizada.'
+        ]);
+
+        LockBalance::where('withdraw_request_id', $withdrawRequest->id)->first()->update([
             'status' => 1
         ]);
     }

@@ -38,7 +38,7 @@
                             <div class="col-sm-12 mt-5">
                                 <div class="input-group">
                                     <button wire:click="requestWithdraw" type="button" class="btn btn-dark btn-block">
-                                        Transferir <span class="fa fa-send" style="color: #fff938"></span>
+                                        Solicitar <span class="fa fa-send" style="color: #fff938"></span>
                                     </button>
                                 </div>
                             </div>
