@@ -94,7 +94,7 @@
                         <input type="text" id="value" onchange="altera()" value="" name="value" required oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');">
                         Valor do Prêmio R$
                         <input type="text" id="premio" value="" name="premio" readonly>
-                        <button  class="btn btn-success" type="button" onclick="altera();">Calcular</button>
+                        <button  class="btn btn-info" type="button" onclick="altera();">Calcular</button>
                     @endforeach
                 @else
                 
@@ -107,8 +107,8 @@
         <div class="col-md-12">
             @if(isset($matriz))
                 <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
-                    @if($typeGame->name == "Lotogiro - 15 Lotofácil" || $typeGame->name == "Lotogiro 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                      <button wire:click="selecionaTudo()" class="btn btn-success" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
+                    @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
+                      <button wire:click="selecionaTudo()" class="btn btn-info" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
                     @endif
 
                     <br>
@@ -116,7 +116,7 @@
                     
                     {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                     @foreach ($busca as $buscas)
-                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-success" type="button">{{ $buscas['numbers'] }}</button>
+                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-dark" type="button" onclick="limpacampos();">{{ $buscas['numbers'] }}</button>
                     @endforeach 
 
                 <div class="table-responsive">
@@ -127,7 +127,7 @@
                                 @foreach($lines as $cols)
                                     <td>
                                         <button wire:click="selectNumber({{$cols}})" id="number_{{$cols}}" type="button"
-                                                class="btn btn-success {{in_array($cols, $selectedNumbers) ? 'btn-success' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
+                                                class="btn btn-info {{in_array($cols, $selectedNumbers) ? 'btn-info' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
                                     </td>
                                 @endforeach
                             </tr>

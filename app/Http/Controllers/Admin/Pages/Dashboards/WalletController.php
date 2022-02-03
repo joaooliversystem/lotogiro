@@ -77,7 +77,7 @@ class WalletController extends Controller
                 if($typeStatus[$request->status] === 1){
                     TransactBalance::create([
                         'user_id_sender' => 1,
-                        'user_id' => $user->id(),
+                        'user_id' => $user->id,
                         'value' => $newRechargeOrder->value,
                         'old_value' => $user->balance,
                         'type' => 'Recarga efetuada por meio da plataforma.'
