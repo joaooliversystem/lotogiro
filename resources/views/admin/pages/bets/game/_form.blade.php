@@ -33,9 +33,13 @@
         </a>
     </div>
     <div class="col-md-6 mb-3">
-        <button type="submit" id="button_game"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/games/create/'.$typeGame->id)) Cadastrar
-            Jogo  @else  Atualizar Jogo @endif </button>
+        <button type="submit" id="button_game" onclick="mudarListaNumerosGeral()"
+                class="btn btn-block btn-outline-success">@if(request()->is('admin/bets/games/create/'.$typeGame->id)) 
+                Cadastrar Jogo  
+                @else  
+                Atualizar Jogo 
+                @endif 
+            </button>
     </div>
 </div>
 

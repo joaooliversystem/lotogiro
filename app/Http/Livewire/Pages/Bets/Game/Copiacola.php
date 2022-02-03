@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\TypeGame;
 use App\Models\TypeGameValue;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 
 class Copiacola extends Component
@@ -21,6 +22,7 @@ class Copiacola extends Component
     public $qtdDezena;
     public $msg;
     public $controle;
+    public $contadorJogos = 0;
 
     public function mount($typeGame, $clients)
     {
@@ -45,6 +47,7 @@ class Copiacola extends Component
         $contadorLinhas;
         $contador = 0;
         foreach($this->dezena as $dezenaConvert){
+            $this->contadorJogos++;
             $string = preg_replace('/^\h*\v+/m', '', $dezenaConvert);
             //$string = preg_replace('/\s+/', ' ', trim($dezenaConvert));
             $words = explode(" ", $string);
@@ -98,6 +101,13 @@ class Copiacola extends Component
 
     public function render()
     {
-        return view('livewire.pages.bets.game.copiacola');
+        $User = Auth::user();
+        $FiltroUser = client::where('name', $User['name'])->first();
+        $this->FiltroUser = $FiltroUser;
+
+        $busca = TypeGameValue::select('numbers')->where('type_game_id', $this->typeGame->id)->orderBy('numbers', 'asc')->get();
+        $this->busca = $busca;
+
+        return view('livewire.pages.bets.game.copiacola', compact('User', 'FiltroUser', 'busca'));
     }
 }

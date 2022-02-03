@@ -6,7 +6,7 @@
 
     <div class="login-box">
         <div class="login-logo">
-            <img src="https://painel.lotogiro.com/admin/images/painel/logo.png" alt="" width=150 height=150>
+            <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
         </div>
         <div class="card">
             <div class="card-body login-card-body">

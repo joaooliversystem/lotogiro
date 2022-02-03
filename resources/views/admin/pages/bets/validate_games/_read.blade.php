@@ -28,9 +28,9 @@
                             <table class="table table-sm">
                                 <thead>
                                 <tr>
-                                    <td>
+                                    {{-- <td>
                                         Cpf
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         Nome
                                     </td>
@@ -38,9 +38,9 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td>
+                                    {{-- <td>
                                         {{\App\Helper\Mask::addMaskCpf($validate_game->client->cpf)}}
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         {{$validate_game->client->name}} {{$validate_game->client->last_name}}
                                     </td>
@@ -57,10 +57,26 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h4>Jogos</h4>
+
+                        @foreach($validate_game->games as $game)
+                            @php
+                                $checar = $game->checked;
+                            @endphp
+                        @endforeach
+
+                        @if($checar == 1)
+                            <a href="{{ route('admin.bets.games.receiptTudo', ['idcliente' =>$idCliente ]) }}">
+                                <button type="button" class="btn btn-info btn-block">
+                                    imprimir Todos Recibos
+                                </button>
+                            </a>
+                        @endif
+
                         <div class="table-responsive">
-                            <table class="table table-sm">
+                            <table class="table table-sm" id="myTable">
                                 <thead>
                                 <tr>
+                                    <th scope="col">Id Jogo</th>
                                     <th scope="col">Tipo de Jogo</th>
                                     <th scope="col">Concurso</th>
                                     <th scope="col">Dezenas</th>
@@ -75,7 +91,7 @@
                                 @forelse($validate_game->games as $game)
    
                                     <tr>
-                                        
+                                        <td>{{$game->id}}</td>
                                         <td>{{$game->typeGame->name}}</td>
                                         <td>{{$game->competition->number}}</td>
                                         <td>{{$game->numbers}}</td>
@@ -89,7 +105,7 @@
                     <div class="col-md-3 mb-3">
                         <a href="{{route('admin.bets.games.receipt', ['game' => $game, 'format' => 'pdf'])}}">
                             <button type="button" class="btn btn-info btn-block">
-                                PDF
+                                IMG
                             </button>
                         </a>
                     </div>
@@ -164,9 +180,16 @@
 
 
 @push('scripts')
-
-    <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
     <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
+
+    <script src="//cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="{{asset('admin/layouts/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+   
+   <script>
         $(document).ready(function () {
             $('#cpf').inputmask("999.999.999-99");
             $('#phone').inputmask("(99) 9999[9]-9999");

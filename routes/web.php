@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+    use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
+    use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
 use App\Http\Controllers\Admin\Pages\HomeController;
 use App\Http\Controllers\Admin\Pages\Settings\UserController;
@@ -29,6 +30,7 @@ use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 |
 */
 Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPaymentCron');
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->middleware('guest:admin');
 
@@ -59,6 +61,19 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
             });
+
+
+            Route::prefix('wallet')->name('wallet.')->group(function () {
+                Route::get('/', [WalletController::class, 'index'])->name('index');
+                Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
+                Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
+                Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+                Route::get('/extract', [WalletController::class, 'extract'])->name('extract');
+                Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
+                Route::get('/recharge-order', [WalletController::class, 'rechargeOrder'])->name('recharge-order');
+                Route::get('/order-detail/{id}', [WalletController::class, 'orderDetail'])->name('order-detail');
+                Route::get('/updateStatusPayment/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
+            });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {
             Route::resource('clients', ClientController::class);
@@ -67,6 +82,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::resource('type_games.values', TypeGameValueController::class);
             Route::get('/games/create-link', [GameController::class, 'createLink'])->name('games.link');
             Route::get('/games/receipt/{game}/{format}/{prize?}', [GameController::class, 'getReceipt'])->name('games.receipt');
+            Route::get('/games/receiptTudo/{idcliente}', [GameController::class, 'getReceiptTudo'])->name('games.receiptTudo');
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');
@@ -74,6 +90,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 'index', 'create'
             ]);
             Route::resource('draws', DrawController::class);
+            Route::get('report-draws/{type}', [DrawController::class, 'reportDraws'])->name('report-draws');
             Route::resource('validate-games', ValidateGamesController::class)->except([
                 'store'
             ]);;

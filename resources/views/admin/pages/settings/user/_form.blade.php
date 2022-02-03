@@ -95,6 +95,42 @@
                         </span>
                         @enderror
                     </div>
+
+                    {{-- parte de dados do cliente --}}
+                    <div class="form-group col-md-6">
+                        <label for="pix" id="pixL">pix</label>
+                        <input type="" class="form-control @error('pix') is-invalid @enderror"
+                               id="pix"
+                               name="pix" maxlength="50">
+                        @error('pix')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="telefone" id="telefoneL">telefone</label>
+                        <input type="text" class="form-control @error('telefone') is-invalid @enderror"
+                               id="telefone"
+                               name="telefone" maxlength="15">
+                        @error('telefone')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="cpf" id="cpfL">cpf</label>
+                        <input type="" class="form-control @error('cpf') is-invalid @enderror"
+                               id="cpf"
+                               name="cpf" maxlength="11">
+                        @error('cpf')
+                        <span class="invalid-feedback" role="alert">
+                           {{ $message }}
+                        </span>
+                        @enderror
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -135,7 +171,14 @@
                 </div>
                 <div class="form-group">
                     @if(Route::currentRouteName() == 'admin.settings.users.edit')
+                        <div class="row">
+                            <div class="col-md-6">
                         <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
+                            </div>
+                            <div class="col-md-6">
+                        <button type="button" class="btn btn-primary btn-block" onclick="habilitarcampo();">Ajuste Manual</button>
+                            </div>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -150,7 +193,8 @@
                         @if(isset($roles) && $roles->count() > 0)
                             @foreach($roles as $role)
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox"
+                                    <input type="radio"
+                                            onchange="radioCliente()"
                                            class="custom-control-input roles"
                                            id="role{{$role->id}}" value="{{$role->id}}"
                                            name="roles[]" @if($role->can) checked @else '' @endif>
@@ -202,5 +246,41 @@
                 unmaskAsNumber: true
             });
         });
+
+        function habilitarcampo(){
+            var campoSaldoAtual = document.getElementById('balanceAtual');
+            var campoSaldo = document.getElementById('balance');
+            campoSaldoAtual.readOnly = false;
+            campoSaldo.readOnly = true;
+        }
+    </script>
+
+    <script>
+        function radioCliente(){
+                
+            if (document.getElementById("role6").checked) {
+
+                document.getElementById("pix").style.visibility = "visible";
+                document.getElementById("telefone").style.visibility = "visible";
+                document.getElementById("cpf").style.visibility = "visible";
+
+                document.getElementById("pixL").style.visibility = "visible";
+                document.getElementById("telefoneL").style.visibility = "visible";
+                document.getElementById("cpfL").style.visibility = "visible";
+
+            } 
+            else{
+
+                document.getElementById("pix").style.visibility = "hidden";
+                document.getElementById("telefone").style.visibility = "hidden";
+                document.getElementById("cpf").style.visibility = "hidden";
+
+                document.getElementById("pixL").style.visibility = "hidden";
+                document.getElementById("telefoneL").style.visibility = "hidden";
+                document.getElementById("cpfL").style.visibility = "hidden";
+
+            }
+        }
+       
     </script>
 @endpush

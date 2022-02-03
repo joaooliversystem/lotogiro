@@ -50,6 +50,18 @@ class Table extends Component
                     'client_id' => $game->client_id
                 ];
 
+                
+                $users = User::where([
+                ['id', $game->user_id],
+                ['type_client', 1],
+                 ])->get();
+                foreach ($users as $user) {
+                $premio = $game->premio;
+                $balance = $user->balance;
+                $result = $balance + $premio;
+                $user->balance = $result;
+                $user->save();
+                }
                 $storeExtact = ExtractController::store($extract);
             }
             session()->flash('success', 'Pagamentos baixados com sucesso!');

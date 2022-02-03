@@ -1,10 +1,10 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
     <a href="/" class="brand-link">
-        <img src="{{asset('admin/images/painel/logo.png')}}"
+        <img src="{{asset('admin/images/painel/Trevo.png')}}"
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 15px">Lotogiro</span>
+        <span class="brand-text font-weight-light" style="font-size: 15px">SuperLotogiro</span>
     </a>
 
     <div class="sidebar">
@@ -212,6 +212,15 @@
                         </ul>
                     </li>
                 @endcanany
+
+                <li class="nav-item has-treeview @if(request()->is('admin/wallet/*')) menu-open @endif">
+                    <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is('admin/wallet/*')) active @endif">
+                        <i class="nav-icon fas fa-wallet"></i>
+                        <p>
+                            Carteira
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
