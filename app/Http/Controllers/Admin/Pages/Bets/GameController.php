@@ -485,7 +485,7 @@ class GameController extends Controller
 
         // pegando typegame
         $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
-        // $TipoJogo = $TipoJogo[0];
+        $TipoJogo = $TipoJogo[0];
 
         // pegando datas do sorteio
         $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
