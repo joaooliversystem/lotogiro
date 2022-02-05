@@ -82,7 +82,11 @@ class WalletController extends Controller
                         'old_value' => $user->balance,
                         'type' => 'Recarga efetuada por meio da plataforma.'
                     ]);
-                    $user->balance = $user->balance + $newRechargeOrder->value;
+                    if($user->comission > 0){
+                        $newRechargeOrder->value *= ($user->comission / 100);
+                    }
+
+                    $user->balance += $newRechargeOrder->value;
                     $user->save();
                 }
 

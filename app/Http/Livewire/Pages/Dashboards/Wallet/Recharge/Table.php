@@ -25,11 +25,11 @@ class Table extends Component
 
         $item->title = "Recarga SuperLotogiro";
         $item->quantity = 1;
-        $item->unit_price = (double) $this->valueAdd;
+        $item->unit_price = Money::toDatabase($this->valueAdd);
 
         $order = new RechargeOrder([
             'user_id' => auth()->id(),
-            'value' => (double) $this->valueAdd,
+            'value' => Money::toDatabase($this->valueAdd),
             'status' => 0
         ]);
         $order->save();
@@ -39,7 +39,7 @@ class Table extends Component
             "success" => "https://superjogo.loteriabr.com/admin/dashboards/wallet/updateStatusPayment/",
             "failure" => "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/",
             "pending" => "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/"
-        ];  
+        ];
         $preference->auto_return = "approved";
         $preference->notification_url = "https://superjogo.loteriabr.com/";
         $preference->external_reference = $order->reference;
