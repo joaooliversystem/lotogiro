@@ -8,6 +8,9 @@
                     <tr>
                         <th>Data</th>
                         <th>Responsável</th>
+                        @if(\App\Helper\UserValidate::iAmAdmin())
+                            <th>Pix</th>
+                        @endif
                         <th>Valor</th>
                         <th>Status</th>
                         <th>Ação</th>
@@ -18,6 +21,9 @@
                         <tr>
                             <td>{{ $withdraw->data }}</td>
                             <td>{{ $withdraw->responsavel }}</td>
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <th>Pix</th>
+                            @endif
                             <td>{{ $withdraw->value }}</td>
                             <td>{{ $withdraw->statusTxt }}</td>
                             <td width="5%" align="center">
