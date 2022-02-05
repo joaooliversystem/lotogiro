@@ -22,7 +22,7 @@
                             <td>{{ $withdraw->data }}</td>
                             <td>{{ $withdraw->responsavel }}</td>
                             @if(\App\Helper\UserValidate::iAmAdmin())
-                                <th>Pix</th>
+                                <th>{{ $withdraw->pix }}</th>
                             @endif
                             <td>{{ $withdraw->value }}</td>
                             <td>{{ $withdraw->statusTxt }}</td>
