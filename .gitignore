@@ -10,6 +10,8 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 ./vendor/
-./composer.lock
 /storage/
 /composer.lock
+./public/
+/resources/css/
+/resources/js/
