@@ -5,9 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ValidateOpenModalOffer
 {
+    use LivewireAlert;
     /**
      * Handle an incoming request.
      *
@@ -17,10 +19,14 @@ class ValidateOpenModalOffer
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!Cookie::has('offerNegative') && \Auth::user()->balance <= 0){
-
+        setcookie('offerNegative', 'close', (time() + 1200));
+        if(!isset($_COOKIE['offerNegative']) && auth()->user()->balance <= 0){
+            setcookie('offerNegative', 'open', (time() + 1200));
         }
 
+        if(auth()->user()->balance > 0){
+            setcookie('offerNegative', 'close', (time() + (3 * 24 * 3600)));
+        }
 
         return $next($request);
     }

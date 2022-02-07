@@ -48,7 +48,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
         Route::post('/login', [LoginController::class, 'login'])->name('post.login');
     });
-    Route::middleware('auth:admin')->group(function () {
+    Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
