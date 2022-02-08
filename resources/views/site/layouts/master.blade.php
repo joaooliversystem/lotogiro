@@ -26,6 +26,7 @@
 <script src="{{asset('site/layouts/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('site/layouts/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('site/layouts/js/master.js')}}"></script>
+
 @stack('scripts')
 @livewireScripts
 

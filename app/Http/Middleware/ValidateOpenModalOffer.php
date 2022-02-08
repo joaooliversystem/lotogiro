@@ -19,13 +19,16 @@ class ValidateOpenModalOffer
      */
     public function handle(Request $request, Closure $next)
     {
-        setcookie('offerNegative', 'close', (time() + 1200));
-        if(!isset($_COOKIE['offerNegative']) && auth()->user()->balance <= 0){
-            setcookie('offerNegative', 'open', (time() + 1200));
-        }
+        if(!isset($_COOKIE['offerNegative'])){
+            setcookie('offerNegative', 'close', (time() + 1200));
 
-        if(auth()->user()->balance > 0){
-            setcookie('offerNegative', 'close', (time() + (3 * 24 * 3600)));
+            if(auth()->user()->balance <= 0){
+                setcookie('offerNegative', 'open', (time() + 1200));
+            }
+
+            if(auth()->user()->balance > 0){
+                setcookie('offerNegative', 'close', (time() + (3 * 24 * 3600)));
+            }
         }
 
         return $next($request);
