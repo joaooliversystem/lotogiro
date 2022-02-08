@@ -472,21 +472,27 @@ class GameController extends Controller
         // pegando jogos feitos
         $jogosCliente = game::where('bet_id', $idcliente)->get();
 
-        // pegando informações do user
         $User = Auth::User();
-        $Nome = $User['name'] . ' ' . $User['last_name'];
-        // dd($jogosCliente);
+        // $Nome = $User['name'] . ' ' . $User['last_name'];
+        // $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $Nome . '.pdf';
 
         // informações para filename
-        $infoCliente =  $jogosCliente[0];
+        $InfoJogos =  $jogosCliente[0];
+
+        // pegando informações de cliente
+        $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
+        $ClienteJogo =  $ClientInfo[0];
 
         // pegando typegame
-        $TipoJogo = TypeGame::where('id', $infoCliente['type_game_id'])->get();
+        $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
         $TipoJogo = $TipoJogo[0];
 
         // pegando datas do sorteio
-        $Datas = Competition::where('id', $infoCliente['competition_id'])->get();
+        $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
         $Datas = $Datas[0];
+
+        // nome cliente
+        $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
 
         $data = [
             'prize' => $prize,
@@ -495,8 +501,7 @@ class GameController extends Controller
             'Datas' => $Datas,
             'TipoJogo' => $TipoJogo
         ];
-    
-        $fileName = 'Recibo ' . $infoCliente['bet_id'] . ' - ' . $Nome . '.pdf';
+        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
 
         // return view('admin.layouts.pdf.receiptTudo', $data);
         $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);

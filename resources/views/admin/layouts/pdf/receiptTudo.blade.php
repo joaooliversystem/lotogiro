@@ -196,24 +196,22 @@
 
             @endphp
 
-<div class="border-bottom-dashed px-3 text-center">
-    <table class="" style="width: 100%">
-        @foreach($matriz as $lines)
-            <tr>
-                @foreach($lines as $cols)
-                    <td class="font text-center">
-                        <div class="number text-white text-bold text-size-5 border-radius m-auto"
-                             style="background-color: {{$TipoJogo['color']}}">
-                            {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
-                        </div>
-                    </td>
-                @endforeach
-            </tr>
-        @endforeach
-    </table>
-</div>
-
-            
+            <div class="border-bottom-dashed px-3 text-center">
+                <table class="" style="width: 100%">
+                    @foreach($matriz as $lines)
+                        <tr>
+                            @foreach($lines as $cols)
+                                <td class="font text-center">
+                                    <div class="number text-white text-bold text-size-5 border-radius m-auto"
+                                        style="background-color: {{$TipoJogo['color']}}">
+                                        {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
+                                    </div>
+                                </td>
+                            @endforeach
+                        </tr>
+                    @endforeach
+                </table>
+            </div>      
 
             <div class="py-2 px-3">
                 <p>
