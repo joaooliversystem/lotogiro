@@ -13,8 +13,8 @@ class Client extends Component
     protected $rules = [
         'name' => 'required|max:50',
         'last_name' => 'required|max:100',
-        'cpf' => 'required|max:11',
         'pix' => 'required',
+        'cpf' => 'required',
         'phone' => 'required'
     ];
 
@@ -35,9 +35,9 @@ class Client extends Component
         }
     }
 
-    public function searchClient($cpf)
+    public function searchClient($phone)
     {
-        $client = \App\Models\Client::where('cpf', $cpf)->first();
+        $client = \App\Models\Client::where('phone', $phone)->first();
 
         return $client;
     }
