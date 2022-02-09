@@ -106,4 +106,6 @@
                 }
             }
         }
+
+        return response()->json(['status' => 403]);
     }

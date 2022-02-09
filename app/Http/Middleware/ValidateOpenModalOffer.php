@@ -47,6 +47,7 @@ class ValidateOpenModalOffer
                 ]);
             }
         }
+        auth()->user()->lockModal = $lockModal->status;
 
         return $next($request);
     }
@@ -55,6 +56,6 @@ class ValidateOpenModalOffer
     {
         $time = Carbon::parse($lockModal->updated_at)->diffInMinutes(Carbon::now());
 
-        return ($time >= 1);
+        return ($time >= 30);
     }
 }

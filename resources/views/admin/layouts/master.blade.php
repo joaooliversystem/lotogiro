@@ -59,7 +59,6 @@
     @include('admin.layouts.assets.footer')
 
 </div>
-@livewire('pages.dashboards.layouts.modal-offer')
 
 <script src="{{asset('admin/layouts/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('admin/layouts/plugins/overlayScrollbars/js/OverlayScrollbars.js')}}"></script>
@@ -92,6 +91,9 @@
     }
 </script>
 
+@if(auth()->user()->lockModal == 0)
+    @livewire('pages.dashboards.layouts.modal-offer')
+@endif
 @livewireScripts
 @stack('scripts')
 
