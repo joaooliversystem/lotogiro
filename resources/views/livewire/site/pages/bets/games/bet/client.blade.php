@@ -1,7 +1,7 @@
 <div>
     <form wire:submit.prevent="submit" class="text-left">
         <div class="form-row">
-            {{-- <div class="form-group col-md-2">
+            <div class="form-group col-md-2">
                 <label for="name">Cpf</label>
                 <input wire:model.lazy="cpf" type="text"
                        class="form-control @error('cpf') is-invalid @enderror"
@@ -14,24 +14,8 @@
                             {{ $message }}
                         </span>
                 @enderror
-            </div> --}}
-
-            <div class="form-group col-md-3">
-                <label for="phone">Telefone</label>
-                <input wire:model.lazy="cpf" type="text"
-                       class="form-control @error('phone') is-invalid @enderror" id="phone"
-                       name="phone"
-                       maxlength="100"
-                       value="{{old('phone', isset($client->phone) && !empty($client->phone) ? $client->ddd.$client->phone : null) }}">
-                <small>Apenas Números</small>
-                @error('phone')
-                <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                @enderror
             </div>
-
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <label for="name">Nome</label>
                 <input wire:model="name" type="text"
                        class="form-control @error('name') is-invalid @enderror" id="name"
@@ -57,7 +41,7 @@
                 </span>
                 @enderror
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-2">
                 <label for="pix">Pix</label>
                 <input wire:model="pix" type="text"
                        class="form-control @error('pix') is-invalid @enderror" id="pix"
@@ -69,7 +53,20 @@
                         </span>
                 @enderror
             </div>
-            
+            <div class="form-group col-md-3">
+                <label for="phone">Telefone</label>
+                <input wire:model="phone" type="text"
+                       class="form-control @error('phone') is-invalid @enderror" id="phone"
+                       name="phone"
+                       maxlength="100"
+                       value="{{old('phone', isset($client->phone) && !empty($client->phone) ? $client->ddd.$client->phone : null) }}">
+                <small>Apenas Números</small>
+                @error('phone')
+                <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                @enderror
+            </div>
         </div>
         <div class="row">
             <div class="form-group col-md-12">
