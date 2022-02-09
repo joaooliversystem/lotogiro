@@ -13,7 +13,7 @@ class ModalOffer extends Component
         $lockModal->status = 1;
         $lockModal->save();
 
-        if($this === 1){
+        if($type === 1){
             $this->redirect(route('admin.dashboards.wallet.recharge'));
         }
     }
