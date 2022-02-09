@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
-    public $timestamps = false;
+    public $fillable = [
+        'name',
+        'last_name',
+        'email',
+        'ddd',
+        'phone',
+    ];
+
+    public $timestamps = true;
     public function games()
     {
         return $this->hasMany(Game::class);

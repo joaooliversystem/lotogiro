@@ -126,7 +126,10 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->commission = $request->commission;
             $user->indicador = $indicador;
-            
+            if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
+
             // enviar pra cliente
             if($auxRole == 6){
 
@@ -145,12 +148,13 @@ class UserController extends Controller
                 $passardados->name = $request->name;
                 $passardados->last_name = $request->last_name;
                 $passardados->email = $request->email;
-                $passardados->phone = $data['telefone'];     
+                $passardados->phone = $data['telefone'];
                 $passardados->pix  = $data['pix'];
                 $passardados->save();
-                
+
             }
             $user->balance = $balanceRequest;
+
             $user->save();
 
         TransactBalance::create([
@@ -217,8 +221,6 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
-
         if(!auth()->user()->hasPermissionTo('update_user')){
             abort(403);
         }
@@ -255,13 +257,17 @@ class UserController extends Controller
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
             if($newBalance > 0){
-            $user->balance = $newBalance;
+                $user->balance = $newBalance;
             }else{
-            $ajuste = 1;
-            $oldBalance = $user->balance;
-            $user->balance = (float) Money::toDatabase($request->balanceAtual); 
+                $ajuste = 1;
+                $oldBalance = $user->balance;
+                $user->balance = (float) Money::toDatabase($request->balanceAtual);
             }
             $user->indicador = $indicador;
+
+            if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
             $user->save();
 
             if((float) $newBalance > 0){

@@ -59,34 +59,7 @@
     @include('admin.layouts.assets.footer')
 
 </div>
-
-<div class="modal fade text-center py-5"  id="offerModal" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="top-strip"></div>
-                <div class="h2">
-                    <img class="img-circle img-fluid" src="http://lotogiro.pc/admin/images/painel/Trevo.png"
-                         alt="" style="max-height: 15vh;">
-                </div>
-                <h2 class="pb-1 text-muted">Sem Saldo? Que tal fazer uma recarga agora?</h2>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <a class="btn btn-warning btn-block text-bold pointer-event closeOffer">Não quero jogar
-                            ainda.</a>
-                    </div>
-                    <div class="col-sm-6">
-                        <a href="{{ route('admin.dashboards.wallet.recharge') }}" class="btn btn-primary btn-block
-                        text-bold closeOffer">Vamos lá!</a>
-                    </div>
-                </div>
-                <div class="bottom-strip"></div>
-            </div>
-        </div>
-    </div>
-</div>
+@livewire('pages.dashboards.layouts.modal-offer')
 
 <script src="{{asset('admin/layouts/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('admin/layouts/plugins/overlayScrollbars/js/OverlayScrollbars.js')}}"></script>
@@ -94,24 +67,12 @@
 <script src="{{asset('admin/layouts/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin/layouts/js/master.js')}}"></script>
 <script src="{{asset('admin/layouts/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
 
 <script>
-    $(document).on('click', '.closeOffer', function () {
-        console.log(Cookies.get('offerNegative'));
-        Cookies.set("offerNegative", "close");
-        $('#offerModal').modal('hide');
-        console.log(Cookies.get('offerNegative'));
-    });
-
     $(document).ready(function () {
-        if (document.cookie.indexOf("offerNegative") >= 0) {
-            if (Cookies.get("offerNegative") === 'open') {
-                $('#offerModal').modal('show');
-            }
-        }
         bsCustomFileInput.init();
     });
+
     toastr.options = {
         "closeButton": false,
         "debug": false,

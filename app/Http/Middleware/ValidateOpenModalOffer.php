@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\LockModalOffer;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -19,18 +21,40 @@ class ValidateOpenModalOffer
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!isset($_COOKIE['offerNegative'])){
-            setcookie('offerNegative', 'close', (time() + 1200));
+        $lockModal = LockModalOffer::where('user_id', auth()->id())->firstOr(function () {
+            return LockModalOffer::create([
+                'user_id' => auth()->id(),
+                'status' => 0,
+            ]);
+        });
 
-            if(auth()->user()->balance <= 0){
-                setcookie('offerNegative', 'open', (time() + 1200));
+        if($this->expired($lockModal)) {
+            if (auth()->user()->balance <= 0) {
+                $lockModal->update([
+                    'status' => 1
+                ]);
+                $lockModal->update([
+                    'status' => 0
+                ]);
             }
 
-            if(auth()->user()->balance > 0){
-                setcookie('offerNegative', 'close', (time() + (3 * 24 * 3600)));
+            if (auth()->user()->balance > 0) {
+                $lockModal->update([
+                    'status' => 0
+                ]);
+                $lockModal->update([
+                    'status' => 1
+                ]);
             }
         }
 
         return $next($request);
+    }
+
+    protected function expired($lockModal)
+    {
+        $time = Carbon::parse($lockModal->updated_at)->diffInMinutes(Carbon::now());
+
+        return ($time >= 1);
     }
 }
