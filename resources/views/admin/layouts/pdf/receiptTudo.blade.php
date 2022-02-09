@@ -135,7 +135,7 @@
         <div class="">
             <div class="border-bottom-dashed py-2">
                 <p class="text-danger text-center font text-size-3 text-bold">
-                    APOSTA SUPERLOTOGIRO TUDO
+                    APOSTA SUPER LOTO GIRO
                 </p>
                 @if($prize)
                     <p class="text-success text-center font text-size-4 text-bold py-2">
@@ -158,7 +158,7 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">CONCURSO:</span>
-                    <span class="font">{{ $Datas['number'] }}</span>
+                    <span class="font">{{ $jogos->competition->number }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">DATA SORTEIO:</span>
@@ -168,7 +168,8 @@
                     <span class="font text-bold">HORA SORTEIO:</span>
                     <span class="font">{{ \Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s') }}</span>
                 </p>
-                <h2 class="font text-bold text-center">{{ $TipoJogo['name'] }}</h2>
+
+                <h2 class="font text-bold text-center">{{ $jogos->typeGame->name }}</h2>
             </div>
 
             @php
@@ -203,7 +204,7 @@
                             @foreach($lines as $cols)
                                 <td class="font text-center">
                                     <div class="number text-white text-bold text-size-5 border-radius m-auto"
-                                        style="background-color: {{$TipoJogo['color']}}">
+                                        style="background-color: {{ $jogos->typeGame->color }}">
                                         {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
                                     </div>
                                 </td>
@@ -211,7 +212,9 @@
                         </tr>
                     @endforeach
                 </table>
-            </div>      
+            </div>
+
+            
 
             <div class="py-2 px-3">
                 <p>
