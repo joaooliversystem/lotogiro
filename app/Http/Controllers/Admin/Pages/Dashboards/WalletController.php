@@ -83,6 +83,15 @@
                     $msgCommission = "Mais {$user->commission}% de comissão.";
                 }
 
+                $commission = 0;
+                $totalRecharge = $newRechargeOrder->value;
+                $msgCommission = "";
+                if($user->commission > 0){
+                    $commission = $newRechargeOrder->value * ($user->commission/100);
+                    $totalRecharge = $newRechargeOrder->value + $commission;
+                    $msgCommission = "Mais {$user->commission}% de comissão.";
+                }
+
                 if($typeStatus[$request->status] === 1){
                     TransactBalance::create([
                         'user_id_sender' => 1,

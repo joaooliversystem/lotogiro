@@ -213,9 +213,9 @@
                     </li>
                 @endcanany
 
-                <li class="nav-item has-treeview @if(request()->is('admin/wallet/*')) menu-open @endif">
-                    <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is('admin/wallet/*')) active @endif">
-                        <i class="nav-icon fas fa-wallet"></i>
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is
+                    ('admin/dashboards/wallet/*')) menu-open @endif">
                         <p>
                             Carteira
                         </p>

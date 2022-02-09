@@ -21,7 +21,7 @@
                 <p class="card-text">{{ $JogosFeitos }}</p>
               </div>
             </div>
-  
+
             <div class="card text-white bg-danger mb-6" style="">
               <div class="card-header">Saldo</div>
               <div class="card-body">
@@ -29,11 +29,11 @@
                 <p class="card-text">R${{ $saldo }}</p>
               </div>
             </div>
-            
+
           </div>
-          
+
         @else
-        
+
             <div class="col-md-7 my-2">
                 <div class="form-group">
                     <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
@@ -50,7 +50,7 @@
                     </button>
                 </a>
             </div>
-            
+
         @endif
 
         @if(\App\Models\TypeGame::count() > 0)

@@ -70,6 +70,22 @@
                     </div>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <label for="password">Link de indicação</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon3">http://lotogiro.pc/admin/indicate/</span>
+                            </div>
+                            <input type="text" class="form-control" id="link" name="link"
+                                   aria-describedby="basic-addon3" value="{{old('link', $user->link ?? null)}}">
+                        </div>
+                        <div class="col-sm-12">
+                            <p class="text-bold">http://lotogiro.pc/admin/indicate/{{old('link', $user->link ?? null)}}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="password">Senha</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
@@ -257,7 +273,7 @@
 
     <script>
         function radioCliente(){
-                
+
             if (document.getElementById("role6").checked) {
 
                 document.getElementById("pix").style.visibility = "visible";
@@ -268,7 +284,7 @@
                 document.getElementById("telefoneL").style.visibility = "visible";
                 document.getElementById("cpfL").style.visibility = "visible";
 
-            } 
+            }
             else{
 
                 document.getElementById("pix").style.visibility = "hidden";
@@ -281,6 +297,6 @@
 
             }
         }
-       
+
     </script>
 @endpush

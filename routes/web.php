@@ -1,5 +1,6 @@
 <?php
 
+    use App\Http\Controllers\Admin\Pages\Auth\RegisterController;
     use App\Http\Controllers\Admin\Pages\Dashboards\WalletController;
     use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Pages\Auth\LoginController;
@@ -30,6 +31,9 @@ use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 |
 */
 Route::get('/', [LoginController::class, 'showLoginForm']);
+Route::get('/admin/indicate/{indicate?}', [RegisterController::class, 'registerIndicate'])->name('indicateRegister');
+Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'create'])->name('register');
 Route::get('/updateStatusPaymentCron/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPaymentCron');
 
 Route::get('/', [LoginController::class, 'showLoginForm'])->middleware('guest:admin');
@@ -48,7 +52,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('get.login');
         Route::post('/login', [LoginController::class, 'login'])->name('post.login');
     });
-    Route::middleware('auth:admin')->group(function () {
+    Route::middleware(['auth:admin', 'check.openModal'])->group(function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
