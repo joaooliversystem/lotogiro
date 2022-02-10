@@ -216,6 +216,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboards.wallet.index') }}" class="nav-link @if(request()->is
                     ('admin/dashboards/wallet/*')) menu-open @endif">
+                    <i class="nav-icon fas fa-wallet"></i>
                         <p>
                             Carteira
                         </p>
