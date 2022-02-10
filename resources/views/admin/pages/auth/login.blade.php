@@ -4,8 +4,8 @@
 
 @section('content')
 
-    <div class="col-sm-6 mt-5">
-        <div class="login-logo">
+    <div class="col-sm-4 mt-5">
+        <div class="login-logo mt-5">
             <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
         </div>
         <div class="card">
