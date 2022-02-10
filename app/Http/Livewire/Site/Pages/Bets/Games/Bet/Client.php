@@ -13,8 +13,8 @@ class Client extends Component
     protected $rules = [
         'name' => 'required|max:50',
         'last_name' => 'required|max:100',
-        'cpf' => 'required|max:11',
         'pix' => 'required',
+        // 'cpf' => 'required',
         'phone' => 'required'
     ];
 
@@ -35,9 +35,9 @@ class Client extends Component
         }
     }
 
-    public function searchClient($cpf)
+    public function searchClient($phone)
     {
-        $client = \App\Models\Client::where('cpf', $cpf)->first();
+        $client = \App\Models\Client::where('phone', $phone)->first();
 
         return $client;
     }
@@ -45,19 +45,19 @@ class Client extends Component
     public function submit(Request $request)
     {
         $data = $this->validate();
-        $cpf = $this->searchClient($data['cpf']);
+        $cpf = $this->searchClient($data['phone']);
   
-        $client = \App\Models\Client::where('cpf', $data['cpf'])->first();
+        $client = \App\Models\Client::where('phone', $data['phone'])->first();
         
         if ($client == null){
 
             try {
-                $client = $this->searchClient($data['cpf']);
+                $client = $this->searchClient($data['phone']);
                 if (empty($client)) {
                     $client = new \App\Models\Client();
                 }
 
-                $client->cpf = $data['cpf'];
+                $client->cpf = null;
                 $client->name = $data['name'];
                 $client->last_name = $data['last_name'];
                 $client->pix = $data['pix'];
