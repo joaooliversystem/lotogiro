@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Site\Pages\Bets\Games\Bet;
 use App\Http\Controllers\Site\Pages\Bets\GameController;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Client extends Component
 {
@@ -24,7 +25,7 @@ class Client extends Component
         $this->typeGames = $typeGames;
     }
 
-    public function updatedCpf($value)
+    public function updatedPhone($value)
     {
         $client = $this->searchClient($value);
         if (!empty($client)) {
@@ -37,7 +38,9 @@ class Client extends Component
 
     public function searchClient($phone)
     {
-        $client = \App\Models\Client::where('phone', $phone)->first();
+        $ddd = Str::of($phone)->substr(0, 2);
+        $tel = Str::of($phone)->substr(2);
+        $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
 
         return $client;
     }
@@ -45,9 +48,11 @@ class Client extends Component
     public function submit(Request $request)
     {
         $data = $this->validate();
-        $cpf = $this->searchClient($data['phone']);
+        $phone = $this->searchClient($data['phone']);
+        $ddd = Str::of($phone)->substr(0, 2);
+        $tel = Str::of($phone)->substr(2);
   
-        $client = \App\Models\Client::where('phone', $data['phone'])->first();
+        $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
         
         if ($client == null){
 

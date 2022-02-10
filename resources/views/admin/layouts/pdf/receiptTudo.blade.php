@@ -168,7 +168,7 @@
                     <span class="font text-bold">HORA SORTEIO:</span>
                     <span class="font">{{ \Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s') }}</span>
                 </p>
-                <h2 class="font text-bold text-center">{{ $TipoJogo['name'] }}</h2>
+                <h2 class="font text-bold text-center">{{mb_strtoupper($jogos->typeGame->name, 'UTF-8')}}</h2>
             </div>
 
             @php
@@ -203,7 +203,7 @@
                             @foreach($lines as $cols)
                                 <td class="font text-center">
                                     <div class="number text-white text-bold text-size-5 border-radius m-auto"
-                                        style="background-color: {{$TipoJogo['color']}}">
+                                        style="background-color: {{$jogos->typeGame->color}}">
                                         {{ strlen($cols) == 1 ? '0'.$cols : $cols }}
                                     </div>
                                 </td>
