@@ -64,6 +64,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
+                Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
             });
 
 
