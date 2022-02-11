@@ -4,10 +4,21 @@
 
 @section('content')
 
-    <div class="col-sm-4 mt-5">
+  <div class="col-sm-4 mt-5">
         <div class="login-logo mt-5">
+
             <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
         </div>
+         @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="card">
             <div class="card-body login-card-body">
                 <div class="col-md-12 px-4">

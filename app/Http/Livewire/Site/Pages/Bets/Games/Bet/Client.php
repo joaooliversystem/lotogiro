@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Site\Pages\Bets\Games\Bet;
 use App\Http\Controllers\Site\Pages\Bets\GameController;
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Client extends Component
 {
@@ -13,8 +14,8 @@ class Client extends Component
     protected $rules = [
         'name' => 'required|max:50',
         'last_name' => 'required|max:100',
-        'cpf' => 'required|max:11',
         'pix' => 'required',
+        // 'cpf' => 'required',
         'phone' => 'required'
     ];
 
@@ -24,7 +25,7 @@ class Client extends Component
         $this->typeGames = $typeGames;
     }
 
-    public function updatedCpf($value)
+    public function updatedPhone($value)
     {
         $client = $this->searchClient($value);
         if (!empty($client)) {
@@ -35,9 +36,11 @@ class Client extends Component
         }
     }
 
-    public function searchClient($cpf)
+    public function searchClient($phone)
     {
-        $client = \App\Models\Client::where('cpf', $cpf)->first();
+        $ddd = Str::of($phone)->substr(0, 2);
+        $tel = Str::of($phone)->substr(2);
+        $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
 
         return $client;
     }
@@ -45,19 +48,21 @@ class Client extends Component
     public function submit(Request $request)
     {
         $data = $this->validate();
-        $cpf = $this->searchClient($data['cpf']);
+        $phone = $this->searchClient($data['phone']);
+        $ddd = Str::of($phone)->substr(0, 2);
+        $tel = Str::of($phone)->substr(2);
   
-        $client = \App\Models\Client::where('cpf', $data['cpf'])->first();
+        $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
         
         if ($client == null){
 
             try {
-                $client = $this->searchClient($data['cpf']);
+                $client = $this->searchClient($data['phone']);
                 if (empty($client)) {
                     $client = new \App\Models\Client();
                 }
 
-                $client->cpf = $data['cpf'];
+                $client->cpf = null;
                 $client->name = $data['name'];
                 $client->last_name = $data['last_name'];
                 $client->pix = $data['pix'];

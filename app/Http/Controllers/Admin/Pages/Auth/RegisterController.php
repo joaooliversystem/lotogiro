@@ -87,6 +87,7 @@ HTML);
                 $user->syncRoles([6]);
 
             \DB::commit();
+              session()->flash('success', 'Cadastrado realizado com sucesso, Efetue seu login!');
             return redirect(route('admin.get.login'));
         } catch (Throwable $e) {
             \DB::rollback();
