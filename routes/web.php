@@ -109,6 +109,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         });
         Route::prefix('settings')->name('settings.')->group(function () {
             Route::resource('users', UserController::class);
+            Route::get('indicated', [UserController::class, 'indicated'])->name('users.indicated');
             Route::get('users/{userId}/statementBalance', [UserController::class, 'statementBalance'])->name('users.statementBalance');
             Route::resource('permissions', PermissionController::class);
             Route::resource('roles', RoleController::class);

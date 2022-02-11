@@ -69,36 +69,44 @@ class WalletController extends Controller
                 return response()->json(['status' => 200]);
             }
 
-            if($typeStatus[$request->status] !== 0){
-                $newRechargeOrder = $rechargeOrder->first()->replicate();
-                $newRechargeOrder->status = $typeStatus[$request->status];
-                $newRechargeOrder->push();
 
-                $commission = 0;
-                $totalRecharge = $newRechargeOrder->value;
-                $msgCommission = "";
-                if($user->commission > 0){
-                    $commission = $newRechargeOrder->value * ($user->commission/100);
-                    $totalRecharge = $newRechargeOrder->value + $commission;
-                    $msgCommission = "Mais {$user->commission}% de comissão.";
-                }
+                if($typeStatus[$request->status] !== 0){
+                    $newRechargeOrder = $rechargeOrder->first()->replicate();
+                    $newRechargeOrder->status = $typeStatus[$request->status];
+                    $newRechargeOrder->push();
 
-                if($typeStatus[$request->status] === 1){
-                    TransactBalance::create([
-                        'user_id_sender' => 1,
-                        'user_id' => $user->id,
-                        'value' => $totalRecharge,
-                        'old_value' => $user->balance,
-                        'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
-                    ]);
+                    $commission = 0;
+                    $totalRecharge = $newRechargeOrder->value;
+                    $msgCommission = "";
+                    if($user->commission > 0){
+                        $commission = $newRechargeOrder->value * ($user->commission/100);
+                        $totalRecharge = $newRechargeOrder->value + $commission;
+                        $msgCommission = "Mais {$user->commission}% de comissão.";
+                    }
 
-                    $user->balance += $newRechargeOrder->value + $commission;
-                    $user->save();
+
+                    if($typeStatus[$request->status] === 1){
+                        TransactBalance::create([
+                            'user_id_sender' => 1,
+                            'user_id' => $user->id,
+                            'value' => $totalRecharge,
+                            'old_value' => $user->balance,
+                            'type' => "Recarga efetuada por meio da plataforma. {$msgCommission}"
+                        ]);
+
+                        $user->balance += $newRechargeOrder->value + $commission;
+                        $user->save();
+                    }
+
+                    return response()->json(['status' => 201]);
                 }
 
                 return response()->json(['status' => 201]);
             }
+
+            return response()->json(['status' => 403]);
         }
-                return response()->json(['status' => 403]);
+
+
     }
 }
