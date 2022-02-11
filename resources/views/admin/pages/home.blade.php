@@ -31,7 +31,8 @@
             </div>
 
           </div>
-
+    </div>
+    <div class="row bg-white p-3">
         @else
 
             <div class="col-md-7 my-2">
@@ -50,10 +51,31 @@
                     </button>
                 </a>
             </div>
-
+    </div>
         @endif
 
+        <div class="row bg-white p-3">
+            <div class="card w-100">
+                <div class="card-header bg-blue">
+                    Seu link de indicação
+                </div>
+                <div class="card-body">
+                    <div class="alert bg-blue" role="alert">
+                        <a href="{{ env('APP_URL') }}/{{ auth()->user()->link }}">
+                            {{ env('APP_URL') }}/{{ auth()->user()->link }}
+                        </a>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-outline-primary">
+                        Seus indicados
+                    </a>
+                </div>
+            </div>
+        </div>
+
         @if(\App\Models\TypeGame::count() > 0)
+            <div class="row">
             @foreach(\App\Models\TypeGame::get() as $typeGame)
                 <div class="col-md-6 my-2">
                     <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
@@ -62,6 +84,7 @@
                     </a>
                 </div>
             @endforeach
+            </div>
         @else
             <div class="col-md-12 p-3 text-center">
                 Não existem tipos de jogos cadastrados!
