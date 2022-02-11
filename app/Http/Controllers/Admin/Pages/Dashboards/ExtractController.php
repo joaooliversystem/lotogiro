@@ -19,6 +19,15 @@ class ExtractController extends Controller
         return view('admin.pages.dashboards.extracts.index');
     }
 
+    public function manualRecharge()
+    {
+        if (!auth()->user()->hasPermissionTo('manual_recharge')) {
+            abort(403);
+        }
+
+        return view('admin.pages.dashboards.extracts.manualRecharge');
+    }
+
     public static function store($data)
     {
         $extract = new Extract();
