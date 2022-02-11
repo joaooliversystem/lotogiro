@@ -25,12 +25,21 @@
                             @can('read_extract')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.extracts.index')}}"
-                                       class="nav-link @if(request()->is('admin/dashboards/extracts*')) active @endif">
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
                                         <p>Extrato</p>
                                     </a>
                                 </li>
                             @endcan
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.manualRecharge')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Extrato Recarga Manual</p>
+                                    </a>
+                                </li>
+                            @endif
                             @can('read_gain')
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.gains.index')}}"
