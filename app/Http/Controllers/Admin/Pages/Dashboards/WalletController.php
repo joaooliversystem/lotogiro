@@ -99,7 +99,6 @@ class WalletController extends Controller
                 return response()->json(['status' => 201]);
             }
         }
-
-        return response()->json(['status' => 403]);
+                return response()->json(['status' => 403]);
     }
 }
