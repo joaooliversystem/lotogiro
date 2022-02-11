@@ -62,7 +62,7 @@
                 <div class="card-body">
                     <div class="alert bg-light" role="alert">
                         <input type="text" readonly class="link_copy_link"
-                               value="{{ env('APP_URL') }}/{{ auth()->user()->link }}"
+                               value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
                         />
                     </div>
                 </div>
