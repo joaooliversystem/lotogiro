@@ -64,6 +64,7 @@
                         <input type="text" readonly class="link_copy_link"
                                value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
                         />
+                        <div class="small mt-3 w-100 text-bold text-center">Clique no link para copiar.</div>
                     </div>
                 </div>
                 <div class="card-header">
