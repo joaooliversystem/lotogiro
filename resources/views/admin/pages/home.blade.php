@@ -60,10 +60,11 @@
                     Seu link de indicação
                 </div>
                 <div class="card-body">
-                    <div class="alert bg-blue" role="alert">
-                        <a href="{{ env('APP_URL') }}/{{ auth()->user()->link }}">
-                            {{ env('APP_URL') }}/{{ auth()->user()->link }}
-                        </a>
+                    <div class="alert bg-light" role="alert">
+                        <input type="text" readonly class="link_copy_link"
+                               value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
+                        />
+                        <div class="small mt-3 w-100 text-bold text-center">Clique no link para copiar.</div>
                     </div>
                 </div>
                 <div class="card-header">
@@ -94,6 +95,24 @@
 
 @endsection
 
+@push('styles')
+    <style>
+        *:focus{
+            outline:none;
+        }
+        .link_copy_link{
+            width: 100%;
+            padding: .5em 0 .5em 0;
+            border: 1px solid #007bff;
+            font-size: 24px;
+            text-align: center;
+        }
+        .link_copy_link:active, .link_copy_link:focus, .link_copy_link:focus-visible{
+            border: 1px solid #00c054 !important;
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script type="text/javascript">
         $('#btn_copy_link').click(function () {
@@ -101,5 +120,17 @@
             link.select();
             document.execCommand('copy');
         });
+
+        (function() {
+            function copy(element) {
+                return function() {
+                    document.execCommand('copy', false, element.select());
+                }
+            }
+
+            var linkIndicate = document.querySelector('.link_copy_link');
+            var copyUrlIndicate = copy(linkIndicate);
+            linkIndicate.addEventListener('click', copyUrlIndicate, false);
+        }());
     </script>
 @endpush
