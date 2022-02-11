@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Admin\Pages\Dashboards;
 
+use App\Helper\UserValidate;
 use App\Http\Controllers\Controller;
 use App\Models\Extract;
 use App\Models\Game;
 use App\Models\TypeGameValue;
 use Illuminate\Http\Request;
+use function App\Helper\UserValidate;
 
 class ExtractController extends Controller
 {
@@ -21,7 +23,7 @@ class ExtractController extends Controller
 
     public function manualRecharge()
     {
-        if (!auth()->user()->hasPermissionTo('manual_recharge')) {
+        if (!UserValidate::iAmAdmin()) {
             abort(403);
         }
 
