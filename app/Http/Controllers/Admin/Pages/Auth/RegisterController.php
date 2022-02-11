@@ -74,6 +74,7 @@ HTML);
                     'email' => $request->email,
                     'indicador' => $request->indicator,
                     'password' => $hashed,
+                    'type_client' => 1,
                 ]);
 
                 Client::create([
