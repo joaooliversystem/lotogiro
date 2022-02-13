@@ -42,7 +42,6 @@ class ManualRecharge extends Component
             ->whereIn('user_id_sender', $adms)
             ->when($this->range > 0, function ($q) {
                 $now = Carbon::now();
-//                dd($now->format('Y-m-d'), $now->subDays(7)->format('Y-m-d'), $now->year, $now->month, $now->day);
                 if($this->range === '1'){
                     return $q->whereMonth('created_at', '=', $now->month);
                 }
