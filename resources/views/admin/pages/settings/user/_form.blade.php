@@ -55,12 +55,12 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    @can('editar_conta')
+                    
                     <div class="form-group col-md-4">
                         <label for="indicador">ID Indicador</label>
                         <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                     </div>
-                    @endcan
+                    
                     <div class="form-group col-md-8">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
@@ -155,7 +155,7 @@
             </div>
         </div>
     </div>
-    @can('editar_conta')
+   
     <div class="col-md-5">
         <div class="card card-warning">
             <div class="card-header">
@@ -239,7 +239,7 @@
         </div>
     </div>
 </div>
-@endcan
+
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.users.index')}}">
