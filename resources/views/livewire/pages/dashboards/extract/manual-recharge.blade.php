@@ -96,8 +96,11 @@
                     <tr>
                         <td colspan="5">
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 col-md-9">
                                     {{ $transacts->links() }}
+                                </div>
+                                <div class="col-sm-12 col-md-3 text-right text-bold">
+                                    Total: R$ {{ $transacts->valueTotal }}
                                 </div>
                             </div>
                         </td>
