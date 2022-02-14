@@ -25,6 +25,7 @@ class User extends Authenticatable
         'indicador',
         'pixSaque',
         'link',
+        'type_client',
     ];
 
     /**

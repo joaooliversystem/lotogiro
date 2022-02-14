@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-sm-12" style="line-height: 3rem;">
                 <p class="mb-0"><b>Última atualização: {{ $order->data }}</b></p>
+                <p class="mb-0"><b>Usuário: {{ $order->usuario }}</b></p>
                 <p class="mb-0"><b>Recarga: </b> R$ {{ $order->value }}</p>
                 <p class="mb-0"><b>Status: </b>{{ $order->statusTxt }}</p>
             </div>
