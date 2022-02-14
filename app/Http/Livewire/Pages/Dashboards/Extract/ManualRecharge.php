@@ -66,10 +66,13 @@ class ManualRecharge extends Component
                     return $q->whereBetween('created_at', [$dateStart, $endStart]);
                 }
             })
-            ->orderByDesc('id')
-            ->paginate(10);
+            ->orderByDesc('id');
 
-        $transacts->each(function($item, $key) {
+        $total = Money::toReal($transacts->sum('value'));
+        $transacts = $transacts->paginate(10);
+        $transacts->valueTotal = $total;
+
+        $transacts->each(function($item, $key) use ($total) {
             $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
             $item->value = Money::toReal($item->value);
 
