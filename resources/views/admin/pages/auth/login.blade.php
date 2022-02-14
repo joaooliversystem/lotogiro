@@ -4,9 +4,8 @@
 
 @section('content')
 
-  <div class="col-sm-4 mt-5">
-        <div class="login-logo mt-5">
-
+  <div class="col-md-4 col-sm-12 mt-md-5">
+        <div class="login-logo mt-md-5">
             <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
         </div>
          @if (session('success'))
@@ -141,11 +140,13 @@
         }
 
     </style>
-    <div class="d-flex flex-column align-items-center justify-content-center"
+    <div class="d-flex flex-md-column flex-sm-row align-items-md-center align-items-sm-start
+    justify-content-md-center justify-content-sm-start"
         style="bottom:40px;right:40px;text-align:center;z-index:1000;position:absolute;">
-        <div class="alert" style="background-color: #25d366; color: #fff;" role="alert">Deseja ser um consultor?</div>
-        <div class="">
-            <a href="https://https://wa.me/558196826967?text=Oi, Ainda não tenho cadastrado."
+        <div class="alert my-auto" style="background-color: #25d366; color: #fff;" role="alert">Deseja ser um
+            consultor?</div>
+        <div class="ml-4">
+            <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
                 class="row pulse-button"
                 target="_blank" style="min-width:70px;min-height:70px;width:70px;height:70px;display: flex;align-items:
                 center;justify-content: center;background-color:#25d366;color:#FFF;border-radius:50px;padding: 2px;">
