@@ -77,7 +77,8 @@ Route::prefix('/admin')->name('admin.')->group(function () {
                 Route::get('/withdraw-list', [WalletController::class, 'withdrawList'])->name('withdraw-list');
                 Route::get('/recharge-order', [WalletController::class, 'rechargeOrder'])->name('recharge-order');
                 Route::get('/order-detail/{id}', [WalletController::class, 'orderDetail'])->name('order-detail');
-                Route::get('/updateStatusPayment/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
+                Route::get('/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/', [WalletController::class, 'updateStatusPayment'])->name('updateStatusPayment');
+                Route::get('/thanks/', [WalletController::class, 'thanks'])->name('thanks');
             });
         });
         Route::prefix('/bets')->name('bets.')->group(function () {

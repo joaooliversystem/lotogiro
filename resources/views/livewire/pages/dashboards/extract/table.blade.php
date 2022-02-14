@@ -9,6 +9,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
+                    <option></option>
                     <option value="1">Mensal</option>
                     <option value="2">Semanal</option>
                     <option value="3">Diário</option>
@@ -165,6 +166,9 @@
         $(document).ready(function () {
             $('#user').select2({
                 theme: "bootstrap"
+            });
+            $('#range').select2({
+                placeholder: "Please select a country"
             });
         });
 
