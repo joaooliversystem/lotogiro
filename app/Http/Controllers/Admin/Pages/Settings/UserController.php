@@ -72,6 +72,12 @@ class UserController extends Controller
         return view('admin.pages.settings.user.indicated');
     }
 
+        public function privado(User $user)
+    {
+        
+        return view('admin.pages.settings.user.edit2', compact('user'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -206,7 +212,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        if(!auth()->user()->hasPermissionTo('update_user')){
+        if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all')){
             abort(403);
         }
 
@@ -218,8 +224,11 @@ class UserController extends Controller
                 $role->can = false;
             }
         }
-
+        if($user->type_client == 1){
+            return view('admin.pages.settings.user.edit2', compact('user'));
+        }else{
         return view('admin.pages.settings.user.edit', compact('user', 'roles'));
+        }
     }
 
     /**
@@ -231,7 +240,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        if(!auth()->user()->hasPermissionTo('update_user')){
+      if(!auth()->user()->hasPermissionTo('update_user') && !auth()->user()->hasPermissionTo('edit_all') ){
             abort(403);
         }
 
@@ -241,7 +250,7 @@ class UserController extends Controller
             'email' => 'email:rfc|required|max:100|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8|same:password_confirmation|max:15',
             'password_confirmation' => 'sometimes|required_with:password|max:15',
-            'commission' => 'required|integer|between:0,100',
+            'commission' => 'integer|between:0,100',
         ]);
 
         $indicador = $request->indicador;
@@ -286,7 +295,12 @@ class UserController extends Controller
             if($ajuste == 1 && $oldBalance != $request->balanceAtual){
                 $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
             }
-
+            if($request->type_client == 1){
+                return redirect()->route('admin.home')->withErrors([
+                'success' => 'Usuário alterado com sucesso'
+            ]);
+            }
+            else{
             if (!empty($request->roles)) {
                 foreach ($request->roles as $role){
                     $userRoles[] = Role::whereId($role)->first();
@@ -297,7 +311,7 @@ class UserController extends Controller
             }else{
                 $user->syncRoles(null);
             }
-
+        }
             return redirect()->route('admin.settings.users.index')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
             ]);
@@ -308,6 +322,7 @@ class UserController extends Controller
                 'error' => config('app.env') != 'production' ? $exception->getMessage() : 'Ocorreu um erro ao alterar o usuário, tente novamente'
             ]);
         }
+        
     }
 
     /**

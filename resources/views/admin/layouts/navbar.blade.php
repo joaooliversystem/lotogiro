@@ -24,6 +24,12 @@
                     <i class="fas fa-user mr-2"></i> Conta
                 </a>
                 @endcan
+                @can('edit_all')
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
+                    <i class="fas fa-user mr-2"></i> Conta
+                </a> 
+                @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.logout')}}">
                     <i class="fas fa-sign-out-alt"></i> Logout
