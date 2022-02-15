@@ -51,30 +51,28 @@
                     </button>
                 </a>
             </div>
-    </div>
         @endif
 
-        <div class="row bg-white p-3">
-            <div class="card w-100">
-                <div class="card-header bg-blue">
-                    Seu link de indicação
+        <div class="card w-100">
+            <div class="card-header bg-blue">
+                Seu link de indicação
+            </div>
+            <div class="card-body">
+                <div class="alert bg-light" role="alert">
+                    <input type="text" readonly class="link_copy_link"
+                           value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
+                    />
+                    <div class="small mt-3 w-100 text-bold text-center">Clique no link para copiar.</div>
                 </div>
-                <div class="card-body">
-                    <div class="alert bg-light" role="alert">
-                        <input type="text" readonly class="link_copy_link"
-                               value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
-                        />
-                        <div class="small mt-3 w-100 text-bold text-center">Clique no link para copiar.</div>
-                    </div>
-                </div>
-                <div class="card-header">
-                    <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-outline-primary">
-                        Seus indicados
-                    </a>
-                </div>
+            </div>
+            <div class="card-header">
+                <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-outline-primary">
+                    Seus indicados
+                </a>
             </div>
         </div>
 
+    </div>
         @if(\App\Models\TypeGame::count() > 0)
             <div class="row">
             @foreach(\App\Models\TypeGame::get() as $typeGame)
