@@ -51,7 +51,6 @@
                     </button>
                 </a>
             </div>
-    </div>
         @endif
 
         <div class="card w-100">
@@ -73,6 +72,7 @@
             </div>
         </div>
 
+    </div>
         @if(\App\Models\TypeGame::count() > 0)
             <div class="row">
             @foreach(\App\Models\TypeGame::get() as $typeGame)
