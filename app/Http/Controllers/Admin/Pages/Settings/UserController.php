@@ -224,7 +224,7 @@ class UserController extends Controller
                 $role->can = false;
             }
         }
-        if($user->type_client == 1){
+        if($user->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
             return view('admin.pages.settings.user.edit2', compact('user'));
         }else{
         return view('admin.pages.settings.user.edit', compact('user', 'roles'));
@@ -295,7 +295,7 @@ class UserController extends Controller
             if($ajuste == 1 && $oldBalance != $request->balanceAtual){
                 $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
             }
-            if($request->type_client == 1){
+            if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
                 return redirect()->route('admin.home')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
             ]);
