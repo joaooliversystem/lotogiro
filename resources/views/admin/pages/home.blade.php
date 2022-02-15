@@ -10,31 +10,28 @@
 
         {{-- caso o cliente seja cambista --}}
         @if($User['type_client'] == 1)
+            <div class="card-deck" style="width: 100%; margin-bottom: 30px; margin-left: auto;
+                margin-right: auto">
 
-        <div class="card-deck" style="width: 100%; margin-bottom: 30px; margin-left: auto;
-        margin-right: auto">
-
-            <div class="card text-white bg-success mb-6" style="">
-              <div class="card-header">Jogos Feitos</div>
-              <div class="card-body">
-                <h5 class="card-title">Jogos Feitos</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
-                <p class="card-text">{{ $JogosFeitos }}</p>
-              </div>
+                <div class="card text-white bg-success mb-6" style="">
+                    <div class="card-header">Jogos Feitos</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Jogos Feitos</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
+                            <p class="card-text">{{ $JogosFeitos }}</p>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-danger mb-6" style="">
+                        <div class="card-header">Saldo</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Saldo</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
+                            <p class="card-text">R${{ $saldo }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
+        @endif
 
-            <div class="card text-white bg-danger mb-6" style="">
-              <div class="card-header">Saldo</div>
-              <div class="card-body">
-                <h5 class="card-title">Saldo</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
-                <p class="card-text">R${{ $saldo }}</p>
-              </div>
-            </div>
-
-          </div>
-    </div>
-    <div class="row bg-white p-3">
-        @else
-
+        @if($User['type_client'] != 1)
             <div class="col-md-7 my-2">
                 <div class="form-group">
                     <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
@@ -51,10 +48,9 @@
                     </button>
                 </a>
             </div>
-    </div>
         @endif
 
-        <div class="row bg-white p-3">
+        <div class="col-sm-12">
             <div class="card w-100">
                 <div class="card-header bg-blue">
                     Seu link de indicação
@@ -74,23 +70,23 @@
                 </div>
             </div>
         </div>
-
-        @if(\App\Models\TypeGame::count() > 0)
-            <div class="row">
-            @foreach(\App\Models\TypeGame::get() as $typeGame)
-                <div class="col-md-6 my-2">
-                    <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
-                        <button class="btn btn-block text-white"
-                                style="background-color: {{$typeGame->color}};">{{$typeGame->name}}</button>
-                    </a>
-                </div>
-            @endforeach
+    </div>
+    @if(\App\Models\TypeGame::count() > 0)
+        <div class="row">
+        @foreach(\App\Models\TypeGame::get() as $typeGame)
+            <div class="col-md-6 my-2">
+                <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
+                    <button class="btn btn-block text-white"
+                            style="background-color: {{$typeGame->color}};">{{$typeGame->name}}</button>
+                </a>
             </div>
-        @else
-            <div class="col-md-12 p-3 text-center">
-                Não existem tipos de jogos cadastrados!
-            </div>
-        @endif
+        @endforeach
+        </div>
+    @else
+        <div class="col-md-12 p-3 text-center">
+            Não existem tipos de jogos cadastrados!
+        </div>
+    @endif
     </div>
 
 @endsection
