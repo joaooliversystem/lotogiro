@@ -21,7 +21,7 @@
                 <p class="card-text">{{ $JogosFeitos }}</p>
               </div>
             </div>
-  
+
             <div class="card text-white bg-danger mb-6" style="">
               <div class="card-header">Saldo</div>
               <div class="card-body">
@@ -29,11 +29,12 @@
                 <p class="card-text">R${{ $saldo }}</p>
               </div>
             </div>
-            
+
           </div>
-          
+    </div>
+    <div class="row bg-white p-3">
         @else
-        
+
             <div class="col-md-7 my-2">
                 <div class="form-group">
                     <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
@@ -50,10 +51,32 @@
                     </button>
                 </a>
             </div>
-            
+    </div>
         @endif
 
+        <div class="row bg-white p-3">
+            <div class="card w-100">
+                <div class="card-header bg-blue">
+                    Seu link de indicação
+                </div>
+                <div class="card-body">
+                    <div class="alert bg-light" role="alert">
+                        <input type="text" readonly class="link_copy_link"
+                               value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
+                        />
+                        <div class="small mt-3 w-100 text-bold text-center">Clique no link para copiar.</div>
+                    </div>
+                </div>
+                <div class="card-header">
+                    <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-outline-primary">
+                        Seus indicados
+                    </a>
+                </div>
+            </div>
+        </div>
+
         @if(\App\Models\TypeGame::count() > 0)
+            <div class="row">
             @foreach(\App\Models\TypeGame::get() as $typeGame)
                 <div class="col-md-6 my-2">
                     <a href="{{route('admin.bets.games.create', ['type_game' => $typeGame->id])}}">
@@ -62,6 +85,7 @@
                     </a>
                 </div>
             @endforeach
+            </div>
         @else
             <div class="col-md-12 p-3 text-center">
                 Não existem tipos de jogos cadastrados!
@@ -71,6 +95,24 @@
 
 @endsection
 
+@push('styles')
+    <style>
+        *:focus{
+            outline:none;
+        }
+        .link_copy_link{
+            width: 100%;
+            padding: .5em 0 .5em 0;
+            border: 1px solid #007bff;
+            font-size: 24px;
+            text-align: center;
+        }
+        .link_copy_link:active, .link_copy_link:focus, .link_copy_link:focus-visible{
+            border: 1px solid #00c054 !important;
+        }
+    </style>
+@endpush
+
 @push('scripts')
     <script type="text/javascript">
         $('#btn_copy_link').click(function () {
@@ -78,5 +120,17 @@
             link.select();
             document.execCommand('copy');
         });
+
+        (function() {
+            function copy(element) {
+                return function() {
+                    document.execCommand('copy', false, element.select());
+                }
+            }
+
+            var linkIndicate = document.querySelector('.link_copy_link');
+            var copyUrlIndicate = copy(linkIndicate);
+            linkIndicate.addEventListener('click', copyUrlIndicate, false);
+        }());
     </script>
 @endpush

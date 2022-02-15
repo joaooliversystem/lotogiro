@@ -98,7 +98,7 @@ class ValidateGamesController extends Controller
                     $game->save();
                     $extract = [
                     'type' => 1,
-                    'value' => $value,
+                    'value' => $game->value,
                     'type_game_id' => $game->type_game_id,
                     'description' => 'Venda - Jogo de id: ' . $game->id,
                     'user_id' => $game->user_id,

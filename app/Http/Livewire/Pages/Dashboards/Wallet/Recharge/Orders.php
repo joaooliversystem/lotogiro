@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Livewire\Component;
 use Livewire\WithPagination;
 use function App\Helper\UserValidate;
+use App\Models\User;
 
 class Orders extends Component
 {
@@ -41,6 +42,8 @@ class Orders extends Component
 
             if(!$orders->contains('reference', $item->reference)) {
                 $item->data = Carbon::parse($item->created_at)->format('d/m/y à\\s H:i');
+                $received = User::find($item->user_id);
+                $item->user = "{$received->name} {$received->last_name}";
                 $item->value = Money::toReal($item->value);
                 $item->statusTxt = $typeStatus[$item->status];
 

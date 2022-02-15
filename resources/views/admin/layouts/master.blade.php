@@ -66,10 +66,12 @@
 <script src="{{asset('admin/layouts/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
 <script src="{{asset('admin/layouts/js/master.js')}}"></script>
 <script src="{{asset('admin/layouts/plugins/bs-custom-file-input/bs-custom-file-input.min.js')}}"></script>
+
 <script>
     $(document).ready(function () {
         bsCustomFileInput.init();
     });
+
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -89,6 +91,9 @@
     }
 </script>
 
+@if(auth()->user()->lockModal == 0)
+    @livewire('pages.dashboards.layouts.modal-offer')
+@endif
 @livewireScripts
 @stack('scripts')
 

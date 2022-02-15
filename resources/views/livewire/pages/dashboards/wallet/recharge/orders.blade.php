@@ -7,6 +7,7 @@
                     <thead>
                     <tr>
                         <th>Data</th>
+                        <th>Usuário</th>
                         <th>Valor</th>
                         <th>Status</th>
                         <th>Ação</th>
@@ -16,6 +17,7 @@
                     @forelse($orders as $order)
                         <tr>
                             <td>{{ $order->data }}</td>
+                            <td>{{ $order->user }}</td>
                             <td>{{ $order->value }}</td>
                             <td>{{ $order->statusTxt }}</td>
                             <td width="5%" align="center">

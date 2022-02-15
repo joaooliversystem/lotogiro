@@ -4,10 +4,20 @@
 
 @section('content')
 
-    <div class="login-box">
-        <div class="login-logo">
+  <div class="col-md-4 col-sm-12 mt-md-5">
+        <div class="login-logo mt-md-5">
             <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
         </div>
+         @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="card">
             <div class="card-body login-card-body">
                 <div class="col-md-12 px-4">
@@ -28,7 +38,7 @@
                     </div>
                     @enderror
                 </div>
-                <p class="login-box-msg">Realize o login para iniciar a sessão</p>
+                <h3 class="login-box-msg">Realize o login para iniciar a sessão</h3>
 
                 <form method="POST" action="{{route('admin.post.login')}}">
                     @csrf
@@ -80,16 +90,68 @@
                         <a href="{{ route('password.request') }}">Esqueci minha senha</a>
                     </p>
                 @endif
-                    <p class="mb-1"><b>
-                        Não é cadastrado?
-                    </b>
-                    </p>
-                   <a href="https://api.whatsapp.com/send?phone=558196826967&text=Oi, Ainda não tenho cadastrado.">
-                 <button type="submit" class="btn btn-primary btn-block">Fale Conosco</button>
-                </a>
 
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="mb-1 text-bold">
+                            Não é cadastrado?
+                        </p>
+{{--                        <a href="https://api.whatsapp.com/send?phone=558196826967&text=Oi, Ainda não tenho cadastrado.">--}}
+{{--                            <button type="submit" class="btn btn-primary btn-block">Fale Conosco</button>--}}
+{{--                        </a>--}}
+                        <a class="btn btn-block btn-primary"
+                            href="{{ route('register') }}">
+                            Cadastre-se
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <style>
+        .pulse-button {
+            cursor: pointer;
+            box-shadow: 0 0 0 0 rgba(37, 211, 102, 1);
+            -webkit-animation: pulse 1.5s infinite;
+        }
+
+        @-webkit-keyframes pulse {
+            0% {
+                -moz-transform: scale(0.9);
+                -ms-transform: scale(0.9);
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
+            }
+            70% {
+                -moz-transform: scale(1);
+                -ms-transform: scale(1);
+                -webkit-transform: scale(1);
+                transform: scale(1);
+                box-shadow: 0 0 0 50px rgba(37, 211, 102, 1);
+            }
+            100% {
+                -moz-transform: scale(0.9);
+                -ms-transform: scale(0.9);
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 1);
+            }
+        }
+
+    </style>
+    <div class="d-flex flex-md-column flex-sm-row align-items-md-center align-items-sm-start
+    justify-content-md-center justify-content-sm-start"
+        style="bottom:40px;right:40px;text-align:center;z-index:1000;position:absolute;">
+        <div class="alert my-auto" style="background-color: #25d366; color: #fff;" role="alert">Deseja ser um
+            consultor?</div>
+        <div class="ml-4">
+            <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
+                class="row pulse-button"
+                target="_blank" style="min-width:70px;min-height:70px;width:70px;height:70px;display: flex;align-items:
+                center;justify-content: center;background-color:#25d366;color:#FFF;border-radius:50px;padding: 2px;">
+                <i class="fa fa-whatsapp fa-3x"></i>
+            </a>
+        </div>
+    </div>
 @endsection

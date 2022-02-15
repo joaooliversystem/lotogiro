@@ -31,6 +31,7 @@
                     @endcan
                 @endif
                 <div class="form-row">
+                    <input type="text" value="1" hidden class="custom-control-input" id="type_client" name="type_client">
                     <div class="form-group col-md-4">
                         <label for="name">Nome</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
@@ -55,12 +56,12 @@
                     </div>
                 </div>
                 <div class="form-row">
-                    
+                    @can('editar_conta')
                     <div class="form-group col-md-4">
                         <label for="indicador">ID Indicador</label>
                         <input type="number" class="form-control" id="indicador" name="indicador" value="{{old('indicador', $user->indicador ?? null)}}" maxlength="20">
                     </div>
-                    
+                    @endcan
                     <div class="form-group col-md-8">
                         <label for="email">E-mail</label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
@@ -155,91 +156,7 @@
             </div>
         </div>
     </div>
-   
-    <div class="col-md-5">
-        <div class="card card-warning">
-            <div class="card-header">
-                <h3 class="card-title">Valores</h3>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label for="commission">Porcentagem de Comissão</label>
-                    <input type="text" class="form-control @error('commission') is-invalid @enderror" id="commission"
-                           name="commission"
-                           maxlength="100" value="{{old('commission', $user->commission ?? null)}}">
-                    @error('commission')
-                    <span class="invalid-feedback" role="alert">
-                       {{ $message }}
-                    </span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="balanceAtual">Saldo Atual</label>
-                    <input type="text" readonly class="form-control text-right" id="balanceAtual"
-                           name="balanceAtual"
-                           maxlength="100"
-                           value="{{old('balance', !empty($user->balance) ? \App\Helper\Money::toReal($user->balance) : null)}}">
-
-                    <label for="balance">Adicionar Saldo</label>
-                    <input type="text" class="form-control @error('balance') is-invalid @enderror" id="balance"
-                           name="balance"
-                           maxlength="100">
-                    @error('balance')
-                    <span class="invalid-feedback" role="alert">
-                       {{ $message }}
-                    </span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    @if(Route::currentRouteName() == 'admin.settings.users.edit')
-                        <div class="row">
-                            <div class="col-md-6">
-                        <a href="{{route('admin.settings.users.statementBalance', $user->id)}}" class="btn btn-primary btn-block">Extrato de Saldo</a>
-                            </div>
-                            <div class="col-md-6">
-                        <button type="button" class="btn btn-primary btn-block" onclick="habilitarcampo();">Ajuste Manual</button>
-                            </div>
-                    </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-        <div class="card card-secondary">
-            <div class="card-header">
-                <h3 class="card-title">Funções</h3>
-            </div>
-            <div class="card-body">
-                <div class="form-group">
-                    @can('update_role')
-                        @if(isset($roles) && $roles->count() > 0)
-                            @foreach($roles as $role)
-                                <div class="custom-control custom-checkbox">
-                                    <input type="radio"
-                                            onchange="radioCliente()"
-                                           class="custom-control-input roles"
-                                           id="role{{$role->id}}" value="{{$role->id}}"
-                                           name="roles[]" @if($role->can) checked @else '' @endif>
-                                    <label class="custom-control-label" for="role{{$role->id}}">{{$role->name}}</label>
-                                </div>
-                            @endforeach
-                        @else
-                            <p>Ainda não existe funções cadastradas.</p>
-                        @endif
-                    @else
-                        @if(isset($roles) && $roles->count() > 0)
-                            <ul class="list-group ">
-                                @foreach($roles as $role)
-                                    <li class="list-group-item">{{$role->name}}</li>
-                                @endforeach
-                            </ul>
-                        @endif
-                    @endcan
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+    
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.users.index')}}">

@@ -36,12 +36,12 @@ class Table extends Component
 
         $preference->items = array($item);
         $preference->back_urls = [
-            "success" => "https://superjogo.loteriabr.com/admin/dashboards/wallet/updateStatusPayment/",
-            "failure" => "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/",
-            "pending" => "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/"
+            "success" => "https://superjogo.loteriabr.com/admin/dashboards/wallet/thanks/",
+            "failure" => "https://superjogo.loteriabr.com/dashboards/wallet/thanks/",
+            "pending" => "https://superjogo.loteriabr.com/dashboards/wallet/thanks/"
         ];
         $preference->auto_return = "approved";
-        $preference->notification_url = "https://superjogo.loteriabr.com/";
+        $preference->notification_url = "https://superjogo.loteriabr.com/dashboards/wallet/updateStatusPayment/2de1ce3ddcb20dda6e6ea9fba8031de4/";
         $preference->external_reference = $order->reference;
         $preference->save();
 
