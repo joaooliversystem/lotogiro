@@ -258,15 +258,16 @@ class UserController extends Controller
             $indicador = 1;
         }
 
-        $auxRole;
-        foreach ($request->roles as $role){
-            $auxRole = $role;
-        }
+
         try
         {
              if(auth()->user()->hasPermissionTo('update_user')){
             $newBalance = 0;
             $ajuste = 0;
+                    $auxRole;
+        foreach ($request->roles as $role){
+            $auxRole = $role;
+        }
             if($request->has('balance') && !is_null($request->balance)){
                 $oldBalance = $user->balance;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
