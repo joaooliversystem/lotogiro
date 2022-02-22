@@ -258,6 +258,10 @@ class UserController extends Controller
             $indicador = 1;
         }
 
+        $auxRole;
+        foreach ($request->roles as $role){
+            $auxRole = $role;
+        }
         try
         {
              if(auth()->user()->hasPermissionTo('update_user')){
@@ -276,6 +280,9 @@ class UserController extends Controller
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            if($auxRole != 6){
+                $user->type_client = null;
+            }
             if($newBalance > 0){
                 $user->balance = $newBalance;
             }else{
