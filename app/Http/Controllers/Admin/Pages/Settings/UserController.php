@@ -224,7 +224,7 @@ class UserController extends Controller
                 $role->can = false;
             }
         }
-        if($user->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
+        if(auth()->user()->hasPermissionTo('edit_all')){
             return view('admin.pages.settings.user.edit2', compact('user'));
         }else{
         return view('admin.pages.settings.user.edit', compact('user', 'roles'));
@@ -302,6 +302,7 @@ class UserController extends Controller
             }
             else{
             if (!empty($request->roles)) {
+                
                 foreach ($request->roles as $role){
                     $userRoles[] = Role::whereId($role)->first();
                 }
