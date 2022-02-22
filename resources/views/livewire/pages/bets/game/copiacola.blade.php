@@ -61,9 +61,9 @@
                     var valor = document.getElementById('value').value;
                     var contadorJogos = document.getElementById('contadorJogos').value;
                     var contadorJogos =  parseFloat(contadorJogos);
-                    var numberValor = parseInt(valor);
+                    var numberValor = parseFloat(valor);
                     var valorTotal = contadorJogos * numberValor;
-                    document.getElementById('ValorTotal').value = valorTotal;">
+                    document.getElementById('ValorTotal').value = valorTotal.toFixed(2);">
                     
                     Valor do Prêmio R$
                     <input type="text" id="premio" value="" name="premio" readonly>
