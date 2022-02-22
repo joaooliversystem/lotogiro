@@ -13,6 +13,11 @@
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent" data-widget="treeview"
                 role="menu" data-accordion="false">
                 @canany(['read_sale', 'read_gain'])
+                <center>
+                    <li>
+                        <a href="/" class="nav-link"><button type="button" class="btn btn-success">Faça Seu Jogo</button></a>
+                    </li>
+                </center>
                     <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) menu-open @endif">
                         <a href="#" class="nav-link @if(request()->is('admin/dashboards/*')) active @endif">
                             <i class="nav-icon fas fa-chart-line"></i>
