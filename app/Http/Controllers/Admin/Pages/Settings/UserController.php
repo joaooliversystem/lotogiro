@@ -260,6 +260,7 @@ class UserController extends Controller
 
         try
         {
+             if(auth()->user()->hasPermissionTo('update_user')){
             $newBalance = 0;
             $ajuste = 0;
             if($request->has('balance') && !is_null($request->balance)){
@@ -294,6 +295,16 @@ class UserController extends Controller
             }
             if($ajuste == 1 && $oldBalance != $request->balanceAtual){
                 $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
+            }
+            }else{
+               $user->name = $request->name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            !empty($request->password) ? $user->password = bcrypt($request->password) : null; 
+                        if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
+            $user->save();
             }
             if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
                 return redirect()->route('admin.home')->withErrors([
