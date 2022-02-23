@@ -116,23 +116,23 @@
         }
         @-webkit-keyframes pulse {
             0% {
-                -moz-transform: scale(0.5);
-                -ms-transform: scale(0.5);
-                -webkit-transform: scale(0.5);
-                transform: scale(0.5);
+                -moz-transform: scale(0.9);0.9
+                -ms-transform: scale(0.9);
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
             }
             70% {
-                -moz-transform: scale(0.5);
-                -ms-transform: scale(0.5);
-                -webkit-transform: scale(0.5);
-                transform: scale(0.5);
+                -moz-transform: scale(0.9);
+                -ms-transform: scale(0.9;
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
                 box-shadow: 0 0 0 50px rgba(37, 211, 102, 1);
             }
             100% {
-                -moz-transform: scale(0.5);
-                -ms-transform: scale(0.5);
-                -webkit-transform: scale(0.5);
-                transform: scale(0.5);
+                -moz-transform: scale(0.9);
+                -ms-transform: scale(0.9);
+                -webkit-transform: scale(0.9);
+                transform: scale(0.9);
                 box-shadow: 0 0 0 0 rgba(37, 211, 102, 1);
             }
         }
@@ -146,7 +146,7 @@
                 class="row pulse-button"
                 title="Deseja ser um consultor?"
                 target="_blank" style="float: right; min-width: 60px; min-height: 60px; width:60px;height:60px;display: flex;align-items:
-                center;justify-content: center;background-color:#25d366;color:#FFF;border-radius:50px;padding: 2px;">
+                center;justify-content: center;background-color:#25d366;color:#FFF;border-radius:50px;padding: 2px;margin-bottom: -70px;">
                 <i style="border:none;"class="fa fa-whatsapp fa-3x"></i>
             </a>
         </div>
