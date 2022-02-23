@@ -53,14 +53,15 @@
         <div class="col-sm-12">
             <div class="card w-100">
                 <div class="card-header bg-blue">
-                    Seu link de indicação
+                    Seu link de indicação &#128071;
                 </div>
                 <div class="card-body">
                     <div class="alert bg-light" role="alert">
-                        <input type="text" readonly class="link_copy_link"
+                    <div class="larger mt-3 w-100 text-bold text-center"> &#128071; Clique no botão para copiar. &#128071;</div>
+                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
                                value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
                         />
-                        <div class="small mt-3 w-100 text-bold text-center">Clique no link para copiar.</div>
+                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
                     </div>
                 </div>
                 <div class="card-header">
@@ -110,23 +111,49 @@
 @endpush
 
 @push('scripts')
-    <script type="text/javascript">
-        $('#btn_copy_link').click(function () {
-            var link = document.getElementById("link_copy");
-            link.select();
-            document.execCommand('copy');
-        });
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+    $('#btn_copy_link').click(function () {
+        var link = document.getElementById("link_copy");
+        link.select();
+        document.execCommand('copy');
+        Swal.fire(
+            'Link copiado!',
+            '',
+            'success'
+        );
+    });
 
-        (function() {
-            function copy(element) {
-                return function() {
-                    document.execCommand('copy', false, element.select());
-                }
-            }
+    function CopyMe(TextToCopy) {
+        var TempText = document.createElement("input");
+        TempText.value = TextToCopy;
+        document.body.appendChild(TempText);
+        TempText.select();
 
-            var linkIndicate = document.querySelector('.link_copy_link');
-            var copyUrlIndicate = copy(linkIndicate);
-            linkIndicate.addEventListener('click', copyUrlIndicate, false);
-        }());
-    </script>
+        document.execCommand("copy");
+        document.body.removeChild(TempText);
+        Swal.fire(
+            'Link copiado!',
+            '',
+            'success'
+        );
+    };
+
+    function getUrl(){
+        return document.getElementById("linkDeIndicacao").value;
+    };
+
+    (function () {
+        function copy(element) {
+            return function () {
+                document.execCommand('copy', false, element.select());
+            };
+        };
+
+        var linkIndicate = document.querySelector('.link_copy_link');
+        var copyUrlIndicate = copy(linkIndicate);
+        linkIndicate.addEventListener('click', copyUrlIndicate, false);
+
+    }());
+</script>
 @endpush
