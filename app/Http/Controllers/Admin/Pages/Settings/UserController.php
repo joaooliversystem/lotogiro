@@ -67,6 +67,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indicatedByLevel()
+    {
+        return view('admin.pages.settings.user.indicatedByLevel');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indicated()
     {
         return view('admin.pages.settings.user.indicated');
