@@ -3,8 +3,19 @@
 @section('title', 'Cadastro')
 
 @section('content')
-
-    <div class="col-6 mt-5">
+    <style type="text/css">
+        .login-page,
+        .register-page {
+          align-items: center;
+          background-image: url(/admin/images/painel/super-lotogiro03.jpg);
+          background-size: cover;
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          justify-content: center;
+        }
+    </style>
+    <div class="col-lg-6 col-md-12 mt-5">
         <div class="login-logo">
             <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
         </div>
@@ -33,7 +44,7 @@
                     </div>
                     @endif
                 </div>
-                <h3 class="login-box-msg">Cadastre-se para começar a jogar!</h3>
+                <h3 class="login-box-msg">Cadastre-se para começar a jogar!!</h3>
 
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
