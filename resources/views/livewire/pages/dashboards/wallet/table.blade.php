@@ -21,15 +21,15 @@
                     </div>
                 </div>
                 <div class="row mt-5">
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.transfer') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Transferir</a>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Recarregar</a>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.withdraw') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Retirar</a>
                     </div>
