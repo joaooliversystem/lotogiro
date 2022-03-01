@@ -19,7 +19,7 @@ class HomeController extends Controller
         //$user= auth()->user()->hasAllRoles(Role::all());
 
         $User = Auth::user();
-        $FiltroUser = client::where('name', $User['name'])->first();
+        $FiltroUser = client::where('email', $User['email'])->first();
         $this->FiltroUser = $FiltroUser;
         
         $JogosFeitos = game::where('user_id', $User['id'])->count();
