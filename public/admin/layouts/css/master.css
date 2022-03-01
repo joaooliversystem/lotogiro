@@ -27614,6 +27614,16 @@ textarea.form-control.is-warning {
   opacity: 0.9;
 }
 
+.bt-esp {
+  padding: 0px;
+}
+
+@media screen and (min-width: 780px) {
+  .bt-esp {
+    padding: 10px;
+  }
+}
+
 .card.bg-dark .card-header {
   border-color: #383f45;
 }
