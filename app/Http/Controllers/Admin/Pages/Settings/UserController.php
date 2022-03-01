@@ -67,6 +67,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indicatedByLevel()
+    {
+        return view('admin.pages.settings.user.indicatedByLevel');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function indicated()
     {
         return view('admin.pages.settings.user.indicated');
@@ -224,7 +234,7 @@ class UserController extends Controller
                 $role->can = false;
             }
         }
-        if($user->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
+        if(auth()->user()->hasPermissionTo('edit_all')){
             return view('admin.pages.settings.user.edit2', compact('user'));
         }else{
         return view('admin.pages.settings.user.edit', compact('user', 'roles'));
@@ -258,10 +268,16 @@ class UserController extends Controller
             $indicador = 1;
         }
 
+
         try
         {
+             if(auth()->user()->hasPermissionTo('update_user')){
             $newBalance = 0;
             $ajuste = 0;
+                    $auxRole;
+        foreach ($request->roles as $role){
+            $auxRole = $role;
+        }
             if($request->has('balance') && !is_null($request->balance)){
                 $oldBalance = $user->balance;
                 $balanceRequest = (float) Money::toDatabase($request->balance);
@@ -275,6 +291,9 @@ class UserController extends Controller
             !empty($request->password) ? $user->password = bcrypt($request->password) : null;
             $user->status = isset($request->status) ? 1 : 0;
             $user->commission = $request->commission;
+            if($auxRole != 6){
+                $user->type_client = null;
+            }
             if($newBalance > 0){
                 $user->balance = $newBalance;
             }else{
@@ -295,6 +314,16 @@ class UserController extends Controller
             if($ajuste == 1 && $oldBalance != $request->balanceAtual){
                 $this->storeTransact($user, (float) Money::toDatabase($request->balanceAtual), $oldBalance);
             }
+            }else{
+               $user->name = $request->name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            !empty($request->password) ? $user->password = bcrypt($request->password) : null; 
+                        if (!empty($request->link)) {
+                $user->link = $request->link;
+            }
+            $user->save();
+            }
             if($request->type_client == 1 || auth()->user()->hasPermissionTo('edit_all')){
                 return redirect()->route('admin.home')->withErrors([
                 'success' => 'Usuário alterado com sucesso'
@@ -302,6 +331,7 @@ class UserController extends Controller
             }
             else{
             if (!empty($request->roles)) {
+                
                 foreach ($request->roles as $role){
                     $userRoles[] = Role::whereId($role)->first();
                 }

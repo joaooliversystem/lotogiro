@@ -144,7 +144,7 @@ class Form extends Component
     public function render()
     {
         $User = Auth::user();
-        $FiltroUser = client::where('name', $User['name'])->first();
+        $FiltroUser = client::where('email', $User['email'])->first();
         $this->FiltroUser = $FiltroUser;
 
         $busca = TypeGameValue::select('numbers')->where('type_game_id', $this->typeGame->id)->orderBy('numbers', 'asc')->get();

@@ -47,10 +47,14 @@ class Client extends Component
 
     public function submit(Request $request)
     {
+        $ddd = null;
+        $tel = null;
         $data = $this->validate();
         $phone = $this->searchClient($data['phone']);
-        $ddd = Str::of($phone)->substr(0, 2);
-        $tel = Str::of($phone)->substr(2);
+        if($phone != null){
+        $ddd = $phone->ddd;
+        $tel = $phone->phone;
+        }
   
         $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
         
