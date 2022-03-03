@@ -14,17 +14,17 @@
                 margin-right: auto">
 
                 <div class="card text-white bg-success mb-6" style="">
-                    <div class="card-header text-bold"><b>Jogos Feitos</b></div>
+                    <div class="card-header">Jogos Feitos</div>
                         <div class="card-body">
-                            <p class="card-text" style="float: left; margin-top: 13px;">{{ $JogosFeitos }}</p>
-                            <i class="nav-icon fa fa-trophy" aria-hidden="true" style="float: right; font-size: 50px"></i>
+                            <h5 class="card-title">Jogos Feitos</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
+                            <p class="card-text">{{ $JogosFeitos }}</p>
                         </div>
                     </div>
                     <div class="card text-white bg-danger mb-6" style="">
-                        <div class="card-header text-bold">Saldo</div>
+                        <div class="card-header">Saldo</div>
                         <div class="card-body">
-                            <p class="card-text" style="float: left; margin-top: 13px;">R${{ $saldo }}</p>
-                            <i class="nav-icon fa fa-money"  style="float: right; font-size: 50px"></i>
+                            <h5 class="card-title">Saldo</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
+                            <p class="card-text">R${{ $saldo }}</p>
                         </div>
                     </div>
                 </div>
@@ -125,23 +125,6 @@
 
         .bg-light-2 {
             background-color: #f8f9fa !important;
-        }
-
-        .btn-info {
-            background-color: #32689A;
-                border: #32689A;
-        }
-
-        .btn-info:hover {
-            background-color: #E2BA5D;
-            border: #E2BA5D;
-        }
-
-        .indica-card {
-            background-color: #142A3E;
-            color: #fff;
-            border-left: 12px solid #E2BA5D;
-            border-bottom: none;
         }
 
         .indica-corpo {
