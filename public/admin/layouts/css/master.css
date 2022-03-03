@@ -2815,38 +2815,39 @@ fieldset:disabled a.btn {
 
 .btn-info {
   color: #ffffff;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
+  background-color: #32689A;
+  border-color: #32689A;
   box-shadow: none;
 }
 
 .btn-info:hover {
   color: #ffffff;
-  background-color: #138496;
-  border-color: #117a8b;
+  background-color: #E2BA5D;;
+  border-color: #E2BA5D;
 }
+
 
 .btn-info:focus,
 .btn-info.focus {
   color: #ffffff;
-  background-color: #138496;
-  border-color: #117a8b;
+  background-color: #32689A;
+  border-color: #32689A;
   box-shadow: 0 0 0 0 rgba(58, 176, 195, 0.5);
 }
 
 .btn-info.disabled,
 .btn-info:disabled {
   color: #ffffff;
-  background-color: #17a2b8;
-  border-color: #17a2b8;
+  background-color: #32689A;
+  border-color: #32689A;
 }
 
 .btn-info:not(:disabled):not(.disabled):active,
 .btn-info:not(:disabled):not(.disabled).active,
 .show > .btn-info.dropdown-toggle {
   color: #ffffff;
-  background-color: #117a8b;
-  border-color: #10707f;
+  background-color: #32689A;
+  border-color: #32689A;
 }
 
 .btn-info:not(:disabled):not(.disabled):active:focus,
@@ -5060,6 +5061,14 @@ input[type=button].btn-block {
   border-radius: calc(0.25rem - 0) calc(0.25rem - 0) 0 0;
 }
 
+.indica-card {
+  background-color: #142A3E !important;
+  color: #fff;
+  border-left: 12px solid #E2BA5D;
+  border-bottom: none;
+  margin-bottom: 10px;
+}
+
 .card-footer {
   padding: 0.75rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.03);
@@ -5276,7 +5285,7 @@ input[type=button].btn-block {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #007bff;
+  color: #32689A;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
 }
@@ -5309,8 +5318,8 @@ input[type=button].btn-block {
 .page-item.active .page-link {
   z-index: 3;
   color: #ffffff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #32689A;
+  border-color: #32689A;
 }
 
 .page-item.disabled .page-link {
@@ -27616,7 +27625,13 @@ textarea.form-control.is-warning {
 }
 
 .bt-esp {
-  padding: 5px;
+  padding: 0px;
+}
+
+@media screen and (min-width: 780px) {
+  .bt-esp {
+    padding: 10px;
+  }
 }
 
 .card.bg-dark .card-header {
@@ -28933,6 +28948,25 @@ html.maximized-card {
   position: absolute;
   top: 50%;
   z-index: 5;
+}
+
+.extractable-cel thead th {
+  background-color: #32689a;
+  color: #fff;
+  font-weight: 900;
+  text-align: left;
+}
+
+@media screen and (max-width: 600px) {
+  .extractable-cel {
+    font-size: 10px;
+  }
+
+  .extractable-cel thead th {
+    font-size: 11px;
+    text-align: center;
+  }
+
 }
 
 .small-box {
@@ -35818,7 +35852,7 @@ blockquote.quote-gray-dark h6 {
 }
 
 .bg-success {
-  background-color: #28a745 !important;
+  background-color: #208e39 !important;
 }
 
 .bg-success,
@@ -35827,7 +35861,7 @@ blockquote.quote-gray-dark h6 {
 }
 
 .bg-success.btn:hover {
-  border-color: #1e7e34;
+  border-color: #156026;
   color: #ececec;
 }
 
@@ -39736,4 +39770,3 @@ a.text-muted:hover {
 .projects .project-state {
   text-align: center;
 }
-
