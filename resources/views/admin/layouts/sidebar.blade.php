@@ -12,12 +12,12 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-child-indent" data-widget="treeview"
                 role="menu" data-accordion="false">
-                @canany(['read_sale', 'read_gain'])
                 <center>
                     <li>
                         <a href="/" class="nav-link"><button type="button" class="btn btn-success">Faça Seu Jogo</button></a>
                     </li>
                 </center>
+                @canany(['read_sale', 'read_gain'])
                     <li class="nav-item has-treeview @if(request()->is('admin/dashboards/*')) menu-open @endif">
                         <a href="#" class="nav-link @if(request()->is('admin/dashboards/*')) active @endif">
                             <i class="nav-icon fas fa-chart-line"></i>
@@ -46,6 +46,14 @@
                                 </li>
                             @endif
                             @can('read_gain')
+                            <li class="nav-item">
+                                <a href="/admin/dashboards/Reportday" class="nav-link">
+                                <i class="nav-icon fas fa-list-alt "></i>
+                                    <p>
+                                        Vendas da Rede
+                                    </p>
+                                </a>
+                            </li>
                                 <li class="nav-item">
                                     <a href="{{route('admin.dashboards.gains.index')}}"
                                        class="nav-link @if(request()->is('admin/dashboards/gains*')) active @endif">

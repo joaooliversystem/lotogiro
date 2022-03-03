@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Pages\Bets\GameController;
 use App\Http\Controllers\Admin\Pages\Bets\ValidateGamesController;
 use App\Http\Controllers\Admin\Pages\Bets\DrawController;
 use App\Http\Controllers\Admin\Pages\Dashboards\SaleController;
+use App\Http\Controllers\Admin\Pages\Dashboards\ReportDayController;
 use App\Http\Controllers\Admin\Pages\Dashboards\GainController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
@@ -58,6 +59,11 @@ Route::prefix('/admin')->name('admin.')->group(function () {
         Route::prefix('dashboards')->name('dashboards.')->group(function () {
             Route::prefix('sales')->name('sales.')->group(function () {
                 Route::get('/', [SaleController::class, 'index'])->name('index');
+            });
+            Route::prefix('Reportday')->name('Reportday.')->group(function () {
+                Route::get('/', [ReportDayController::class, 'index'])->name('index');
+                Route::get('/FiltroEspecifico/{slug}', [ReportDayController::class, 'getFiltro'])->name('getFiltro');
+                Route::post('/filtro-especifico', [ReportDayController::class, 'FiltroEspecifico'])->name('filtro-especifico');
             });
             Route::prefix('gains')->name('gains.')->group(function () {
                 Route::get('/', [GainController::class, 'index'])->name('index');
