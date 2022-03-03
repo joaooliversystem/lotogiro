@@ -5069,6 +5069,21 @@ input[type=button].btn-block {
   margin-bottom: 10px;
 }
 
+.ganhos {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.ganhos-card {
+  background-color: #fff !important;
+  color: #000;
+  border-left: 12px solid #E2BA5D;
+  border-bottom: 8px solid #E2BA5D;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+
 .card-footer {
   padding: 0.75rem 1.25rem;
   background-color: rgba(0, 0, 0, 0.03);
@@ -36439,6 +36454,11 @@ blockquote.quote-gray-dark h6 {
 .bg-black {
   background-color: #000;
   color: #ffffff !important;
+}
+
+.bg-gold {
+  background-color: #CCA541;
+  color: #fff !important;
 }
 
 .bg-white {
