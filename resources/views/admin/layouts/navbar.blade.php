@@ -4,7 +4,8 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item pl-3">
-            Saldo: R${{\App\Helper\Money::toReal(auth()->user()->balance)}}
+            Saldo: R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
+            Bônus:  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
         </li>
     </ul>
 
@@ -28,7 +29,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.settings.users.edit', ['user' => auth()->user()->id])}}">
                     <i class="fas fa-user mr-2"></i> Conta
-                </a> 
+                </a>
                 @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{route('admin.logout')}}">
