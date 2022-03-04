@@ -1,8 +1,9 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Período</h4>
-            <div class="dropdown-divider"></div>
+            <div class="card-header indica-card">
+                Período
+            </div>
         </div>
     </div>
     <div class="row">
@@ -94,7 +95,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>

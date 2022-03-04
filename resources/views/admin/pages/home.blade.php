@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="row bg-white p-3">
-        <div class="col-md-12 p-4">
-            <h3 class="text-center">JOGOS</h3>
+        <div class="col-md-12 p-4 faixa-jogos">
+            <h3 class="text-center text-bold">JOGOS</h3>
         </div>
 
         {{-- caso o cliente seja cambista --}}
@@ -14,17 +14,17 @@
                 margin-right: auto">
 
                 <div class="card text-white bg-success mb-6" style="">
-                    <div class="card-header text-bold"><b>Jogos Feitos</b></div>
+                    <div class="card-header">Jogos Feitos</div>
                         <div class="card-body">
-                            <p class="card-text" style="float: left; margin-top: 13px;">{{ $JogosFeitos }}</p>
-                            <i class="nav-icon fa fa-trophy" aria-hidden="true" style="float: right; font-size: 50px"></i>
+                            <h5 class="card-title">Jogos Feitos</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
+                            <p class="card-text">{{ $JogosFeitos }}</p>
                         </div>
                     </div>
                     <div class="card text-white bg-danger mb-6" style="">
-                        <div class="card-header text-bold">Saldo</div>
+                        <div class="card-header">Saldo</div>
                         <div class="card-body">
-                            <p class="card-text" style="float: left; margin-top: 13px;">R${{ $saldo }}</p>
-                            <i class="nav-icon fa fa-money"  style="float: right; font-size: 50px"></i>
+                            <h5 class="card-title">Saldo</h5> <i class="nav-icon fas fa-chart-line"  style="float: right; font-size: 50px"></i>
+                            <p class="card-text">R${{ $saldo }}</p>
                         </div>
                     </div>
                 </div>
@@ -52,23 +52,31 @@
 
         <div class="col-sm-12">
             <div class="card w-100">
-                <div class="card-header bg-blue">
-                    Seu link de indicação &#128071;
+                
+                <div class="card-header indica-card">
+                    Indicações
                 </div>
-                <div class="card-body">
-                    <div class="alert bg-light" role="alert">
-                    <div class="larger mt-3 w-100 text-bold text-center"> &#128071; Clique no botão para copiar. &#128071;</div>
-                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
-                               value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
-                        />
-                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
-                    </div>
-                </div>
-                <div class="card-header">
-                    <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-outline-primary">
-                        Seus indicados
-                    </a>
-                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="card-body col-lg-6 col-sm-12">
+                            <div class="alert bg-light indica-corpo" role="alert">
+                                <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
+                                       value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
+                                />
+                                <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
+                                <p class="mensagem">Clique no botão e copie seu link de indicação</p>
+                            </div>
+                        </div>
+                        <div class="card-body col-lg-6 col-sm-12">
+                            <div class="indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                                <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
+                                    Seus indicados
+                                </a>
+                                <p class="mensagem">Clique no botão e veja seus indicados</p>
+                            </div>  
+                        </div>
+                    </div>    
+                </div>    
             </div>
         </div>
     </div>
@@ -97,6 +105,13 @@
         *:focus{
             outline:none;
         }
+
+        .faixa-jogos {
+          background: url(https://superlotogiro.com/images/super-lotogiro01.jpg);
+          color: #fff;
+          background-size: cover;
+          box-shadow: inset 0 0 0 2000px rgba(50, 104, 154, 0.4);
+        }
         .link_copy_link{
             width: 100%;
             padding: .5em 0 .5em 0;
@@ -107,6 +122,39 @@
         .link_copy_link:active, .link_copy_link:focus, .link_copy_link:focus-visible{
             border: 1px solid #00c054 !important;
         }
+
+        .bg-light-2 {
+            background-color: #f8f9fa !important;
+        }
+
+        .indica-corpo {
+                padding: 35px;
+        }
+
+        .mensagem {
+          color: #000;
+          font-size: 10px;
+          text-align: center;
+          margin-top: 10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .faixa-jogos {
+                background: url(https://superlotogiro.com/images/super-lotogiro01.jpg) auto;
+                background-position: center;
+            }
+
+
+            .btn {
+                padding: 10px;
+
+            }
+
+            .indica-corpo {
+                padding: 0px;
+            }
+        }
+
     </style>
 @endpush
 

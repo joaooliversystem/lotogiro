@@ -1,5 +1,12 @@
 <div>
     <div class="row">
+        <div class="col-md-12">
+            <div class="card-header indica-card">
+                Recargas Manuais
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 10px;margin-right: 10px;">
         <div class="col-md-4">
             <div class="form-group">
                 <select wire:model="adminSelected" class="custom-select" id="user" name="user">
@@ -60,9 +67,8 @@
     </div>
 
     <div class="row bg-white p-3">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
-                <h4 class="my-4">Recargas manuais</h4>
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
