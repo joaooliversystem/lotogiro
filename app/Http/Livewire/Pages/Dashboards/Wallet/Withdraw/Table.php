@@ -21,8 +21,8 @@ class Table extends Component
 
     public function requestWithdraw(): void
     {
-        if($this->valueTransfer <= 0 || is_null($this->valueTransfer)){
-            $this->alert('warning', 'Valor precisa ser maior que 0!', [
+        if($this->valueTransfer <= .99 || is_null($this->valueTransfer)){
+            $this->alert('warning', 'Valor precisa ser de pelo menos R$ 1,00!', [
                 'position' => 'center',
                 'timer' => '2000',
                 'toast' => false,
@@ -31,7 +31,17 @@ class Table extends Component
             ]);
         }
 
-       if($this->valueTransfer > 0){
+        if($this->valueTransfer > $this->user['bonus']){
+            $this->alert('warning', 'Saldo Bônus inferior ao solicitado!', [
+                'position' => 'center',
+                'timer' => '2000',
+                'toast' => false,
+                'timerProgressBar' => true,
+                'allowOutsideClick' => false
+            ]);
+        }
+
+       if($this->valueTransfer > .99 && $this->valueTransfer <= $this->user['bonus']){
            $withdrawRequest = WithdrawRequest::create([
                'user_id' => $this->userId,
                'value' => Money::toDatabase($this->valueTransfer)

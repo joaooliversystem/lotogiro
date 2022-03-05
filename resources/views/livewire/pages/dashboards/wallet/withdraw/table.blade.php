@@ -29,15 +29,21 @@
                             </div>
                             <div class="col-sm-5">
                                 <h6>Valor a retirar</h6>
+                                <small class="text-muted">Valor mínimo de R$ 1,00
+
+                                    <small class="text-muted"><p>O valor inserido, será creditado
+                                            em sua conta assim que formos notificados.</p></small>
+                                </small>
                                 <div class="input-group">
-                                    <input wire:model.defer="valueTransfer" x-on:focus="formatInput()" type="text"
+                                    <input wire:model="valueTransfer" x-on:focus="formatInput()" type="text"
                                            class="search-query form-control" placeholder="Valor a retirar"
                                            id="valueTransfer" inputmode="numeric" value="0,00" />
                                 </div>
                             </div>
                             <div class="col-sm-12 mt-5">
                                 <div class="input-group">
-                                    <button wire:click="requestWithdraw" type="button" class="btn btn-dark btn-block">
+                                    <button wire:click="requestWithdraw" type="button" class="btn btn-dark btn-block"
+                                            @if($valueTransfer <= .99) disabled @endif>
                                         Solicitar <span class="fa fa-send" style="color: #fff938"></span>
                                     </button>
                                 </div>
