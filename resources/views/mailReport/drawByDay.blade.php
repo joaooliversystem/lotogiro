@@ -25,13 +25,7 @@
         @forelse($draw->game as $game)
             <div style="border: 1px #333 solid; padding: 3px 2px; margin: 3px 1px;">
                 <h3 style="width:100%; display: flex; flex-flow: row;">
-                    <b>✓
-{{--                        @if($draw->typeRequest == 'geral') {{ Str::words($game->fullName, 1, ' xxx') }}--}}
-{{--                        @else--}}
-                        {{ $game->fullName }}
-{{--                        @endif--}}
-                        , {{ $game->cupons }}
-                        Cupons</b>
+                    <b>✓ {{ $game->fullName }}, {{ $game->cupons }} Cupons</b>
                 </h3>
                 @if($draw->typeRequest == 'financeiro')
                 <h3 style="width:100%; display: flex; flex-flow: row;">
