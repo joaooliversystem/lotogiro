@@ -1,11 +1,17 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Filtros</h4>
-            <div class="dropdown-divider"></div>
+            <div class="card-header indica-card">
+                Vendas
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row ganhos">
+        <div class="card-header ganhos-card">
+            Filtros
+        </div>
+    </div>
+    <div class="row ganhos">
         <div class="col-md-3">
             <div class="form-group">
                 <label for="status">Status</label>
@@ -65,13 +71,13 @@
         </div>
     </div>
     @if($auth->hasPermissionTo('read_all_sales'))
-    <div class="row">
-        <div class="col-md-12">
-            <h4>Usuário</h4>
+    <div class="row ganhos">
+            <div class="card-header ganhos-card">
+                Usuário
+            </div>
         </div>
-    </div>
     <div class="dropdown-divider"></div>
-    <div class="row">
+    <div class="row ganhos">
         <div class="col-md-12">
             <div class="input-group mb-3">
                 <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário" autocomplete="off">
@@ -137,7 +143,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
