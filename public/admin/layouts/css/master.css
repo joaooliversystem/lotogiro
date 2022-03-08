@@ -2984,8 +2984,8 @@ fieldset:disabled a.btn {
 
 .btn-dark {
   color: #ffffff;
-  background-color: #343a40;
-  border-color: #343a40;
+  background-color: #2a3e50;
+  border-color: #2a3e50;
   box-shadow: none;
 }
 
@@ -3061,14 +3061,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary {
-  color: #6c757d;
-  border-color: #6c757d;
+  color: #2a3e50;
+  border-color: #2a3e50;
 }
 
 .btn-outline-secondary:hover {
   color: #ffffff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #2a3e50;
+  border-color: #2a3e50;
 }
 
 .btn-outline-secondary:focus,
@@ -5065,7 +5065,7 @@ input[type=button].btn-block {
   background-color: #142A3E !important;
   color: #fff;
   border-left: 12px solid #E2BA5D;
-  border-bottom: none;
+  border-bottom: 0px !important;
   margin-bottom: 10px;
 }
 
@@ -27639,14 +27639,29 @@ textarea.form-control.is-warning {
   opacity: 0.9;
 }
 
-.bt-esp {
-  padding: 0px;
+.bt-recharge {
+  width: 150px;
+  float: right;
 }
 
-@media screen and (min-width: 780px) {
+.bt-esp {
+  padding: 5px;
+}
+
+.faixa-jogos {
+  background: url(https://superlotogiro.com/images/super-lotogiro01.jpg);
+  color: #fff;
+  background-size: cover;
+  box-shadow: inset 0 0 0 2000px rgba(50, 104, 154, 0.4);
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 780px) {
+
   .bt-esp {
-    padding: 10px;
+    padding: 10px !important;
   }
+  
 }
 
 .card.bg-dark .card-header {
