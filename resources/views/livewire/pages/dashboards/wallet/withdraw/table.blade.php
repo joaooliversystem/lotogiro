@@ -33,19 +33,28 @@
                                 </div>
                             </div>
                             <div class="col-sm-5">
+
                                 <div class="card-header ganhos-card">
-                                    <h6><b>Valor a retirar</b></h6>
+                                <h6><b>Valor a retirar</b></h6>
                                 </div>
+                                <small class="text-muted">Valor mínimo de R$ 1,00
+
+                                    <small class="text-muted"><p>O valor inserido, será creditado
+                                            em sua conta assim que formos notificados.</p></small>
+                                </small>
+
                                 <div class="input-group">
-                                    <input wire:model.defer="valueTransfer" x-on:focus="formatInput()" type="text"
+                                    <input wire:model="valueTransfer" x-on:focus="formatInput()" type="text"
                                            class="search-query form-control" placeholder="Valor a retirar"
                                            id="valueTransfer" inputmode="numeric" value="0,00" />
                                 </div>
                             </div>
                             <div class="col-sm-12 mt-5">
                                 <div class="input-group">
+
                                     <button wire:click="requestWithdraw" type="button" class="btn btn-info btn-block">
                                         Solicitar <span class="fa fa-send"></span>
+
                                     </button>
                                 </div>
                             </div>
