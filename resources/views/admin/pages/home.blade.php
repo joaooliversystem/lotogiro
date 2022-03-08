@@ -106,12 +106,6 @@
             outline:none;
         }
 
-        .faixa-jogos {
-          background: url(https://superlotogiro.com/images/super-lotogiro01.jpg);
-          color: #fff;
-          background-size: cover;
-          box-shadow: inset 0 0 0 2000px rgba(50, 104, 154, 0.4);
-        }
         .link_copy_link{
             width: 100%;
             padding: .5em 0 .5em 0;

@@ -94,61 +94,25 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <p class="mb-1 text-bold">
-                            Não é cadastrado?
+                            Não é cadastrado?<br>
+                            <a class="btn btn-block btn-info right"
+                               href="{{ route('register') }}">
+                                Cadastre-se
+                            </a>
                         </p>
 {{--                        <a href="https://api.whatsapp.com/send?phone=558196826967&text=Oi, Ainda não tenho cadastrado.">--}}
 {{--                            <button type="submit" class="btn btn-primary btn-block">Fale Conosco</button>--}}
 {{--                        </a>--}}
-                        <a class="btn btn-block btn-primary"
-                            href="{{ route('register') }}">
-                            Cadastre-se
+
+                        <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
+                           class="btn btn-block btn-success"
+                           title="Deseja ser um consultor?"
+                           target="_blank">
+                            <i style="border:none;"class="fa fa-whatsapp"></i> Deseja ser um consultor?
                         </a>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <style>
-        .pulse-button {
-            cursor: pointer;
-            box-shadow: 0 0 0 0 rgba(37, 211, 102, 1);
-            -webkit-animation: pulse 1.5s infinite;
-        }
-        @-webkit-keyframes pulse {
-            0% {
-                -moz-transform: scale(0.9);0.9
-                -ms-transform: scale(0.9);
-                -webkit-transform: scale(0.9);
-                transform: scale(0.9);
-            }
-            70% {
-                -moz-transform: scale(0.9);
-                -ms-transform: scale(0.9;
-                -webkit-transform: scale(0.9);
-                transform: scale(0.9);
-                box-shadow: 0 0 0 50px rgba(37, 211, 102, 1);
-            }
-            100% {
-                -moz-transform: scale(0.9);
-                -ms-transform: scale(0.9);
-                -webkit-transform: scale(0.9);
-                transform: scale(0.9);
-                box-shadow: 0 0 0 0 rgba(37, 211, 102, 1);
-            }
-        }
-    </style>
-    <div class="d-flex flex-md-column flex-sm-row align-items-md-center align-items-sm-start
-    justify-content-md-center justify-content-sm-start"
-        style="bottom:10px;right:40px;text-align:center;z-index:1000;position:absolute;">
-        <div class="ml-4">
-            <p class="d-lg-none .d-xl-block" style="font-size: 11px;color: #fff;background-color: #25d366;border-radius: 3px;padding: 10px;">Deseja ser um consultor?</p>
-            <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
-                class="row pulse-button"
-                title="Deseja ser um consultor?"
-                target="_blank" style="float: right; min-width: 60px; min-height: 60px; width:60px;height:60px;display: flex;align-items:
-                center;justify-content: center;background-color:#25d366;color:#FFF;border-radius:50px;padding: 2px;margin-bottom: -70px;">
-                <i style="border:none;"class="fa fa-whatsapp fa-3x"></i>
-            </a>
         </div>
     </div>
 @endsection
