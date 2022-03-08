@@ -1,8 +1,13 @@
 <div>
+    <div class="col-md-12 p-4 faixa-jogos">
+        <h3 class="text-center text-bold">CARTEIRA</h3>
+    </div>
     <div class="row bg-white p-3">
         <div class="col-md-12">
-            <div class="table-responsive">
-                <h4 class="my-4">Pedidos de Recarga</h4>
+            <div class="card-header indica-card">
+                Pedidos de Recarga
+            </div>
+            <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-bordered table-lg">
                     <thead>
                     <tr>
@@ -49,3 +54,20 @@
         </div>
     </div>
 </div>
+
+@push('styles')
+    <style>
+
+        @media screen and (max-width: 760px) {
+            .btn-info {
+                font-size: 9px;
+            }
+            tbody tr td {
+                font-size: 9px;
+            }
+        }
+
+
+
+    </style>
+@endpush
