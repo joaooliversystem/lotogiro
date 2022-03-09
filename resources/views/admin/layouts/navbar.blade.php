@@ -7,6 +7,13 @@
             Saldo: R${{\App\Helper\Money::toReal(auth()->user()->balance)}} |
             Bônus:  R${{\App\Helper\Money::toReal(auth()->user()->bonus)}}
         </li>
+        <li class="nav-item pl-3">
+                        <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
+                        text-bold">
+                            <i class="fas fa-piggy-bank"></i>
+                            Recarregar 
+                        </a>
+        </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">
