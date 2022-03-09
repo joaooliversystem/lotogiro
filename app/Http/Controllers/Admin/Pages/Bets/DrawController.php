@@ -188,9 +188,9 @@ class DrawController extends Controller
         $drawsByDay->totalCupons = $totalCupons;
         $drawsByDay->totalPremio = Money::toReal($totalPremio);
 
-//        return new reportDrawsByDay($drawsByDay);
+        return new reportDrawsByDay($drawsByDay);
 //        \App\Jobs\reportDrawsByDay::dispatch($drawsByDay);
-        Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
+//        Mail::send(new \App\Mail\reportDrawsByDay($drawsByDay));
 
         return redirect()->back();
     }

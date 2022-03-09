@@ -2984,8 +2984,8 @@ fieldset:disabled a.btn {
 
 .btn-dark {
   color: #ffffff;
-  background-color: #343a40;
-  border-color: #343a40;
+  background-color: #2a3e50;
+  border-color: #2a3e50;
   box-shadow: none;
 }
 
@@ -3061,14 +3061,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary {
-  color: #6c757d;
-  border-color: #6c757d;
+  color: #2a3e50;
+  border-color: #2a3e50;
 }
 
 .btn-outline-secondary:hover {
   color: #ffffff;
-  background-color: #6c757d;
-  border-color: #6c757d;
+  background-color: #2a3e50;
+  border-color: #2a3e50;
 }
 
 .btn-outline-secondary:focus,
@@ -5065,9 +5065,24 @@ input[type=button].btn-block {
   background-color: #142A3E !important;
   color: #fff;
   border-left: 12px solid #E2BA5D;
-  border-bottom: none;
+  border-bottom: 0px !important;
   margin-bottom: 10px;
 }
+
+.ganhos {
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.ganhos-card {
+  background-color: #fff !important;
+  color: #000;
+  border-left: 12px solid #E2BA5D;
+  border-bottom: 8px solid #E2BA5D;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
 
 .card-footer {
   padding: 0.75rem 1.25rem;
@@ -22005,13 +22020,13 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
 
 .sidebar-dark-info .nav-sidebar > .nav-item > .nav-link.active,
 .sidebar-light-info .nav-sidebar > .nav-item > .nav-link.active {
-  background-color: #17a2b8;
+  background-color: #32689a;
   color: #ffffff;
 }
 
 .sidebar-dark-info .nav-sidebar.nav-legacy > .nav-item > .nav-link.active,
 .sidebar-light-info .nav-sidebar.nav-legacy > .nav-item > .nav-link.active {
-  border-color: #17a2b8;
+  border-color: #32689a;
 }
 
 .sidebar-dark-warning .nav-sidebar > .nav-item > .nav-link.active,
@@ -27624,14 +27639,29 @@ textarea.form-control.is-warning {
   opacity: 0.9;
 }
 
-.bt-esp {
-  padding: 0px;
+.bt-recharge {
+  width: 150px;
+  float: right;
 }
 
-@media screen and (min-width: 780px) {
+.bt-esp {
+  padding: 5px;
+}
+
+.faixa-jogos {
+  background: url("/site/images/painel/tema-resp.jpg");
+  color: #fff;
+  background-size: cover;
+  box-shadow: inset 0 0 0 2000px rgba(50, 104, 154, 0.4);
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 780px) {
+
   .bt-esp {
-    padding: 10px;
+    padding: 10px !important;
   }
+  
 }
 
 .card.bg-dark .card-header {
@@ -36439,6 +36469,11 @@ blockquote.quote-gray-dark h6 {
 .bg-black {
   background-color: #000;
   color: #ffffff !important;
+}
+
+.bg-gold {
+  background-color: #CCA541;
+  color: #fff !important;
 }
 
 .bg-white {
