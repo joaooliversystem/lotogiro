@@ -76,6 +76,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
 
             Route::prefix('wallet')->name('wallet.')->group(function () {
                 Route::get('/', [WalletController::class, 'index'])->name('index');
+                Route::get('/convert', [WalletController::class, 'convert'])->name('convert');
                 Route::get('/recharge', [WalletController::class, 'recharge'])->name('recharge');
                 Route::get('/transfer', [WalletController::class, 'transfer'])->name('transfer');
                 Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
