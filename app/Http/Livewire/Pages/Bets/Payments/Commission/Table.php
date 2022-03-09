@@ -68,6 +68,7 @@ class Table extends Component
                     'user_id' => $game->user_id,
                     'client_id' => $game->client_id
                 ];
+                /*
                 $users = User::whereNotNull('bonus')->get();
                 foreach ($users as $user) {
                 $bonus = $user->bonus;
@@ -76,7 +77,7 @@ class Table extends Component
                 $user->balance = $result;
                 $user->bonus = 0;
                 $user->save();
-                }
+                }*/
                 $storeExtact = ExtractController::store($extract);
             }
             session()->flash('success', 'Pagamentos baixados com sucesso!');
