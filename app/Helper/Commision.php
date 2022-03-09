@@ -16,7 +16,43 @@ class Commision
         $comPai = $userPai->commission;
         $typeClient = auth()->user()->type_client;
         $valorPai = 0;
-        if($typeClient == 1){
+         if($typeClient == 1){
+            $commission = 4.35;
+            $valor = ($value / 100) * $commission;
+            $valorPai = $valor;
+            $result = $userPai->bonus + $valor;
+            $userPai->bonus = $result;
+            $userPai->save();
+        }else{
+            if($comPai = $userPai->commission == 15){
+                 $idAvo = $userPai->indicador; 
+                 $userAvo = User::find($idAvo);
+                    if($idAvo == 1){
+                        $perPai = 4.35;
+                        $valorPai = ($value / 100) * $perPai;
+                        $result = $userPai->bonus + $valorPai;
+                        $userPai->bonus = $result;
+                        $userPai->save();
+
+                    }else{
+                        $perAvo = 1.75;
+                        $valorAvo = ($value / 100) * $perAvo;
+                        $result = $userAvo->bonus + $valorAvo;
+                        $userAvo->bonus = $result;
+                        $userAvo->save();
+                        $perPai = 4.35;
+                        $valorPai = ($value / 100) * $perPai;
+                        $result = $userPai->bonus + $valorPai;
+                        $userPai->bonus = $result;
+                        $userPai->save();
+
+
+                    }
+        }
+
+         
+
+       /* if($typeClient == 1){
             $commission = 4.35;
             $valor = ($value / 100) * $commission;
             $valorPai = $valor;
@@ -25,6 +61,9 @@ class Commision
             $userPai->save();
         
         }else{
+        
+        
+        
 
        
         if($comPai == 25){
@@ -91,5 +130,9 @@ class Commision
  }
         
         return $valorPai;
+    }
+    */
+    }
+    return $valorPai;
     }
 }
