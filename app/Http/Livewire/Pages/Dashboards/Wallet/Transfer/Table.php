@@ -19,7 +19,7 @@ class Table extends Component
     public $storeContact = true;
     public $user;
     public $userId;
-     public function mount()
+    public function mount()
     {
         $this->user = auth()->user();
         $this->userId = auth()->user()->id;
@@ -37,7 +37,6 @@ class Table extends Component
 
     public function transferBalance(): void
     {
-        
         $myOldBalance = $this->user->balance;
         $oldBalanceClient = $this->client['balance'];
         $this->client['balance'] += (float) Money::toDatabase($this->valueTransfer);
