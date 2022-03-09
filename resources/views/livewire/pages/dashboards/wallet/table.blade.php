@@ -12,12 +12,7 @@
                     <div class="col-sm-8">
                         <h4>Saldo: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
                         <h4>Bônus: R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
-                        <a href="{{ route('admin.dashboards.wallet.convert') }}" type="button" class="btn btn-success
-                        text-light
-                        text-bold">
-                            <i class="fas fa-exchange-alt"></i>
-                            Converter
-                        </a>
+
                     </div>
                     <div class="col-sm-4 right">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
@@ -30,6 +25,14 @@
                             <i class="fas fa-money-bill-alt"></i>
                             Retirar
                         </a>
+
+                        <a href="{{ route('admin.dashboards.wallet.convert') }}" type="button" class="btn btn-block btn-success
+                        text-light
+                        text-bold">
+                            <i class="fas fa-exchange-alt"></i>
+                            Converter
+                        </a>
+                        
                     </div>
                 </div>
 
