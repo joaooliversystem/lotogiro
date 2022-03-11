@@ -5062,7 +5062,7 @@ input[type=button].btn-block {
 }
 
 .indica-card {
-  background-color: #142A3E !important;
+  background-color: #32689A !important;
   color: #fff;
   border-left: 12px solid #E2BA5D;
   border-bottom: 0px !important;
@@ -22427,6 +22427,13 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   border-left: 0.2rem solid;
 }
 
+@media (max-width: 700px) {
+  .nav-flat.nav-sidebar > .nav-item .nav-treeview .nav-item > .nav-link,
+  .nav-flat.nav-sidebar > .nav-item > .nav-treeview .nav-item > .nav-link {
+    font-size: 15px;
+  }
+}
+
 .nav-legacy {
   margin: -0.25rem -0.5rem 0;
 }
@@ -28995,6 +29002,10 @@ html.maximized-card {
   .extractable-cel thead th {
     font-size: 11px;
     text-align: center;
+  }
+
+  .main-footer {
+    font-size: 10px;
   }
 
 }
