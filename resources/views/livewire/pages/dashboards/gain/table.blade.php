@@ -275,3 +275,19 @@
     </script>
 
 @endpush
+
+@push('styles')
+    <style>
+
+        @media screen and (max-width: 760px) {
+            
+            .extractable-cel {
+                font-size: 8px;
+            }
+            .extractable-cel thead th {
+                font-size: 9px;
+                text-align: center;
+            }
+
+    </style>
+@endpush

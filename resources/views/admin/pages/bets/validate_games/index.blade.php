@@ -22,7 +22,7 @@
             <h4 class="text-center mb-4">
                 Acesse as apostas em aberto para validar os jogos e valores
             </h4>
-            <div class="table-responsive">
+            <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="bet_table">
                     <thead>
                     <tr>
