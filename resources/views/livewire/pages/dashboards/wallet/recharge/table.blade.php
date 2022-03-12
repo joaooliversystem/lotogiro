@@ -1,8 +1,11 @@
 <div>
+    <div class="col-md-12 p-4 faixa-jogos">
+        <h3 class="text-center text-bold">CARTEIRA</h3>
+    </div>
     <div class="col-md-12">
         <div class="card card-info">
-            <div class="card-header">
-                <h3 class="card-title">Recarga - Adicionar Saldo</h3>
+            <div class="card-header indica-card">
+                <h3 class="card-title">Adicionar Saldo</h3>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -32,10 +35,10 @@
                                             </li>
                                         </ul>
 
-                                        <div class="input-group-append">
+                                        <div class="input-group-append bt-recharge">
                                             <button wire:click.prevent="callMP" type="submit"
                                                     @if($valueAdd <= .99) disabled @endif
-                                                    class="btn btn-primary btn-lg btn-block">Continuar {{$valueAdd}}</button>
+                                                    class="btn btn-info btn-md btn-block">Continuar {{$valueAdd}}</button>
                                         </div>
                                     </div>
                                 </div>

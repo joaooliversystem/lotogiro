@@ -1,11 +1,17 @@
 <div>
     <div class="row">
         <div class="col-md-12">
-            <h4>Filtros</h4>
-            <div class="dropdown-divider"></div>
+            <div class="card-header indica-card">
+                Ganhos
+            </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row ganhos">
+        <div class="card-header ganhos-card">
+            Filtros
+        </div>
+    </div>
+    <div class="row ganhos">
         <div class="col-md-3">
             <div class="form-group">
                 <label for="status">Status</label>
@@ -65,13 +71,13 @@
         </div>
     </div>
     @if($auth->hasPermissionTo('read_all_sales'))
-        <div class="row">
-            <div class="col-md-12">
-                <h4>Usuário</h4>
+        <div class="row ganhos">
+            <div class="card-header ganhos-card">
+                Usuário
             </div>
         </div>
-        <div class="dropdown-divider"></div>
-        <div class="row">
+        
+        <div class="row ganhos">
             <div class="col-md-12">
                 <div class="input-group mb-3">
                     <input wire:model="search" type="text" id="author" class="form-control" placeholder="Pesquisar Usuário"autocomplete="off">
@@ -128,19 +134,19 @@
                     <p>Bônus</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-shopping-cart"></i>
+                    <i class="fas fas fa-gift"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="small-box bg-black">
+            <div class="small-box bg-gold">
                 <div class="inner">
                     <h3>R${{\App\Helper\Money::toReal($value + $valueBonus)}}</h3>
                     <p>Total de Ganhos</p>
                 </div>
                 <div class="icon">
-                    <i class="fas fa-dollar-sign"></i>
+                    <i class="fas fa-wallet"></i>
                 </div>
                 <span class="small-box-footer p-2"></span>
             </div>
@@ -160,7 +166,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
@@ -268,4 +274,20 @@
         });
     </script>
 
+@endpush
+
+@push('styles')
+    <style>
+
+        @media screen and (max-width: 760px) {
+            
+            .extractable-cel {
+                font-size: 8px;
+            }
+            .extractable-cel thead th {
+                font-size: 9px;
+                text-align: center;
+            }
+
+    </style>
 @endpush

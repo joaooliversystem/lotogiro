@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="row bg-white p-3">
-        <div class="col-md-12 p-4">
-            <h3 class="text-center">JOGOS</h3>
+        <div class="col-md-12 p-4 faixa-jogos">
+            <h3 class="text-center text-bold">JOGOS</h3>
         </div>
 
         {{-- caso o cliente seja cambista --}}
@@ -31,44 +31,56 @@
             </div>
         @endif
 
-        @if($User['type_client'] != 1)
-            <div class="col-md-7 my-2">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
-                </div>
-            </div>
-            <div class="col-md-2 my-2">
-                <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
-            </div>
-            <div class="col-md-3 my-2">
-                <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}"
-                target="_blank">
-                    <button type="button" class="btn btn-info btn-block">
-                        Enviar via WhatsApp
-                    </button>
-                </a>
-            </div>
-        @endif
+        
 
         <div class="col-sm-12">
             <div class="card w-100">
-                <div class="card-header bg-blue">
-                    Seu link de indicação &#128071;
+                
+                <div class="card-header indica-card">
+                    Indicações
                 </div>
-                <div class="card-body">
-                    <div class="alert bg-light" role="alert">
-                    <div class="larger mt-3 w-100 text-bold text-center"> &#128071; Clique no botão para copiar. &#128071;</div>
-                        <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
-                               value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
-                        />
-                        <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
-                    </div>
-                </div>
-                <div class="card-header">
-                    <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-outline-primary">
-                        Seus indicados
-                    </a>
-                </div>
+                <div class="container">
+                    <div class="row">
+
+                        @if($User['type_client'] != 1)
+                        <div class="card-body col-lg-12 col-sm-12">
+                            <div class="col-lg-12 my-2 ">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 my-2 alert bg-light indica-corpo" style="float:left;">
+                                <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
+                            </div>
+                            <div class="col-lg-6 my-2 alert bg-light indica-corpo" style="float:right;">
+                                <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}"
+                                target="_blank" style="text-decoration: none !important;">
+                                    <button type="button" class="btn btn-info btn-block">
+                                        Enviar via WhatsApp
+                                    </button>
+                                </a>
+                            </div>
+                        </div>    
+                        @endif
+                        <div class="card-body col-lg-6 col-sm-12">
+                            <div class="alert bg-light indica-corpo" role="alert">
+                                <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
+                                       value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
+                                />
+                                <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
+                                <p class="mensagem">Clique no botão e copie seu link de indicação</p>
+                            </div>
+                        </div>
+                        <div class="card-body col-lg-6 col-sm-12">
+                            <div class="indica-corpo bg-light-2" style="color: #fff;" role="alert">
+                                <a href="{{ route('admin.settings.users.indicated') }}" class="btn btn-block btn-info">
+                                    Seus indicados
+                                </a>
+                                <p class="mensagem">Clique no botão e veja seus indicados</p>
+                            </div>  
+                        </div>
+                    </div>    
+                </div>    
             </div>
         </div>
     </div>
@@ -97,6 +109,7 @@
         *:focus{
             outline:none;
         }
+
         .link_copy_link{
             width: 100%;
             padding: .5em 0 .5em 0;
@@ -107,6 +120,39 @@
         .link_copy_link:active, .link_copy_link:focus, .link_copy_link:focus-visible{
             border: 1px solid #00c054 !important;
         }
+
+        .bg-light-2 {
+            background-color: #f8f9fa !important;
+        }
+
+        .indica-corpo {
+                padding: 35px;
+        }
+
+        .mensagem {
+          color: #000;
+          font-size: 10px;
+          text-align: center;
+          margin-top: 10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .faixa-jogos {
+                background: url(https://superlotogiro.com/images/super-lotogiro01.jpg) auto;
+                background-position: center;
+            }
+
+
+            .btn {
+                padding: 10px;
+
+            }
+
+            .indica-corpo {
+                padding: 0px;
+            }
+        }
+
     </style>
 @endpush
 
