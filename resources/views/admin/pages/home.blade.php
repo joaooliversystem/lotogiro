@@ -31,24 +31,7 @@
             </div>
         @endif
 
-        @if($User['type_client'] != 1)
-            <div class="col-md-7 my-2">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
-                </div>
-            </div>
-            <div class="col-md-2 my-2">
-                <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
-            </div>
-            <div class="col-md-3 my-2">
-                <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}"
-                target="_blank">
-                    <button type="button" class="btn btn-info btn-block">
-                        Enviar via WhatsApp
-                    </button>
-                </a>
-            </div>
-        @endif
+        
 
         <div class="col-sm-12">
             <div class="card w-100">
@@ -58,6 +41,27 @@
                 </div>
                 <div class="container">
                     <div class="row">
+
+                        @if($User['type_client'] != 1)
+                        <div class="card-body col-lg-12 col-sm-12">
+                            <div class="col-lg-12 my-2 ">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 my-2 alert bg-light indica-corpo" style="float:left;">
+                                <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
+                            </div>
+                            <div class="col-lg-6 my-2 alert bg-light indica-corpo" style="float:right;">
+                                <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}"
+                                target="_blank" style="text-decoration: none !important;">
+                                    <button type="button" class="btn btn-info btn-block">
+                                        Enviar via WhatsApp
+                                    </button>
+                                </a>
+                            </div>
+                        </div>    
+                        @endif
                         <div class="card-body col-lg-6 col-sm-12">
                             <div class="alert bg-light indica-corpo" role="alert">
                                 <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
