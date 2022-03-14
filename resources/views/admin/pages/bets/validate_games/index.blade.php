@@ -19,7 +19,7 @@
                 </script>
             @endpush
             @enderror
-            <h4 class="text-center mb-4">
+            <h4 class="text-center mb-4 validate-msg">
                 Acesse as apostas em aberto para validar os jogos e valores
             </h4>
             <div class="table-responsive extractable-cel">
@@ -27,7 +27,6 @@
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Cpf Cliente</th>
                         <th>Cliente</th>
                         <th>Criação</th>
                         <th style="width: 80px">Ações</th>
@@ -87,7 +86,6 @@
                 ajax: "{{ route('admin.bets.validate-games.index') }}",
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'client_cpf', name: 'client_cpf'},
                     {data: 'client', name: 'client'},
                     {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
