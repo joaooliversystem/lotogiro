@@ -49,17 +49,23 @@
                                     <input type="text" class="form-control" id="link_copy" value="{{route('games.bet', ['user' => auth()->id()])}}">
                                 </div>
                             </div>
-                            <div class="col-lg-6 my-2 alert bg-light indica-corpo" style="float:left;">
+                        </div>
+                        <div class="card-body col-lg-6 col-sm-12">
+                            <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:left;">
                                 <button type="button" id="btn_copy_link" class="btn btn-info btn-block">Copiar Link</button>
+                                <p class="mensagem">Clique no botão e copie seu link acima</p>
                             </div>
-                            <div class="col-lg-6 my-2 alert bg-light indica-corpo" style="float:right;">
+                        </div>  
+                        <div class="card-body col-lg-6 col-sm-12">
+                            <div class="col-lg-12 my-2 alert bg-light indica-corpo" style="float:right;">
                                 <a href="https://api.whatsapp.com/send?text=Segue link para criar um jogo: {{route('games.bet', ['user' => auth()->id()])}}"
                                 target="_blank" style="text-decoration: none !important;">
                                     <button type="button" class="btn btn-info btn-block">
                                         Enviar via WhatsApp
                                     </button>
+                                    <p class="mensagem">Clique no botão e envie pelo WhatsApp</p>
                                 </a>
-                            </div>
+                            </div> 
                         </div>    
                         @endif
                         <div class="card-body col-lg-6 col-sm-12">

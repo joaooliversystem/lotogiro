@@ -5303,14 +5303,15 @@ input[type=button].btn-block {
   color: #32689A;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
+  margin-bottom: 20px;
 }
 
 .page-link:hover {
   z-index: 2;
   color: #0056b3;
   text-decoration: none;
-  background-color: #e9ecef;
-  border-color: #dee2e6;
+  background-color: #E2BA5D;
+  border-color: ##E2BA5D;
 }
 
 .page-link:focus {
@@ -39815,4 +39816,29 @@ a.text-muted:hover {
 
 .projects .project-state {
   text-align: center;
+}
+
+
+.table-responsive.extractable-cel label input {
+  border-radius: 0px;
+}
+
+#bet_table {
+  width: 100% !important;
+}
+
+
+@media (max-width: 700px) {
+  #client_table tr td {
+    text-align: center;
+  }
+
+  .new-client {
+    text-align: center;
+  }
+
+  .validate-msg {
+    font-size: 13px;
+    font-weight: 900;
+  }
 }
