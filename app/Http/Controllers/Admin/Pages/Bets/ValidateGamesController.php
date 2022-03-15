@@ -119,14 +119,15 @@ class ValidateGamesController extends Controller
 
                 $validate_game->status = true;
                 $validate_game->save();
+                
             }
 
          // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
-        $idCliente = $bet->id;
+        $idCliente = $validate_game->id;
 
         // pegando jogos feitos
         $jogosCliente = Game::where('bet_id', $idCliente)->get();
-
+           
         // informações para filename
         $InfoJogos =  $jogosCliente[0];
 
