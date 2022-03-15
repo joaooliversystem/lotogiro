@@ -5062,7 +5062,7 @@ input[type=button].btn-block {
 }
 
 .indica-card {
-  background-color: #142A3E !important;
+  background-color: #32689A !important;
   color: #fff;
   border-left: 12px solid #E2BA5D;
   border-bottom: 0px !important;
@@ -5303,14 +5303,15 @@ input[type=button].btn-block {
   color: #32689A;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
+  margin-bottom: 20px;
 }
 
 .page-link:hover {
   z-index: 2;
   color: #0056b3;
   text-decoration: none;
-  background-color: #e9ecef;
-  border-color: #dee2e6;
+  background-color: #E2BA5D;
+  border-color: ##E2BA5D;
 }
 
 .page-link:focus {
@@ -22427,6 +22428,13 @@ body.sidebar-collapse:not(.sidebar-mini-md):not(.sidebar-mini) .main-header::bef
   border-left: 0.2rem solid;
 }
 
+@media (max-width: 700px) {
+  .nav-flat.nav-sidebar > .nav-item .nav-treeview .nav-item > .nav-link,
+  .nav-flat.nav-sidebar > .nav-item > .nav-treeview .nav-item > .nav-link {
+    font-size: 15px;
+  }
+}
+
 .nav-legacy {
   margin: -0.25rem -0.5rem 0;
 }
@@ -27649,7 +27657,7 @@ textarea.form-control.is-warning {
 }
 
 .faixa-jogos {
-  background: url(https://superlotogiro.com/images/super-lotogiro01.jpg);
+  background: url("/site/images/painel/tema-resp.jpg");
   color: #fff;
   background-size: cover;
   box-shadow: inset 0 0 0 2000px rgba(50, 104, 154, 0.4);
@@ -28995,6 +29003,10 @@ html.maximized-card {
   .extractable-cel thead th {
     font-size: 11px;
     text-align: center;
+  }
+
+  .main-footer {
+    font-size: 10px;
   }
 
 }
@@ -39804,4 +39816,29 @@ a.text-muted:hover {
 
 .projects .project-state {
   text-align: center;
+}
+
+
+.table-responsive.extractable-cel label input {
+  border-radius: 0px;
+}
+
+#bet_table {
+  width: 100% !important;
+}
+
+
+@media (max-width: 700px) {
+  #client_table tr td {
+    text-align: center;
+  }
+
+  .new-client {
+    text-align: center;
+  }
+
+  .validate-msg {
+    font-size: 13px;
+    font-weight: 900;
+  }
 }

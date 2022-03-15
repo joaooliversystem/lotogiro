@@ -11,18 +11,28 @@
                 <div class="row">
                     <div class="col-sm-8">
                         <h4>Saldo: R${{ \App\Helper\Money::toReal(auth()->user()->balance) }}</h4>
+                        <h4>Bônus: R${{ \App\Helper\Money::toReal(auth()->user()->bonus) }}</h4>
+
                     </div>
-                    <div class="col-sm-4 right">                
+                    <div class="col-sm-4 right">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">
                             <i class="fas fa-piggy-bank"></i>
-                            Recarregar 
+                            Recarregar
                         </a>
                         <a href="{{ route('admin.dashboards.wallet.withdraw') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">
                             <i class="fas fa-money-bill-alt"></i>
                             Retirar
                         </a>
+
+                        <a href="{{ route('admin.dashboards.wallet.convert') }}" type="button" class="btn btn-block btn-success
+                        text-light
+                        text-bold">
+                            <i class="fas fa-exchange-alt"></i>
+                            Converter
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -30,7 +40,7 @@
                    <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.extract') }}" type="button" class="btn btn-block btn-dark text-light
                             text-bold">Extrato</a>
-                    </div> 
+                    </div>
                     <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.withdraw-list') }}" type="button" class="btn
                         btn-block btn-outline-secondary text-black
@@ -46,7 +56,7 @@
                    <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.transfer') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Transferir</a>
-                    </div> 
+                    </div>
                     <div class="col-sm-4 bt-esp">
                         <a href="{{ route('admin.dashboards.wallet.recharge') }}" type="button" class="btn btn-block btn-success text-light
                         text-bold">Recarregar</a>

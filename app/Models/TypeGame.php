@@ -28,5 +28,8 @@ class TypeGame extends Model
     {
         return $this->hasMany(Extract::class);
     }
-
+    public function typeGameValues()
+    {
+        return $this->hasMany(TypeGameValue::class);
+    }
 }

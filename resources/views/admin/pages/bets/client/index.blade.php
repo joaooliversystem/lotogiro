@@ -20,17 +20,17 @@
                 @endpush
             @enderror
             @can('create_client')
-                <a href="{{route('admin.bets.clients.create')}}">
-                    <button class="btn btn-info my-2">Novo Cliente</button>
-
-                </a>
+                <div class="new-client">
+                    <a href="{{route('admin.bets.clients.create')}}">
+                        <button class="btn btn-info my-2">Novo Cliente</button>
+                    </a> 
+                </div>
             @endcan
-            <div class="table-responsive">
+            <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="client_table">
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Cpf</th>
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Criação</th>
@@ -90,7 +90,6 @@
                 ajax: "{{ route('admin.bets.clients.index') }}",
                 columns: [
                     {data: 'id', name: 'id'},
-                    {data: 'cpf', name: 'cpf'},
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'created_at', name: 'created_at'},

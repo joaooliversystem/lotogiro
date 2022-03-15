@@ -16,6 +16,10 @@
         {
             return view('admin.pages.dashboards.wallet.index');
         }
+        public function convert()
+        {
+            return view('admin.pages.dashboards.wallet.convert');
+        }
         public function recharge()
         {
             return view('admin.pages.dashboards.wallet.recharge');
