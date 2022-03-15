@@ -563,18 +563,7 @@ class GameController extends Controller
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
             $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
-            
-            // $arquivo = $pdf->output($fileName);
-            Mail::send('email.jogo', ['idjogo' => $game->id ], function($m){
-                global $data;
-                global $fileName;
-                global $pdf;
-                // $arquivo = $pdf->output($fileName);
-                $m->from('admin@superlotogiro.com', 'SuperLotogiro');
-                $m->subject('Seu Bilhete');
-                $m->to('kleciohenrique18@gmail.com');
-                $m->attachData($pdf->output(), $fileName);
-            });
+            return $pdf->download($fileName);
 
         } elseif ($format == "txt") {
             $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.txt';
