@@ -18,3 +18,4 @@ yarn-error.log
 
 /vendor
 /resources/js/
+.env
