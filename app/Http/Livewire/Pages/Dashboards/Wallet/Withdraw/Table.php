@@ -32,8 +32,9 @@ class Table extends Component
         }
         $value = str_replace(',', '.', $this->valueTransfer);
         $valorConvertido = (float)$value;
-        $valorFormatado = number_format($valorConvertido, 4, '.', '');
-        if($valorFormatado > $this->user['bonus']){
+        $valorFormatadoSolicitado = number_format($valorConvertido, 2, '.', '');
+        $valorFormatadoBonus = number_format($this->user['bonus'], 2, '.', '');
+        if($valorFormatadoSolicitado > $valorFormatadoBonus){
             $this->alert('warning', 'Saldo Bônus inferior ao solicitado!', [
                 'position' => 'center',
                 'timer' => '2000',
