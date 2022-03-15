@@ -30,8 +30,10 @@ class Table extends Component
                 'allowOutsideClick' => false
             ]);
         }
-
-        if($this->valueTransfer > $this->user['bonus']){
+        $value = str_replace(',', '.', $this->valueTransfer);
+        $valorConvertido = (float)$value;
+        $valorFormatado = number_format($valorConvertido, 4, '.', '');
+        if($valorFormatado > $this->user['bonus']){
             $this->alert('warning', 'Saldo Bônus inferior ao solicitado!', [
                 'position' => 'center',
                 'timer' => '2000',
@@ -52,7 +54,7 @@ class Table extends Component
                'value' => Money::toDatabase($this->valueTransfer)
            ]);
 
-           $this->userObj->balance = $this->userObj->balance - Money::toDatabase($this->valueTransfer);
+           $this->userObj->bonus = $this->userObj->bonus - Money::toDatabase($this->valueTransfer);
            $this->userObj->pixSaque = $this->pixSaque;
 
            $this->userObj->save();
