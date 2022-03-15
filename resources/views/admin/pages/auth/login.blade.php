@@ -13,6 +13,13 @@
                 {{ session('success') }}
             </div>
         @endif
+        
+        @if (session('SenhaRecuperada'))
+            <div class="alert alert-success" role="alert">
+                {{ session('SenhaRecuperada') }}
+            </div>
+        @endif
+        
         @if (session('error'))
             <div class="alert alert-danger" role="alert">
                 {{ session('error') }}
@@ -85,11 +92,8 @@
                         </div>
                     </div>
                 </form>
-                @if (Route::has('password.request'))
-                    <p class="mb-1">
-                        <a href="{{ route('password.request') }}">Esqueci minha senha</a>
-                    </p>
-                @endif
+                
+                <a href="{{ route('forget.password.get') }}">Esqueceu sua Senha?</a>
 
                 <div class="row">
                     <div class="col-sm-12">
@@ -100,9 +104,6 @@
                                 Cadastre-se
                             </a>
                         </p>
-{{--                        <a href="https://api.whatsapp.com/send?phone=558196826967&text=Oi, Ainda não tenho cadastrado.">--}}
-{{--                            <button type="submit" class="btn btn-primary btn-block">Fale Conosco</button>--}}
-{{--                        </a>--}}
 
                         <a href="https://wa.me/558196826967?text=Olá, gostaria de me tornar um consultor."
                            class="btn btn-block btn-success"
