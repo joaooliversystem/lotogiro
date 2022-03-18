@@ -15,7 +15,7 @@
         @endpush
         @enderror
         <div class="card card-info">
-            <div class="card-header">
+            <div class="card-header indica-card">
                 <h3 class="card-title">Concurso</h3>
             </div>
             <div class="card-body">

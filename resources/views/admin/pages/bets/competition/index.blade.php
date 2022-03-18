@@ -25,7 +25,7 @@
 
             </a>
             @endcan
-            <div class="table-responsive">
+            <div class="table-responsive extractable-cel">
             <table class="table table-striped table-hover table-sm" id="competition_table">
                 <thead>
                 <tr>
@@ -34,7 +34,7 @@
                     <th>Tipo de Jogo</th>
                     <th>Data de Sorteio</th>
                     <th>Criação</th>
-                    <th style="width: 80px">Ações</th>
+                    <th class="acoes">Ações</th>
                 </tr>
                 </thead>
                 <tbody>
