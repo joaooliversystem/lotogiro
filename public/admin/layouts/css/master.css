@@ -3061,14 +3061,14 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-secondary {
-  color: #2a3e50;
-  border-color: #2a3e50;
+  color: #32689A;
+  border-color: #32689A;
 }
 
 .btn-outline-secondary:hover {
   color: #ffffff;
-  background-color: #2a3e50;
-  border-color: #2a3e50;
+  background-color: #32689A;
+  border-color: #32689A;
 }
 
 .btn-outline-secondary:focus,
@@ -5053,20 +5053,16 @@ input[type=button].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
-}
-
-.card-header:first-child {
-  border-radius: calc(0.25rem - 0) calc(0.25rem - 0) 0 0;
-}
-
-.indica-card {
   background-color: #32689A !important;
   color: #fff;
   border-left: 12px solid #E2BA5D;
   border-bottom: 0px !important;
   margin-bottom: 10px;
+  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+}
+
+.card-header:first-child {
+  border-radius: calc(0.25rem - 0) calc(0.25rem - 0) 0 0;
 }
 
 .ganhos {
@@ -5076,11 +5072,11 @@ input[type=button].btn-block {
 
 .ganhos-card {
   background-color: #fff !important;
-  color: #000;
-  border-left: 12px solid #E2BA5D;
-  border-bottom: 8px solid #E2BA5D;
-  margin-bottom: 10px;
-  width: 100%;
+  color: #000 !important;
+  border-left: 12px solid #E2BA5D !important;
+  border-bottom: 2px solid #E2BA5D !important;
+  margin-bottom: 10px !important;
+  width: 100% !important;
 }
 
 
@@ -39827,10 +39823,49 @@ a.text-muted:hover {
   width: 100% !important;
 }
 
+#competition_table {
+  width: 100% !important;
+}
+
+#type_game_table {
+  width: 100% !important;
+}
+
+#competition_table .acoes {
+  width: 80px !important;
+}
+
+#type_game_table .acoes {
+  width: 60px !important;
+}
+
 
 @media (max-width: 700px) {
+
   #client_table tr td {
     text-align: center;
+  }
+
+  #bet_table tr td {
+    text-align: center;
+  }
+
+  #competition_table tr td {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  #competition_table .btn-warning {
+    margin-bottom: 4px;
+  }
+
+  #type_game_table tr td {
+    text-align: center;
+    font-size: 10px;
+  }
+
+  #type_game_table .btn-warning {
+    margin-bottom: 4px;
   }
 
   .new-client {
