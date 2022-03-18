@@ -20,13 +20,15 @@ use App\Models\TypeGameValue;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
-// use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 use PDF;
 use SnappyImage;
+
+// lib de email
+use Mail;
 
 class GameController extends Controller
 {
@@ -104,9 +106,8 @@ class GameController extends Controller
         return view('admin.pages.bets.game.create', compact('typeGames', 'typeGame', 'clients'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Bet $validate_game, Game $game)
     {
-
         if($request->controle == 1){
         if (!auth()->user()->hasPermissionTo('create_game')) {
             abort(403);
@@ -201,8 +202,61 @@ class GameController extends Controller
             $bet->status_xml = 2;
             $bet->save();
 
+            // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
+        
+        $idAposta = $bet->id;
+
+        // pegando jogos feitos
+        $jogosCliente = Game::where('bet_id', $idAposta)->get();
+
+        // informações para filename
+        $InfoJogos =  $jogosCliente[0];
+
+        // pegando informações de cliente
+        $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
+        $ClienteJogo =  $ClientInfo[0];
+
+        // pegando typegame
+        $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
+        $TipoJogo = $TipoJogo[0];
+
+        // pegando datas do sorteio
+        $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
+        $Datas = $Datas[0];
+
+        // nome cliente
+        $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
+
+        global $data;
+        $data = [
+            'prize' => false,
+            'jogosCliente' => $jogosCliente,
+            'Nome' => $Nome,
+            'Datas' => $Datas,
+            'TipoJogo' => $TipoJogo
+        ];
+       
+        global $fileName;
+        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
+
+        // return view('admin.layouts.pdf.receiptTudo', $data);
+        global $pdf;
+        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+        // return $pdf->download($fileName);
+
+        // $arquivo = $pdf->output($fileName);
+        Mail::send('email.jogo', ['idjogo' => $game->id ], function($m){
+            global $data;
+            global $fileName;
+            global $pdf;
+            $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+            $m->subject('Seu Bilhete');
+            $m->to(auth()->user()->email);
+            $m->attachData($pdf->output(), $fileName);
+        });
+
               return redirect()->route('admin.bets.validate-games.edit', ['validate_game' => $bet->id])->withErrors([
-                'success' => 'Jogo cadastrado com sucesso'
+                'success' => 'Jogo cadastrado com sucesso1'
             ]);
         } catch (\Exception $exception) {
             $bet->status_xml = 3;
@@ -280,8 +334,59 @@ class GameController extends Controller
             $game->commision_value_pai = $commissionCalculationPai;
             $game->save();
 
+        // PEGAR ID DO CLIENTE PARA BUSCAR APOSTAS DO MESMO
+        $idCliente = $game->id;
+
+        // pegando jogos feitos
+        $jogosCliente = Game::where('id', $idCliente)->get();
+
+        // informações para filename
+        $InfoJogos =  $jogosCliente[0];
+
+        // pegando informações de cliente
+        $ClientInfo = Client::where('id', $InfoJogos["client_id"])->get();
+        $ClienteJogo =  $ClientInfo[0];
+
+        // pegando typegame
+        $TipoJogo = TypeGame::where('id', $InfoJogos['type_game_id'])->get();
+        $TipoJogo = $TipoJogo[0];
+
+        // pegando datas do sorteio
+        $Datas = Competition::where('id', $InfoJogos['competition_id'])->get();
+        $Datas = $Datas[0];
+
+        // nome cliente
+        $Nome = $ClienteJogo['name'] . ' ' . $ClienteJogo['last_name'];
+
+        global $data;
+        $data = [
+            'prize' => false,
+            'jogosCliente' => $jogosCliente,
+            'Nome' => $Nome,
+            'Datas' => $Datas,
+            'TipoJogo' => $TipoJogo
+        ];
+        global $fileName;
+        $fileName = 'Recibo ' . $InfoJogos['bet_id']  . ' - ' . $Nome . '.pdf';
+
+        // return view('admin.layouts.pdf.receiptTudo', $data);
+        global $pdf;
+        $pdf = PDF::loadView('admin.layouts.pdf.receiptTudo', $data);
+        // return $pdf->download($fileName);
+
+        // $arquivo = $pdf->output($fileName);
+        Mail::send('email.jogo', ['idjogo' => $game->id ], function($m){
+            global $data;
+            global $fileName;
+            global $pdf;
+            $m->from('admin@superlotogiro.com', 'SuperLotogiro');
+            $m->subject('Seu Bilhete');
+            $m->to(auth()->user()->email);
+            $m->attachData($pdf->output(), $fileName);
+        });
+
             return redirect()->route('admin.bets.games.edit', ['game' => $game->id])->withErrors([
-                'success' => 'Jogo cadastrado com sucesso'
+                'success' => 'Jogo cadastrado com sucesso2'
             ]);
         } catch (\Exception $exception) {
             return redirect()->route('admin.bets.games.create', ['type_game' => $request->type_game])->withErrors([
@@ -437,7 +542,8 @@ class GameController extends Controller
 
             $matriz[$index] = $line;
         }
-
+        
+        global $data;
         $data = [
             'game' => $game,
             'client' => $client,
@@ -447,10 +553,14 @@ class GameController extends Controller
             'matriz' => $matriz,
             'prize' => $prize,
         ];
-        if ($format == "pdf") {
-            $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
-            // return view('admin.layouts.pdf.receipt', $data);
+        
+
+        if ($format == "pdf") {
+            
+            global $fileName;
+            global $pdf;
+            $fileName = 'Recibo ' . $game->id . ' - ' . $client->name . '.jpeg';
 
             $pdf = SnappyImage::loadView('admin.layouts.pdf.receipt', $data);
             return $pdf->download($fileName);

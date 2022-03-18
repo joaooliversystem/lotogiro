@@ -71,7 +71,7 @@
                         <div class="card-body col-lg-6 col-sm-12">
                             <div class="alert bg-light indica-corpo" role="alert">
                                 <input id="linkDeIndicacao" style="display:none;" type="text" readonly class="link_copy_link"
-                                       value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->link }}"
+                                       value="{{ env('APP_URL') }}/admin/indicate/{{ auth()->user()->id }}"
                                 />
                                 <button type="button" id="btn_copy_link2" class="btn btn-info btn-block" onclick="CopyMe(getUrl())">Indique e Ganhe!</button>
                                 <p class="mensagem">Clique no botão e copie seu link de indicação</p>
