@@ -73,7 +73,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-row">
+                <!--<div class="form-row">
                     <div class="form-group col-sm-12">
                         <label for="password">Link de indicação</label>
                         <div class="input-group mb-3">
@@ -87,7 +87,7 @@
                             <p class="text-bold">https://superjogo.loteriabr.com/admin/indicate/{{old('link', $user->link ?? null)}}</p>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="form-row">
                     <div class="form-group col-md-6">

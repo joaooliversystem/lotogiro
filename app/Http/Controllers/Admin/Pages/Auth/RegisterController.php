@@ -23,7 +23,7 @@ class RegisterController extends Controller
             return redirect(route('register'));
         }
 
-        $indicador = User::where('link', request('indicate'))->first();
+        $indicador = User::where('id', request('indicate'))->first();
 
         if(!$indicador){
             echo "<script>setTimeout(function(){ window.location.href = '/register'; }, 3000);</script>";
