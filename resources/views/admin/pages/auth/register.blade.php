@@ -17,7 +17,7 @@
     </style>
     <div class="col-lg-6 col-md-12 mt-5">
         <div class="login-logo">
-            <img src="{{{ asset('admin/images/painel/Trevo.png') }}}" alt="" width=150 height=150>
+            <img src="{{{ asset('admin/images/painel/Logomarca.png') }}}" alt="" width=200 height=200>
         </div>
         <div class="card">
             <div class="card-body">
