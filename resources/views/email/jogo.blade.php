@@ -1,5 +1,5 @@
 <center>
-    <img src="https://superjogo.loteriabr.com/admin/images/painel/Trevo.png" alt="" width=150 height=150>
+    <img src="https://web.girodasorte.digital/admin/images/painel/Logomarca.png" alt="" width=150 height=150>
 
     <h1>Seu Bilhete</h1>
     <p>
@@ -11,6 +11,6 @@
     Obrigado por jogar conosco.
     <br>
     Atenciosamente,
-    Superlotogiro
+    Giro da Sorte
 </p>
 </center>

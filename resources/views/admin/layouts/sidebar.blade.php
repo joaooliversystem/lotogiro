@@ -1,10 +1,10 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
     <a href="/" class="brand-link">
-        <img src="{{asset('admin/images/painel/Trevo.png')}}"
+        <img src="{{asset('admin/images/painel/Logomarca.png')}}"
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 15px">SuperLotogiro</span>
+        <span class="brand-text font-weight-light" style="font-size: 15px">Giro da Sorte</span>
     </a>
 
     <div class="sidebar">

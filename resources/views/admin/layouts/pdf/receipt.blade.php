@@ -115,7 +115,7 @@
 <div class="">
     <div class="border-bottom-dashed py-2">
         <p class="text-center font text-size-3 text-bold text-white">
-            APOSTA SUPERLOTOGIRO
+            APOSTA GIRO DA SORTE
         </p>
         @if($prize)
             <p class="text-success text-center font text-size-4 text-bold py-2">

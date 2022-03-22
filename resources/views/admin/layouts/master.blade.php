@@ -19,7 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Exo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Quattrocento&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
-    <link rel="shortcut icon" href="{{{ asset('admin/images/painel/Trevo.png') }}}">
+    <link rel="shortcut icon" href="{{{ asset('admin/images/painel/Logomarca.png') }}}">
 
     @livewireStyles
 
@@ -91,9 +91,7 @@
     }
 </script>
 
-@if(auth()->user()->lockModal == 0)
-    @livewire('pages.dashboards.layouts.modal-offer')
-@endif
+
 @livewireScripts
 @stack('scripts')
 
