@@ -103,7 +103,7 @@
                             </div>
                         </div>
                     @endif
-                    <div class="table-responsive">
+                    <div class="table-responsive extractable-cel">
                         <table class="table table-striped table-hover table-sm" id="result_table">
                             <thead>
                             <tr>
