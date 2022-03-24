@@ -1,8 +1,8 @@
 <div>
-    <table class="table">
+    <table class="table px-sorteio">
         <thead>
         <tr>
-            <th scope="col">Tipo</th>
+            <th class="col1" scope="col">Tipo</th>
             <th scope="col">Concurso</th>
             <th scope="col">Data do Sorteio</th>
             <th scope="col">Importar Jogo</th>
@@ -16,7 +16,7 @@
             @else
                 <td>{{$typeGame->competitions->last()->number}}</td>
                 <td>{{\Carbon\Carbon::parse($typeGame->competitions->last()->sort_date)->format('d/m/Y H:i:s')}}</td>
-                <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-primary" type="button">Carregar </button></a></td>
+                <td> <a href="{{route('admin.bets.games.carregarjogo', ['type_game' => $typeGame->id])}}"><button  class="btn btn-info" type="button">Carregar </button></a></td>
             @endif
         </tr>
         </tbody>
@@ -42,9 +42,10 @@
     <div class="form-row">
         <div class="form-group col-md-12">
             <div wire:ignore>
-                <h4>Cliente</h4>
+                <div class="card-header ganhos-card">
+                    <h4>Cliente</h4>
+                </div>
             </div>        
-        <div class="dropdown-divider"></div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group mb-3">
@@ -106,28 +107,33 @@
     <div class="row">
         <div class="col-md-12">
             @if(isset($matriz))
-                <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
+                <h4>Quantidade selecionada:({{count($selectedNumbers)}}/{{$numbers}})</h4>
                     @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                      <button wire:click="selecionaTudo()" class="btn btn-info" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
+                      <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
                     @endif
 
                     <br>
-                    <br>
                     
-                    {{-- puxar do banco de dados quantos numeros pode se jogar --}}
-                    @foreach ($busca as $buscas)
-                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-dark" type="button" onclick="limpacampos();">{{ $buscas['numbers'] }}</button>
-                    @endforeach 
+                    <div class="col-md-12 automatic-bet">
+                        <p style="font-size: 10px;margin-bottom: auto;">
+                            Selecione a quantidade de números para gerar um jogo automático:
+                        </p>
+                        {{-- puxar do banco de dados quantos numeros pode se jogar --}}
+                        @foreach ($busca as $buscas)
+                            <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="{{ env('randomNumbersColor') }}" type="button" onclick="limpacampos();">{{ $buscas['numbers'] }}</button>
+                        @endforeach 
+                    </div>
 
-                <div class="table-responsive">
-                    <table class="table  text-center">
+
+                <div class="table-responsive responsive-bet">
+                    <table class="table text-center">
                         <tbody>
                         @foreach($matriz as $lines)
                             <tr>
                                 @foreach($lines as $cols)
                                     <td>
                                         <button wire:click="selectNumber({{$cols}})" id="number_{{$cols}}" type="button"
-                                                class="btn btn-info {{in_array($cols, $selectedNumbers) ? 'btn-info' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
+                                                class="btn {{in_array($cols, $selectedNumbers) ? env('OneNumber2') : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
                                     </td>
                                 @endforeach
                             </tr>
@@ -147,6 +153,22 @@
     <style>
         .btn-beat-number {
             width: 100%;
+        }
+
+        .table th, .table td {
+          border-top: none;
+          padding: 5px 5px 5px 5px;
+        }
+
+        .ganhos-card h4 {
+            font-size: 20px !important;
+        }
+
+        @media (max-width: 700px) {
+            h4 {
+                font-size: 15px;
+                margin-left: 7px;
+            }
         }
     </style>
 
