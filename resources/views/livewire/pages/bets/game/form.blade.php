@@ -108,7 +108,7 @@
             @if(isset($matriz))
                 <h4>Selecione os números:({{count($selectedNumbers)}}/{{$numbers}})</h4>
                     @if($typeGame->name == "SLG - 15 Lotofácil" || $typeGame->name == "SLG - 20 LotoMania" || $typeGame->name == "Lotogiro - 1000X Lotofácil" || $typeGame->name == "ACUMULADO 15 lotofacil")
-                      <button wire:click="selecionaTudo()" class="btn btn-info" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
+                      <button wire:click="selecionaTudo()" class="{{ env('AllColor') }}" type="button" onclick="limpacampos();">Seleciona todos os Números</button>
                     @endif
 
                     <br>
@@ -116,7 +116,7 @@
                     
                     {{-- puxar do banco de dados quantos numeros pode se jogar --}}
                     @foreach ($busca as $buscas)
-                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="btn btn-dark" type="button" onclick="limpacampos();">{{ $buscas['numbers'] }}</button>
+                        <button style="margin-top: 1%" wire:click="randomNumbers({{ $buscas['numbers'] }})" class="{{ env('randomNumbersColor') }}" type="button" onclick="limpacampos();">{{ $buscas['numbers'] }}</button>
                     @endforeach 
 
                 <div class="table-responsive">
@@ -127,7 +127,7 @@
                                 @foreach($lines as $cols)
                                     <td>
                                         <button wire:click="selectNumber({{$cols}})" id="number_{{$cols}}" type="button"
-                                                class="btn btn-info {{in_array($cols, $selectedNumbers) ? 'btn-info' : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
+                                                class="btn {{in_array($cols, $selectedNumbers) ? env('OneNumber2') : 'btn-warning'}} btn-beat-number">{{$cols}}</button>
                                     </td>
                                 @endforeach
                             </tr>
