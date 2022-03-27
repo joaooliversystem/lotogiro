@@ -158,7 +158,7 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">CONCURSO:</span>
-                    <span class="font">{{$game->competition->number }}</span>
+                    <span class="font">{{$jogos->competition->number }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">DATA SORTEIO:</span>
