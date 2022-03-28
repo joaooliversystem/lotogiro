@@ -88,7 +88,7 @@
             <input type="hidden" name="controle"  id="controle" value="{{$controle}}" >
      <label for="dezena">Dezenas:</label>             
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 dezena">
              <input type="hidden" name="dezena" >
              <input type="hidden" name="qtdDezena" value="{{$qtdDezena}}" >
             <textarea wire:model="dezena" id="dezena"  name="dezena" rows="20" cols="90"></textarea>
@@ -96,7 +96,7 @@
     </div>
         <input type="hidden" class="form-control" id="type_game" name="type_game" value="{{$typeGame->id}}">
         <input hidden value="1" id="xml" name="xml">    
-         <button type="button"  class="btn btn-secondary" wire:click="dezenas" >Computar</button>        
+        <button type="button"  class="btn btn-secondary" wire:click="dezenas" >Computar</button>   
         <div class="modal-footer">
             <button type="submit" class="btn btn-info">Criar</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
