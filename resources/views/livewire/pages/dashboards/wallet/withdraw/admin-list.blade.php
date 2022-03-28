@@ -31,6 +31,7 @@
                             @endif
                             <td>{{ $withdraw->value }}</td>
                             <td>{{ $withdraw->statusTxt }}</td>
+                            @if(\App\Helper\UserValidate::iAmAdmin())
                             <td width="5%" align="center">
                                 @if($withdraw->status === 0)
                                     <button wire:click="withdrawDone({{ $withdraw->id }})" type="button" class="btn
@@ -41,6 +42,7 @@
                                 @else
                                     <button disabled type="button" class="btn btn-success"><i class="fa
                                     fa-check-circle"></i></button>
+                                @endif
                                 @endif
                             </td>
                         </tr>

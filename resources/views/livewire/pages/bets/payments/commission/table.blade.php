@@ -1,36 +1,49 @@
 <div>
+    <div class="col-md-12 p-4 faixa-jogos">
+        <h3 class="text-center text-bold">COMISSÕES</h3>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <input wire:model="dateStart" type="text"
-                           class="form-control @error('dateStart') is-invalid @enderror"
-                           id="date_start"
-                           name="dateStart"
-                           autocomplete="off"
-                           maxlength="50"
-                           placeholder="Data Inicial"
-                           onchange="this.dispatchEvent(new InputEvent('input'))">
-                    @error('dateStart')
-                    <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <div class="col-md-1 commisao-icon text-center">
+                        <i class="fas fa-calendar nav-icon"></i>
+                    </div>
+                    <div class="col-md-11 commisao-input">
+                        <input wire:model="dateStart" type="text"
+                               class="form-control @error('dateStart') is-invalid @enderror"
+                               id="date_start"
+                               name="dateStart"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Inicial"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateStart')
+                        <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <input wire:model="dateEnd" type="text"
-                           class="form-control date @error('dateEnd') is-invalid @enderror"
-                           id="date_end"
-                           name="dateEnd"
-                           autocomplete="off"
-                           maxlength="50"
-                           placeholder="Data Final"
-                           onchange="this.dispatchEvent(new InputEvent('input'))">
-                    @error('dateEnd')
-                    <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                    @enderror
+                    <div class="col-md-1 commisao-icon text-center">
+                        <i class="fas fa-calendar nav-icon"></i>
+                    </div>
+                    <div class="col-md-11 commisao-input">
+                        <input wire:model="dateEnd" type="text"
+                               class="form-control date @error('dateEnd') is-invalid @enderror"
+                               id="date_end"
+                               name="dateEnd"
+                               autocomplete="off"
+                               maxlength="50"
+                               placeholder="Data Final"
+                               onchange="this.dispatchEvent(new InputEvent('input'))">
+                        @error('dateEnd')
+                        <span class="invalid-feedback" role="alert">
+                                {{ $message }}
+                            </span>
+                        @enderror
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,12 +93,32 @@
             </select>
         </div>
         <div class="form-group offset-md-5 col-md-6 text-right">
-             Quantidade: {{$games->count()}}  Vendas: R${{\App\Helper\Money::toReal($value)}}  Bonus: R${{\App\Helper\Money::toReal($valueBonus)}} Total: R${{\App\Helper\Money::toReal($value + $valueBonus)}}
             <button wire:click="pay" type="button" class="btn btn-danger">Baixar Pagamento</button>
         </div>
     </div>
+    <div class="card card-info">
+        <div class="card-header indica-card">
+            <h3 class="card-title">Informações de Pagamento</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                    <div class="col-md-3">   
+                        <b>Quantidade:</b> {{$games->count()}}
+                    </div>
+                    <div class="col-md-3">
+                        <b>Vendas:</b> R${{\App\Helper\Money::toReal($value)}} 
+                    </div>
+                    <div class="col-md-3">
+                        <b>Bonus:</b> R${{\App\Helper\Money::toReal($valueBonus)}} 
+                    </div>
+                    <div class="col-md-3">
+                        <b>Total:</b> R${{\App\Helper\Money::toReal($value + $valueBonus)}}
+                    </div>
+            </div>
+        </div>
+    </div>  
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12 extractable-cel">
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-sm" id="game_table">
                     <thead>
