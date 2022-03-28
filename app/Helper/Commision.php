@@ -14,11 +14,12 @@ class Commision
 
         $typeClient = auth()->user()->type_client;
         $valorPai = 0;
+        
         if($ID_VALUE != null){
             $userPai = User::find($ID_VALUE);
             $comPai = $userPai->commission;
          if($typeClient == 1){
-            $commission = 4.35;
+            $commission = 10;
             $valor = ($value / 100) * $commission;
             $valorPai = $valor;
             $result = $userPai->bonus + $valor;
