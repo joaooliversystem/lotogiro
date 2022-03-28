@@ -15,7 +15,7 @@
         @endpush
         @enderror
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7 indica-user">
         <div class="card card-info pb-5">
             <div class="card-header">
                 <h3 class="card-title">Usuário</h3>

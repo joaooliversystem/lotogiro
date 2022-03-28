@@ -25,7 +25,7 @@
 
                 </a>
             @endcan
-            <div class="table-responsive">
+            <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="user_table">
                     <thead>
                     <tr>
@@ -33,7 +33,7 @@
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Criação</th>
-                        <th style="width: 80px">Ações</th>
+                        <th class="acoes">Ações</th>
                     </tr>
                     </thead>
                     <tbody>
