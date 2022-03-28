@@ -47,6 +47,7 @@
     @endpush
 @endif
 <div class="wrapper">
+
     @include('admin.layouts.navbar')
     @include('admin.layouts.sidebar')
 
