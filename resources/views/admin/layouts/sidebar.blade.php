@@ -45,15 +45,15 @@
                                     </a>
                                 </li>
                             @endif
-{{--                            @if(\App\Helper\UserValidate::iAmAdmin())--}}
-{{--                                <li class="nav-item">--}}
-{{--                                    <a href="{{route('admin.dashboards.extracts.sales')}}"--}}
-{{--                                       class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">--}}
-{{--                                        <i class="fas fa-file-alt nav-icon"></i>--}}
-{{--                                        <p>Extrato de Vendas</p>--}}
-{{--                                    </a>--}}
-{{--                                </li>--}}
-{{--                            @endif--}}
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.sales')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Extrato de Vendas</p>
+                                    </a>
+                                </li>
+                            @endif
                             @can('read_gain')
                             <li class="nav-item">
                                 <a href="/admin/dashboards/Reportday" class="nav-link">

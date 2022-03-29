@@ -1,4 +1,7 @@
 <div>
+    <div wire:loading.delay class="overlayLoading">
+        <div class="spinner"></div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card-header indica-card">
@@ -7,37 +10,13 @@
         </div>
     </div>
     <div class="row" style="margin-left: 10px;margin-right: 10px;">
-        <div class="col-md-3">
-            <div class="form-group">
-                <select wire:model="jogoSelected" class="custom-select" id="jogo" name="jogo">
-                    <option value="0">Todos os Jogos</option>
-                    @foreach($jogos as $jogo)
-                        <option value="{{$jogo['id']}}">{{ $jogo['name'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-        <div class="col-md-1" style="display: @if($jogoSelected > 0) block @else none @endif;">
-            <div class="form-group">
-                <select wire:model="dezenaSelected" class="custom-select" id="dezena" name="dezena">
-                    <option>D</option>
-                    @if($jogoSelected > 0)
-                        @foreach($jogos->find($jogoSelected)->typeGameValues as $typeGameValues)
-                            <option value="{{$typeGameValues['id']}}">{{ $typeGameValues['numbers'] }}</option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
-        </div>
-
         <div class="col-md-2">
             <div class="form-group">
                 <select wire:model="range" class="custom-select" id="range" name="range">
-                    <option value="0">Tudo</option>
-                    <option value="1">Mensal</option>
+                    <option value="0">Diário</option>
+                    <option value="1">Ontem</option>
                     <option value="2">Semanal</option>
-                    <option value="3">Diário</option>
+                    <option value="3">Mensal</option>
                     <option value="4">Personalizado</option>
                 </select>
             </div>
@@ -81,57 +60,96 @@
     </div>
 
     <div class="row bg-white p-3">
-        <div class="col-md-12 extractable-cel">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered table-lg">
-                    <thead>
-                    <tr>
-                        <th>Data</th>
-                        <th>Responsável</th>
-                        <th>Usuário</th>
-                        <th>Valor</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-{{--                    @forelse($transacts as $transact)--}}
-{{--                        <tr>--}}
-{{--                            <td>{{ $transact->data }}</td>--}}
-{{--                            <td>{{ $transact->responsavel }}</td>--}}
-{{--                            <td>{{ $transact->usuario }}</td>--}}
-{{--                            <td>{{ $transact->value }}</td>--}}
-{{--                        </tr>--}}
-{{--                    @empty--}}
-{{--                        <tr>--}}
-{{--                            <td colspan="5">--}}
-{{--                                <div class="row">--}}
-{{--                                    <div class="col-sm-12">--}}
-{{--                                        Nenhum registro encontrado.--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </td>--}}
-{{--                        </tr>--}}
-{{--                    @endforelse--}}
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="5">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-9">
-{{--                                    {{ $transacts->links() }}--}}
+        @forelse($dados as $dado)
+        <div class="col-sm-12 col-md-4">
+            <div class="alert" style="background-color: {{ $dado['gameColor'] }}; color:#FFF;">
+                <strong>{{ $dado['gameName'] }}</strong>
+                <strong style="float: right;">{{ $dado['fullGain'] }}</strong>
+                <hr class="message-inner-separator">
+                <p>
+                    <button class="btn btn-light btn-block" type="button" data-toggle="collapse"
+                            data-target="#dados{{$dado['game']}}" aria-expanded="false"
+                            aria-controls="dados{{$dado['game']}}">
+                        Ver Dados
+                    </button>
+                </p>
+                <div class="col">
+                    <div class="collapse multi-collapse" id="dados{{$dado['game']}}">
+                        <div class="card card-body" style="color: #000">
+                            <p><strong>Bilhetes Vendidos:</strong> {{ $dado['total'] }}</p>
+                            <p><strong>Total Recebido:</strong> {{ $dado['payed'] }}</p>
+                            <p><strong>Bilhetes Premiados:</strong> {{ $dado['drawed'] }}</p>
+                            <p><strong>Total Pago:</strong> {{ $dado['drawedPayed'] }}</p>
+                        </div>
+
+                        <p>
+                            <button class="btn btn-light btn-block" type="button" data-toggle="collapse"
+                                    data-target="#detalhes{{$dado['game']}}" aria-expanded="false"
+                                    aria-controls="detalhes{{$dado['game']}}">
+                                Mais Detalhes
+                            </button>
+                        </p>
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="detalhes{{$dado['game']}}">
+                                @foreach($dado['unities'] as $unities)
+                                <div class="card card-body" style="color: #000">
+                                    <div class="btn bg-blue light mb-2">
+                                        <strong>Dezenas:</strong> {{ $unities['dezenas'] }}
+                                    </div>
+                                    <div>
+                                        <p><strong>Bilhetes Vendidos:</strong> {{ $unities['vendido'] }}</p>
+                                        <p><strong>Total Recebido:</strong> {{ $unities['total'] }}</p>
+                                        <p><strong>Bilhetes Premiados:</strong> {{ $unities['drawed'] }}</p>
+                                        <p><strong>Total Pago:</strong> {{ $unities['payed'] }}</p>
+                                    </div>
                                 </div>
-                                <div class="col-sm-12 col-md-3 text-right text-bold">
-{{--                                    Total: R$ {{ $transacts->valueTotal }}--}}
-                                </div>
+                                @endforeach
                             </div>
-                        </td>
-                    </tr>
-                    </tfoot>
-                </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        @empty
+        <div class="col-sm-12"><p>Nenhum jogo vendido.</p></div>
+        @endforelse
     </div>
 </div>
 
+
+@push('scripts')
+    <style>
+        .spinner {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 9px solid;
+            border-color: #dbdcef;
+            border-right-color: #32689a;
+            animation: spinner-d3wgkg 1s infinite linear;
+            margin-left: calc(50% - 56px);
+            margin-top: calc(25% - 56px);
+        }
+        .overlayLoading{
+            min-width: 100%;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            z-index: 99999;
+            background-image: repeating-linear-gradient(45deg, #32689a 0, #32689a 3px, transparent 0, transparent 50%);
+            background-size: 21px 21px;
+            background-color: #333333;
+            opacity: .9;
+        }
+
+        @keyframes spinner-d3wgkg {
+            to {
+                transform: rotate(1turn);
+            }
+        }
+    </style>
+@endpush
 
 @push('scripts')
     <script src="{{asset('admin/layouts/plugins/daterangepicker/moment.min.js')}}"></script>
