@@ -8,25 +8,24 @@ PREMIADO
 @endif
 
 @foreach ($jogosCliente as $jogos)
+ID APOSTA: {{$jogos['id']}}
 
-    ID APOSTA: {{$jogos['id']}}
+EMITIDO EM: {{\Carbon\Carbon::parse($jogos->created_at)->format('d/m/Y h:i:s')}}
 
-    EMITIDO EM: {{\Carbon\Carbon::parse($jogos->created_at)->format('d/m/Y h:i:s')}}
+PARTICIPANTE: {{ $Nome }}
 
-    PARTICIPANTE: {{ $Nome }}
+TELEFONE: {{ $telefone }}
 
-    TELEFONE: {{ $telefone }}
+CONCURSO: {{ $jogos->competition->number }}
 
-    CONCURSO: {{ $jogos->competition->number }}
+DATA SORTEIO: {{\Carbon\Carbon::parse($Datas['sort_date'])->format('d/m/Y')}}
 
-    DATA SORTEIO: {{\Carbon\Carbon::parse($Datas['sort_date'])->format('d/m/Y')}}
+HORA SORTEIO: {{\Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s')}}
 
-    HORA SORTEIO: {{\Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s')}}
+{{mb_strtoupper($jogos->typeGame->name, 'UTF-8')}}
 
-    {{mb_strtoupper($jogos->typeGame->name, 'UTF-8')}}
-
-    @php
-                $numbers = array();
+@php
+$numbers = array();
                 $numbers = explode(',', $jogos['numbers']);
                 asort($numbers, SORT_NUMERIC);
 
@@ -48,11 +47,11 @@ PREMIADO
                     $matriz[$index] = $line;
                 }
 
-            @endphp
+@endphp
 
-    @foreach($matriz as $lines)
-    {{implode(' ', $lines)}}
-    @endforeach
+@foreach($matriz as $lines)
+{{implode(' ', $lines)}}
+@endforeach
 
     @php
         $contDezenas = array();
@@ -60,13 +59,13 @@ PREMIADO
     @endphp
 
 
-    QTDE DEZENAS: {{ count($contDezenas) }}
+QTDE DEZENAS: {{ count($contDezenas) }}
 
-    VALOR APOSTADO: R${{\App\Helper\Money::toReal($jogos{'value'})}}
+VALOR APOSTADO: R${{\App\Helper\Money::toReal($jogos{'value'})}}
 
-    GANHO MÁXIMO: R${{\App\Helper\Money::toReal($jogos['premio'])}}
+GANHO MÁXIMO: R${{\App\Helper\Money::toReal($jogos['premio'])}}
 
-    ----------------------------------------
+----------------------------------------
 
 @endforeach
 
