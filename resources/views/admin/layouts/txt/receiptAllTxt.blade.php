@@ -46,7 +46,7 @@ $numbers = array();
 QTDE DEZENAS: {{ count($contDezenas) }}
 VALOR APOSTADO: R${{\App\Helper\Money::toReal($jogos{'value'})}}
 GANHO MÁXIMO: R${{\App\Helper\Money::toReal($jogos['premio'])}}
-----------------------------------------
+------------------
 
 @endforeach
 
