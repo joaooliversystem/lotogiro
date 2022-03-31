@@ -65,11 +65,21 @@
                         @endforeach
 
                         @if($checar == 1)
+                        <div class="card-body col-lg-6 col-sm-12" style="float: left !important">
                             <a href="{{ route('admin.bets.games.receiptTudo', ['idcliente' =>$idCliente ]) }}">
                                 <button type="button" class="btn btn-info btn-block">
-                                    imprimir Todos Recibos
+                                    imprimir Todos Recibos em PDF
                                 </button>
                             </a>
+                        </div>
+                        
+                        <div class="card-body col-lg-6 col-sm-12" style="float: left !important">
+                            <a href="{{ route('admin.bets.games.getReceiptTudoTxt', ['idcliente' =>$idCliente ]) }}">
+                                <button type="button" class="btn btn-info btn-block">
+                                    imprimir Todos Recibos em TXT
+                                </button>
+                            </a>
+                        </div>
                         @endif
 
                         <div class="table-responsive">

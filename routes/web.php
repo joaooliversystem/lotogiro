@@ -108,6 +108,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/create-link', [GameController::class, 'createLink'])->name('games.link');
             Route::get('/games/receipt/{game}/{format}/{prize?}', [GameController::class, 'getReceipt'])->name('games.receipt');
             Route::get('/games/receiptTudo/{idcliente}', [GameController::class, 'getReceiptTudo'])->name('games.receiptTudo');
+            Route::get('/games/receiptTudoTxt/{idcliente}', [GameController::class, 'getReceiptTudoTxt'])->name('games.getReceiptTudoTxt');
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');

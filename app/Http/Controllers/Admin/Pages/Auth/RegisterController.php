@@ -63,6 +63,7 @@ HTML);
             'indicator' => ['required'],
         ]);
 
+
         try {
             \DB::beginTransaction();
                 $phone = Str::of($request->phone)->replaceMatches('/[^A-Za-z0-9]++/', '');
@@ -81,6 +82,7 @@ HTML);
                     'name' => $request->name,
                     'last_name' => $request->last_name,
                     'email' => $request->email,
+                    'pix' => $request->pix,
                     'ddd' => Str::of($phone)->substr(0, 2),
                     'phone' => Str::of($phone)->substr(2),
                 ]);
