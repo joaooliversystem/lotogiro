@@ -75,7 +75,6 @@ HTML);
                     'email' => $request->email,
                     'indicador' => $request->indicator,
                     'password' => $hashed,
-                    'pixSaque' => $request->pix,
                     'type_client' => 1,
                 ]);
 
