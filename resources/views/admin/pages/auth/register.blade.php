@@ -89,7 +89,7 @@
 
                         <div class="col-sm-12 col-md-6">
                             <label for="pix" class="col-form-label text-md-left">PIX</label>
-                            <input id="pix" type="text" class="form-control" name="pix" value="" autofocus>
+                            <input id="pix" type="text" class="form-control" name="pix" value="" autofocus placeholder="(opcional)">
                         </div>
                         
                         <div class="col-sm-6 col-md-6">
@@ -117,8 +117,7 @@
                         </div>
 
                         <div class="col-sm-12 col-md-6">
-                            <label for="password-confirm" class="col-form-label text-md-left">{{ __('Confirm
-                            Password') }}</label>
+                            <label for="password-confirm" class="col-form-label text-md-left">{{ __('Confirmar Senha') }}</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 
                         </div>
