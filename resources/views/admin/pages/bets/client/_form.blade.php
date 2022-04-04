@@ -17,12 +17,12 @@
     </div>
     <div class="col-md-12">
         <div class="card card-info">
-            <div class="card-header">
+            <div class="card-header indica-card">
                 <h3 class="card-title">Cliente</h3>
             </div>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="name">Nome</label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                                name="name"
@@ -33,7 +33,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-8">
+                    <div class="form-group col-md-6">
                         <label for="last_name">Sobrenome</label>
                         <input type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name"
                                name="last_name"
@@ -82,18 +82,7 @@
                     @enderror
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="bank">Banco</label>
-                        <input type="text" class="form-control @error('bank') is-invalid @enderror" id="bank"
-                               name="bank"
-                               maxlength="50" value="{{old('bank', $client->bank ?? null)}}">
-                        @error('bank')
-                        <span class="invalid-feedback" role="alert">
-                            {{ $message }}
-                        </span>
-                        @enderror
-                    </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="type_account">Tipo de Conta</label>
                         <select class="custom-select @error('type_account') is-invalid @enderror" name="type_account" id="type_account">
                             <option value="" @if(!isset($client)) selected @endif>Selecione</option>
@@ -106,7 +95,20 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
+                        <label for="bank">Banco</label>
+                        <input type="text" class="form-control @error('bank') is-invalid @enderror" id="bank"
+                               name="bank"
+                               maxlength="50" value="{{old('bank', $client->bank ?? null)}}">
+                        @error('bank')
+                        <span class="invalid-feedback" role="alert">
+                            {{ $message }}
+                        </span>
+                        @enderror
+                    </div>                    
+                </div>
+                <div class="form-row">               
+                    <div class="form-group col-md-6">
                         <label for="agency">Agência</label>
                         <input type="text" class="form-control @error('agency') is-invalid @enderror" id="agency"
                                name="agency"
@@ -117,8 +119,6 @@
                         </span>
                         @enderror
                     </div>
-                </div>
-                <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="account">Conta</label>
                         <input type="text" class="form-control @error('account') is-invalid @enderror" id="account"
@@ -130,7 +130,9 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="form-group col-md-6">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
                         <label for="pix">Pix</label>
                         <input type="text" class="form-control @error('pix') is-invalid @enderror" id="pix"
                                name="pix"

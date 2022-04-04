@@ -1,10 +1,10 @@
 <aside class="main-sidebar sidebar-dark-info elevation-4" style="overflow-x: hidden">
     <a href="/" class="brand-link">
-        <img src="{{asset('admin/images/painel/Trevo.png')}}"
+        <img src="{{asset(env('logo'))}}"
              alt="Logo"
              class="brand-image img-circle elevation-3"
              style="opacity: .8">
-        <span class="brand-text font-weight-light" style="font-size: 15px">SuperLotogiro</span>
+        <span class="brand-text font-weight-light" style="font-size: 15px">{{ env("nome_sistema") }}</span>
     </a>
 
     <div class="sidebar">
@@ -42,6 +42,15 @@
                                        class="nav-link @if(request()->is('admin/dashboards/extracts/manual-recharge')) active @endif">
                                         <i class="fas fa-file-alt nav-icon"></i>
                                         <p>Extrato Recarga Manual</p>
+                                    </a>
+                                </li>
+                            @endif
+                            @if(\App\Helper\UserValidate::iAmAdmin())
+                                <li class="nav-item">
+                                    <a href="{{route('admin.dashboards.extracts.sales')}}"
+                                       class="nav-link @if(request()->is('admin/dashboards/extracts/sales')) active @endif">
+                                        <i class="fas fa-file-alt nav-icon"></i>
+                                        <p>Extrato de Vendas</p>
                                     </a>
                                 </li>
                             @endif

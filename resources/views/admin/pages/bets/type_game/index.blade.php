@@ -24,14 +24,14 @@
                     <button class="btn btn-info my-2">Novo Tipo de Jogo</button>
                 </a>
             @endcan
-            <div class="table-responsive">
+            <div class="table-responsive extractable-cel">
                 <table class="table table-striped table-hover table-sm" id="type_game_table">
                     <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nome</th>
                         <th>Criação</th>
-                        <th style="width: 80px">Ações</th>
+                        <th class="acoes">Ações</th>
                     </tr>
                     </thead>
                     <tbody>

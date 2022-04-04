@@ -30,6 +30,15 @@ class ExtractController extends Controller
         return view('admin.pages.dashboards.extracts.manualRecharge');
     }
 
+    public function sales()
+    {
+        if (!UserValidate::iAmAdmin()) {
+            abort(403);
+        }
+
+        return view('admin.pages.dashboards.extracts.sales');
+    }
+
     public static function store($data)
     {
         $extract = new Extract();

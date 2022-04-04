@@ -279,12 +279,12 @@
 <div class="row">
     <div class="col-md-6 mb-3">
         <a href="{{route('admin.settings.roles.index')}}">
-            <button type="button" class="btn btn-block btn-outline-secondary">Voltar a tela principal</button>
+            <button type="button" class="btn btn-block btn-info">Voltar a tela principal</button>
         </a>
     </div>
     <div class="col-md-6 mb-3">
         <button type="submit"
-                class="btn btn-block btn-outline-success">@if(request()->is('admin/settings/roles/create'))
+                class="btn btn-block btn-success">@if(request()->is('admin/settings/roles/create'))
                 Cadastrar Função  @else  Atualizar Função @endif </button>
     </div>
 </div>

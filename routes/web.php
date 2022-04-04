@@ -21,6 +21,10 @@ use App\Http\Controllers\Admin\Pages\Dashboards\GainController;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 
+// recuperar senha controller
+use App\Http\Controllers\ForgotPasswordController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,6 +35,13 @@ use App\Http\Controllers\Admin\Pages\Bets\PaymentController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// rotas para recuperar senha
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('forget.password.post'); 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 Route::get('/', [LoginController::class, 'showLoginForm']);
 Route::get('/admin/indicate/{indicate?}', [RegisterController::class, 'registerIndicate'])->name('indicateRegister');
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
@@ -70,6 +81,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             });
             Route::prefix('extracts')->name('extracts.')->group(function () {
                 Route::get('/', [ExtractController::class, 'index'])->name('index');
+                Route::get('/sales', [ExtractController::class, 'sales'])->name('sales');
                 Route::get('/manual-recharge', [ExtractController::class, 'manualRecharge'])->name('manualRecharge');
             });
 
@@ -96,6 +108,7 @@ Route::prefix('/admin')->name('admin.')->group(function () {
             Route::get('/games/create-link', [GameController::class, 'createLink'])->name('games.link');
             Route::get('/games/receipt/{game}/{format}/{prize?}', [GameController::class, 'getReceipt'])->name('games.receipt');
             Route::get('/games/receiptTudo/{idcliente}', [GameController::class, 'getReceiptTudo'])->name('games.receiptTudo');
+            Route::get('/games/receiptTudoTxt/{idcliente}', [GameController::class, 'getReceiptTudoTxt'])->name('games.getReceiptTudoTxt');
             Route::get('/games/{type_game}', [GameController::class, 'index'])->name('games.index');
             Route::get('games/carregarjogo/{type_game}', [GameController::class, 'carregarJogo'])->name('games.carregarjogo');
             Route::get('/games/create/{type_game}', [GameController::class, 'create'])->name('games.create');

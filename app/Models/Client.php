@@ -14,6 +14,7 @@ class Client extends Model
         'email',
         'ddd',
         'phone',
+        'pix',
     ];
 
     public $timestamps = true;

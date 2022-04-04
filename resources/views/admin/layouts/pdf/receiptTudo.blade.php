@@ -135,7 +135,7 @@
         <div class="">
             <div class="border-bottom-dashed py-2">
                 <p class="text-danger text-center font text-size-3 text-bold">
-                    APOSTA SUPERLOTOGIRO TUDO
+                    APOSTA {{ env("nome_sistema") }} TUDO
                 </p>
                 @if($prize)
                     <p class="text-success text-center font text-size-4 text-bold py-2">
@@ -158,7 +158,7 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">CONCURSO:</span>
-                    <span class="font">{{$game->competition->number }}</span>
+                    <span class="font">{{$jogos->competition->number }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">DATA SORTEIO:</span>
