@@ -162,11 +162,11 @@
                 </p>
                 <p class="">
                     <span class="font text-bold">DATA SORTEIO:</span>
-                    <span class="font">{{ \Carbon\Carbon::parse($Datas['sort_date'])->format('d/m/Y') }}</span>
+                    <span class="font">{{ \Carbon\Carbon::parse($jogos->competition->sort_date)->format('d/m/Y') }}</span>
                 </p>
                 <p class="">
                     <span class="font text-bold">HORA SORTEIO:</span>
-                    <span class="font">{{ \Carbon\Carbon::parse($Datas['sort_date'])->format('H:i:s') }}</span>
+                    <span class="font">{{ \Carbon\Carbon::parse($jogos->competition->sort_date)->format('H:i:s') }}</span>
                 </p>
                 <h2 class="font text-bold text-center">{{mb_strtoupper($jogos->typeGame->name, 'UTF-8')}}</h2>
             </div>
