@@ -122,7 +122,7 @@
                                 {{ $game->user->name . ' ' . $game->user->last_name }}
                             </td>
                             <td>
-                                {{ $game->competition }}
+                                {{ $game->competition->id }}
                             </td>
                             <td>
                                 {{ $game->numbers }}
