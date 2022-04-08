@@ -159,11 +159,11 @@ class UserController extends Controller
             // enviar pra cliente
             if($auxRole == 6){
 
-                $validatedData = $request->validate([
+               /* $validatedData = $request->validate([
                     'pix' => 'required|max:60',
                     'telefone' => 'required|max:15',
                     'cpf' => 'required|max:11'
-                ]);
+                ]);*/
 
                 $user->type_client = 1;
 
