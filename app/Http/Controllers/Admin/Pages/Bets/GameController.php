@@ -136,9 +136,9 @@ class GameController extends Controller
                 $bet->user_id = Auth()->user()->id;
                 $bet->client_id = $request->client;
                 $bet->status_xml = 1;
-                $bet->key = $chaveregistro;
+                $bet->key_reg = $chaveregistro;
                 $bet->save();
-                $bet = Bet::where('user_id', $user)->where('status_xml',1)->where('key', $chaveregistro)->first();
+                $bet = Bet::where('user_id', $user)->where('status_xml',1)->where('key_reg', $chaveregistro)->first();
 
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $request->type_game],
