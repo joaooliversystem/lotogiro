@@ -49,14 +49,18 @@ class Client extends Component
     {
         $ddd = null;
         $tel = null;
+        $client = null;
         $data = $this->validate();
+
         $phone = $this->searchClient($data['phone']);
         if($phone != null){
+
         $ddd = $phone->ddd;
         $tel = $phone->phone;
-        }
-  
         $client = \App\Models\Client::where(['ddd' => $ddd,'phone' => $tel])->first();
+        }
+
+        
         
         if ($client == null){
 
