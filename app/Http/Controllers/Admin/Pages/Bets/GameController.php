@@ -6,6 +6,7 @@ use App\Exports\Receipt;
 use App\Helper\Balance;
 use App\Helper\Commision;
 use App\Helper\Mask;
+use App\Helper\ChaveAleatoria;
 use App\Http\Controllers\Admin\Pages\Dashboards\ExtractController;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
@@ -129,13 +130,15 @@ class GameController extends Controller
                     'error' => 'Apostas Encerradas!'
                 ]);
              }
+                $chaveregistro = ChaveAleatoria::generateKey(8);
                 $user = Auth()->user()->id;
                 $bet = new Bet();
                 $bet->user_id = Auth()->user()->id;
                 $bet->client_id = $request->client;
                 $bet->status_xml = 1;
+                $bet->key_reg = $chaveregistro;
                 $bet->save();
-                $bet = Bet::where('user_id', $user)->where('status_xml',1)->first();
+                $bet = Bet::where('user_id', $user)->where('status_xml',1)->where('key_reg', $chaveregistro)->first();
 
         $typeGameValue = TypeGameValue::where([
             ['type_game_id', $request->type_game],
