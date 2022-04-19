@@ -1,6 +1,0 @@
-[13-Aug-2021 22:32:27 America/Sao_Paulo] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/lotogiroc/public_html/public/vendor/dompdf/dompdf/src/Css/Style.php on line 1705
-[13-Aug-2021 22:33:10 America/Sao_Paulo] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/lotogiroc/public_html/public/vendor/dompdf/dompdf/src/Css/Style.php on line 1681
-[13-Aug-2021 22:33:41 America/Sao_Paulo] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/lotogiroc/public_html/public/vendor/dompdf/dompdf/src/Css/Style.php on line 1686
-[14-Aug-2021 20:31:22 America/Sao_Paulo] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/lotogiroc/public_html/public/vendor/dompdf/dompdf/src/Css/Style.php on line 890
-[16-Aug-2021 15:05:06 America/Sao_Paulo] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/lotogiroc/public_html/public/vendor/dompdf/dompdf/src/Frame.php on line 330
-[16-Aug-2021 15:19:06 America/Sao_Paulo] PHP Fatal error:  Maximum execution time of 30 seconds exceeded in /home/lotogiroc/public_html/public/vendor/dompdf/dompdf/src/Frame.php on line 330
