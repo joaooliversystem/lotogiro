@@ -7,11 +7,11 @@ use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
+//use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ValidateOpenModalOffer
 {
-    use LivewireAlert;
+   //; use LivewireAlert;
     /**
      * Handle an incoming request.
      *
